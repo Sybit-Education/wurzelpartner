@@ -63,7 +63,7 @@ const imageUrl = computed((): string => {
       <img
         :src="imageUrl"
         :alt="tree.name"
-        class="mt-4 md:max-w-md  h-full rounded-lg shadow-lg w-auto md:float-left md:mb-8" />
+        class="mt-1 md:max-w-md  h-full rounded-lg shadow-lg w-auto md:float-left md:mb-8" />
       <p class="mt-10 md:mt-2 text-xl text-gray-700 text-justify whitespace-pre-line">
         {{ tree.description }}
       </p>

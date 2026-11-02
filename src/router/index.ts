@@ -64,6 +64,10 @@ const router = createRouter({
       meta: {
         //hideLayout: true
       },
+    }, {
+      path: '/spendenvonbaume',
+      name: 'spendenvonbaume',
+      component: () => import('../views/spendenvonbaumeView.vue'),
     },
   ],
 })
