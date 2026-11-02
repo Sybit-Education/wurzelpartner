@@ -77,22 +77,22 @@ onBeforeUnmount(() => {
             >Wurzelpartner</span
           >
         </a>
-        <div class="flex items-center ml-auto md:order-2">
+        <div class="flex items-center ml-auto md:order-2 md:self-end">
           <!-- Theme Toggle -->
-          <ThemeToggle class="mr-2" />
-          <div class="hidden md:flex md:items-center md:space-x-3 mr-4">
+          <ThemeToggle class="mr-2 md:translate-x-62" />
+          <div class="hidden md:flex md:space-x-2 md:translate-x-62">
             <template v-if="!authStore.isAuthenticated">
               <fwb-button
                 color="green"
                 size="md"
                 href="/login"
-                class="px-5 py-2.5 m-2 h-10 inline-flex items-center justify-center bg-brand-600 hover:bg-brand-700"
+                class="px-5 py-2.5 h-10 inline-flex items-center justify-center bg-brand-600 hover:bg-brand-700"
                 ><span class="text-white">Anmelden</span>
               </fwb-button>
               <fwb-button
                 color="alternative"
                 size="md"
-                class="px-5 py-2.5 m-2 h-10 inline-flex items-center justify-center"
+                class="px-5 py-2.5 h-10 inline-flex items-center justify-center"
                 href="/signup"
                 >Registrieren</fwb-button
               >
@@ -177,6 +177,14 @@ onBeforeUnmount(() => {
           <ul
             class="font-medium flex flex-col md:p-0 mt-4 ml-8 md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-1"
           >
+            <li>
+              <router-link
+                to="/"
+                class="block py-2 px-3 text-white bg-brand-700 rounded-sm md:bg-transparent md:text-brand-700 md:p-0 dark:text-white md:dark:text-green-500"
+                aria-current="page"
+                >Home
+                </router-link>
+            </li>
             <li>
               <router-link
                 to="/trees"
