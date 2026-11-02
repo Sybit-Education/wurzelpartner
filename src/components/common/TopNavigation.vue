@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
 import ThemeToggle from '@/components/common/ThemeToggle.vue'
@@ -8,15 +8,63 @@ import { FwbButton } from 'flowbite-vue'
 const authStore = useAuthStore()
 const router = useRouter()
 const isMenuOpen = ref(false)
+const isProfileMenuOpen = ref(false)
+const profileMenuRef = ref<HTMLElement | null>(null)
+
+const userInitial = computed(() =>
+  authStore.username ? authStore.username.charAt(0).toUpperCase() : '?',
+)
+const userEmail = computed(() => authStore.user?.email ?? '')
+const avatarUrl = computed(() =>
+  userEmail.value
+    ? `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(userEmail.value)}&backgroundColor=b6e3f4,c0aede,d1d4f9&fontSize=42`
+    : '',
+)
 
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value
+}
+
+function toggleProfileMenu() {
+  isProfileMenuOpen.value = !isProfileMenuOpen.value
+}
+
+function openProfileMenu() {
+  isProfileMenuOpen.value = true
+}
+
+function closeProfileMenu() {
+  isProfileMenuOpen.value = false
+}
+
+function handleClickOutside(event: MouseEvent) {
+  if (profileMenuRef.value && !profileMenuRef.value.contains(event.target as Node)) {
+    closeProfileMenu()
+  }
+}
+
+function goToDashboard() {
+  isProfileMenuOpen.value = false
+  router.push({ name: 'dashboard' })
+}
+
+function goToProfile() {
+  isProfileMenuOpen.value = false
+  router.push({ name: 'profile' })
 }
 
 function handleLogout() {
   authStore.logout()
   router.push('/login')
 }
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
@@ -50,15 +98,49 @@ function handleLogout() {
               >
             </template>
             <template v-else>
-              <span class="text-gray-900 dark:text-white mr-2"
-                >Hallo, {{ authStore.username }}</span
-              >
-              <button
-                @click="handleLogout"
-                class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-              >
-                Abmelden
-              </button>
+              <div class="relative" @mouseenter="openProfileMenu" ref="profileMenuRef">
+                <button
+                  @click="toggleProfileMenu"
+                  class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-brand-600 text-sm font-semibold text-white shadow-md hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+                >
+                  <img
+                    v-if="avatarUrl"
+                    :src="avatarUrl"
+                    :alt="`Avatar für ${authStore.username}`"
+                    class="h-full w-full object-cover"
+                  />
+                  <span v-else>{{ userInitial }}</span>
+                </button>
+                <div
+                  v-if="isProfileMenuOpen"
+                  class="absolute right-0 z-20 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
+                >
+                  <div class="border-b border-gray-200 px-4 py-3 dark:border-gray-700">
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Angemeldet als</p>
+                    <p class="truncate text-sm font-semibold text-gray-900 dark:text-white">
+                      {{ authStore.username }}
+                    </p>
+                  </div>
+                  <button
+                    @click="goToDashboard"
+                  class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
+                >
+                  Dashboard
+                </button>
+                  <button
+                    @click="goToProfile"
+                    class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Profil
+                  </button>
+                  <button
+                    @click="handleLogout"
+                    class="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-900/40"
+                  >
+                    Abmelden
+                  </button>
+                </div>
+              </div>
             </template>
           </div>
           <button
@@ -152,6 +234,22 @@ function handleLogout() {
                 <span class="block w-full text-center py-2 px-3 text-gray-900 dark:text-white">
                   Hallo, {{ authStore.username }}
                 </span>
+              </li>
+              <li class="md:hidden mt-2">
+                <router-link
+                  to="/dashboard"
+                  class="block w-full text-center py-2 px-3 text-white bg-brand-600 rounded-lg hover:bg-brand-700"
+                >
+                  Zum Dashboard
+                </router-link>
+              </li>
+              <li class="md:hidden mt-2">
+                <router-link
+                  to="/profile"
+                  class="block w-full text-center py-2 px-3 text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
+                >
+                  Profil verwalten
+                </router-link>
               </li>
               <li class="md:hidden mt-2">
                 <button
