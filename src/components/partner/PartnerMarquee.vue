@@ -39,14 +39,15 @@ onMounted(fetchPartners)
 <template>
   <section class="overflow-hidden rounded-2xl">
     <div class="py-6 md:py-8">
-
       <div class="mt-6 min-h-[100px]">
         <div v-if="isLoading" class="flex items-center gap-2">
           <span class="h-2.5 w-2.5 animate-ping rounded-full"></span>
           <span>Lade Partner …</span>
         </div>
         <div v-else-if="hasError" class="text-sm">Partner konnten nicht geladen werden.</div>
-        <div v-else-if="partners.length === 0" class="text-sm">Aktuell keine Partner vorhanden.</div>
+        <div v-else-if="partners.length === 0" class="text-sm">
+          Aktuell keine Partner vorhanden.
+        </div>
         <div v-else class="relative overflow-hidden">
           <div
             class="marquee-track flex items-center gap-6 md:gap-10"

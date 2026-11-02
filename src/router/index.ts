@@ -33,13 +33,20 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
-   {path: '/accesibility',
+    {
+      path: '/accesibility',
       name: 'Acessibility',
-      component: () => import('../views/acessibilityView.vue')},
-   {
+      component: () => import('../views/acessibilityView.vue'),
+    },
+    {
       path: '/map',
       name: 'map',
       component: () => import('../views/MapView.vue'),
+    },
+    {
+      path: '/donation',
+      name: 'donation',
+      component: () => import('../views/donationMenu.vue'),
     },
     {
       path: '/createtree',

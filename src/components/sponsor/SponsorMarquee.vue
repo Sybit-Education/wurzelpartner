@@ -38,7 +38,6 @@ onMounted(fetchSponsors)
 <template>
   <section class="overflow-hidden rounded-2xl">
     <div class="py-6 md:py-8">
-
       <div class="mt-6 min-h-[100px]">
         <div v-if="isLoading" class="flex items-center gap-2">
           <span class="h-2.5 w-2.5 animate-ping rounded-full"></span>

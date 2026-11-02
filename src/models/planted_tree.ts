@@ -1,5 +1,5 @@
-import type { UserInfo } from "./userInfo"
-import type { Location } from "./location"
+import type { UserInfo } from './userInfo'
+import type { Location } from './location'
 
 export interface PlantedTree {
   id: string | number
