@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TreeDetails from '@/views/TreeDetails.vue'
 import { useAuthStore } from '@/stores/authStore'
-import AcessibilityView from '@/views/acessibilityView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
