@@ -93,7 +93,7 @@ function handleLogout() {
           id="navbar-default"
         >
           <ul
-            class="font-medium flex flex-col md:p-0 mt-4 ml-8 md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-1"
+            class="font-medium flex flex-col md:p-05 mt-4 ml-4 md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-1"
           >
             <li>
               <router-link
@@ -136,6 +136,13 @@ function handleLogout() {
                 class="block  px-10-text-gray-900 rounded-sm hover:bg-gray-100md:hover:bg-transparent md:border-0 md:hover:text-brand"
                 >Barrierefreiheit
                 </router-link></li>
+                 <li>
+              <router-link
+                to="/privacy-policy"
+                class="block  px-1 text-gray-900 rounded-sm hover:bg-gray-100md:hover:bg-transparent md:border-0 md:hover:text-brand"
+                >Datenschutzerklärung
+                </router-link></li>
+
             <template v-if="!authStore.isAuthenticated">
               <li class="md:hidden mt-4">
                 <router-link
