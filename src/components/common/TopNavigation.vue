@@ -146,6 +146,21 @@ function handleLogout() {
               >
             </li>
 
+              <router-link
+                to="/donation"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
+                Spenden
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/accesibility"
+                class="block px-10-text-gray-900 rounded-sm hover:bg-gray-100md:hover:bg-transparent md:border-0 md:hover:text-brand"
+              >
+                Barrierefreiheit
+              </router-link>
+            </li>
             <template v-if="!authStore.isAuthenticated">
               <li class="md:hidden mt-4">
                 <router-link
