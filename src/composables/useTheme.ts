@@ -1,67 +1,37 @@
-import { computed } from 'vue'
 import { useThemeStore, type ThemeMode } from '@/stores/themeStore'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 
-/**
- * Composable für Theme-Management in Komponenten
- *
- * Bietet eine einfache API für:
- * - Abfrage des aktuellen Theme-Zustands
- * - Wechseln zwischen Themes
- * - Setzen eines spezifischen Themes
- *
- * @example
- * ```vue
- * <script setup>
- * import { useTheme } from '@/composables/useTheme'
- *
- * const { isDark, mode, toggle, setMode } = useTheme()
- * </script>
- *
- * <template>
- *   <button @click="toggle">{{ isDark ? '🌙' : '☀️' }}</button>
- * </template>
- * ```
- */
+// Custom theme hook
 export function useTheme() {
   const themeStore = useThemeStore()
   const { mode, isDark } = storeToRefs(themeStore)
 
-  /**
-   * Label für den aktuellen Theme-Mode (z.B. für UI-Anzeige)
-   */
+  // Names for mode
+  const modeLabelTable: Record<ThemeMode, string> = {
+    light: 'Hell',
+    dark: 'Dunkel',
+    system: 'System',
+  }
+
+  // Current display
   const modeLabel = computed(() => {
-    switch (mode.value) {
-      case 'light':
-        return 'Hell'
-      case 'dark':
-        return 'Dunkel'
-      case 'system':
-        return 'System'
-      default:
-        return 'System'
-    }
+    return modeLabelTable[mode.value]
   })
 
-  /**
-   * Icon-Name für den aktuellen Theme-Mode
-   */
+  // Icon table
+  const modeIconTable: Record<ThemeMode, string> = {
+    light: 'sun',
+    dark: 'moon',
+    system: 'computer-desktop',
+  }
+
+  // Current icon
   const modeIcon = computed(() => {
-    switch (mode.value) {
-      case 'light':
-        return 'sun'
-      case 'dark':
-        return 'moon'
-      case 'system':
-        return 'computer-desktop'
-      default:
-        return 'computer-desktop'
-    }
+    return modeIconTable[mode.value]
   })
 
-  /**
-   * Alle verfügbaren Theme-Modes mit Labels
-   */
+  // Available modes
   const availableModes: { value: ThemeMode; label: string }[] = [
     { value: 'light', label: 'Hell' },
     { value: 'dark', label: 'Dunkel' },

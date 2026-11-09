@@ -1,22 +1,21 @@
 <template>
   <main
     class="min-h-[calc(100vh-8rem)] bg-transparent px-5 py-[clamp(2.5rem,7vw,6rem)] text-[#20342a] max-[35rem]:min-h-[calc(100vh-5rem)] max-[35rem]:px-4 max-[35rem]:py-9 dark:text-[#f4f7f4]"
-    :class="{ dark: isDark }"
   >
-    <div class="mx-auto w-full max-w-[42rem]">
+    <div class="mx-auto w-full max-w-2xl">
       <header class="mb-7">
         <p
-          class="!mb-[0.8rem] !mt-0 flex items-center gap-[0.55rem] !text-[0.78rem] !font-bold uppercase !tracking-[0.08em] !text-[#326b45] dark:!text-[#b5ddb5]"
+          class="mb-[0.8rem] mt-0 flex items-center gap-[0.55rem] text-[0.78rem] font-bold uppercase tracking-[0.08em] text-[#326b45] dark:text-[#b5ddb5]"
         >
           Wurzelpartner · Baumpatenschaft
         </p>
         <h1
-          class="!m-0 !text-[clamp(2rem,5vw,2.8rem)] !font-bold !leading-[1.1] !text-[#20342a] dark:!text-[#f4f7f4]"
+          class="m-0 text-[clamp(2rem,5vw,2.8rem)] font-bold leading-[1.1] text-[#20342a] dark:text-[#f4f7f4]"
         >
           Ein Baum für morgen.
         </h1>
         <p
-          class="!mb-0 !mt-[0.85rem] !max-w-[34rem] !text-base !leading-[1.6] !text-[#637267] dark:!text-[#c6d1c7]"
+          class="mb-0 mt-[0.85rem] max-w-136 text-base leading-[1.6] text-[#637267] dark:text-[#c6d1c7]"
         >
           Wähle eine Baumart und die gewünschte Anzahl. Dein Beitrag wird direkt berechnet.
         </p>
@@ -34,7 +33,7 @@
             <select
               id="tree"
               v-model.number="selectedTreePrice"
-              class="min-h-[3.25rem] w-full cursor-pointer rounded-[5px] border border-[#dce5d8] bg-[#fffefa] py-0 pr-10 pl-[0.9rem] font-[inherit] text-[#20342a] focus-visible:border-[#326b45] focus-visible:outline-3 focus-visible:outline-[#326b45]/25 focus-visible:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:text-[#f4f7f4] dark:focus-visible:border-[#b5ddb5] dark:focus-visible:outline-[#b5ddb5]/25"
+              class="min-h-13 w-full cursor-pointer rounded-[5px] border border-[#dce5d8] bg-[#fffefa] py-0 pr-10 pl-[0.9rem] font-[inherit] text-[#20342a] focus-visible:border-[#326b45] focus-visible:outline-3 focus-visible:outline-[#326b45]/25 focus-visible:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:text-[#f4f7f4] dark:focus-visible:border-[#b5ddb5] dark:focus-visible:outline-[#b5ddb5]/25"
             >
               <option v-for="tree in treeTypes" :key="tree.name" :value="tree.price">
                 {{ tree.name }} · {{ tree.price }} €
@@ -45,7 +44,7 @@
           <label class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]" for="quantity">
             <span class="text-[0.88rem] font-bold">Anzahl der Bäume</span>
             <div
-              class="flex min-h-[3.25rem] w-full items-center justify-between rounded-[5px] border border-[#dce5d8] bg-[#fffefa] px-[0.85rem] focus-within:border-[#326b45] focus-within:outline-3 focus-within:outline-[#326b45]/25 focus-within:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:focus-within:border-[#b5ddb5] dark:focus-within:outline-[#b5ddb5]/25"
+              class="flex min-h-13 w-full items-center justify-between rounded-[5px] border border-[#dce5d8] bg-[#fffefa] px-[0.85rem] focus-within:border-[#326b45] focus-within:outline-3 focus-within:outline-[#326b45]/25 focus-within:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:focus-within:border-[#b5ddb5] dark:focus-within:outline-[#b5ddb5]/25"
             >
               <input
                 id="quantity"
@@ -54,7 +53,7 @@
                 min="1"
                 step="1"
                 inputmode="numeric"
-                class="w-[4.5rem] min-w-0 border-0 bg-transparent text-[1.1rem] font-bold text-[#20342a] outline-none dark:text-[#f4f7f4]"
+                class="w-18 min-w-0 border-0 bg-transparent text-[1.1rem] font-bold text-[#20342a] outline-none dark:text-[#f4f7f4]"
               />
               <span class="text-[0.85rem] text-[#637267] dark:text-[#c6d1c7]">Bäume</span>
             </div>
@@ -66,10 +65,10 @@
           aria-live="polite"
         >
           <div>
-            <p class="!m-0 !text-[0.9rem] !font-bold !text-[#20342a] dark:!text-[#f4f7f4]">
+            <p class="m-0 text-[0.9rem] font-bold text-[#20342a] dark:text-[#f4f7f4]">
               Dein Beitrag
             </p>
-            <p class="!mb-0 !mt-[0.2rem] !text-[0.8rem] !text-[#637267] dark:!text-[#c6d1c7]">
+            <p class="mb-0 mt-[0.2rem] text-[0.8rem] text-[#637267] dark:text-[#c6d1c7]">
               {{ selectedTreeName }} · {{ treeCount }} {{ treeCount === 1 ? 'Baum' : 'Bäume' }}
             </p>
           </div>
@@ -94,7 +93,7 @@
           <div>
             <strong class="block text-[0.87rem]">Kaufprozess noch nicht verfügbar</strong>
             <p
-              class="!mb-0 !mt-[0.18rem] !text-[0.82rem] !leading-[1.45] !text-[#6b5b32] dark:!text-[#efdfb2]"
+              class="mb-0 mt-[0.18rem] text-[0.82rem] leading-[1.45] text-[#6b5b32] dark:text-[#efdfb2]"
             >
               Der Kaufprozess muss noch implementiert werden.
             </p>
@@ -116,9 +115,6 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useTheme } from '@/composables/useTheme'
-
-const { isDark } = useTheme()
 
 const treeTypes = [
   { name: 'Birke', price: 25 },
@@ -126,7 +122,7 @@ const treeTypes = [
   { name: 'Buche', price: 35 },
 ]
 
-const selectedTreePrice = ref(treeTypes[0]!.price)
+const selectedTreePrice = ref(treeTypes[0].price)
 const quantity = ref<number | ''>(1)
 
 const treeCount = computed(() => Math.max(1, Math.floor(Number(quantity.value) || 1)))

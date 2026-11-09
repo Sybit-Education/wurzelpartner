@@ -1,89 +1,108 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import TreeDetails from '@/views/TreeDetails.vue'
 import { useAuthStore } from '@/stores/authStore'
+import { createRouter, createWebHistory } from 'vue-router'
+// Routes
+import AboutView from '../views/AboutView.vue'
+import HomeView from '../views/HomeView.vue'
+import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
+import TreeDetails from '../views/TreeDetails.vue'
+import TreeOverviewView from '../views/TreeOverviewView.vue'
+import AcessibilityView from '../views/AcessibilityView.vue'
+import MapView from '../views/MapView.vue'
+import PlantATreeView from '../views/PlantATreeView.vue'
+import PartnerDetailView from '../views/PartnerDetailView.vue'
+import LoginView from '../views/LoginView.vue'
+import SignUpView from '../views/SignUpView.vue'
+import DonateTreeView from '../views/DonateTreeView.vue'
+import DonateMoneyView from '../views/DonateMoneyView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // Home
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: HomeView,
     },
+    // Trees
     {
       path: '/trees',
-      name: 'trees',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TreeOverviewView.vue'),
+      name: 'Trees',
+      component: TreeOverviewView,
     },
+    // Tree details
     {
       path: '/tree/:id',
-      name: 'tree-details',
+      name: 'Tree details',
       component: TreeDetails,
       props: true,
     },
+    // About
     {
       path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      name: 'About us',
+      component: AboutView,
     },
+    // Data-protection
     {
       path: '/privacy',
-      name: 'privacy',
-      component: () => import('../views/PrivacyPolicyView.vue'),
+      name: 'Privacy',
+      component: PrivacyPolicyView,
     },
+    // Status about acessibility
     {
       path: '/accesibility',
       name: 'Acessibility',
-      component: () => import('../views/acessibilityView.vue'),
+      component: AcessibilityView,
     },
+    // Map
     {
       path: '/map',
-      name: 'map',
-      component: () => import('../views/MapView.vue'),
+      name: 'Map',
+      component: MapView,
     },
-    {
-      path: '/donation',
-      name: 'donation',
-      component: () => import('../views/donationMenu.vue'),
-    },
+    // Create a tree
     {
       path: '/createtree',
       name: 'Create a tree',
-      component: () => import('../views/PlantATreeView.vue'),
+      component: PlantATreeView,
     },
+    // Partner details
     {
       path: '/partner/:id',
-      name: 'partner-details',
-      component: () => import('../views/PartnerDetailView.vue'),
+      name: 'Partner details',
+      component: PartnerDetailView,
       props: true,
     },
+    // Login
     {
       path: '/login',
-      name: 'login',
-      component: () => import('../views/LoginView.vue'),
+      name: 'Login',
+      component: LoginView,
       meta: {
-        //hideLayout: true
+        hideLayout: true
       },
     },
+    // Sign up
     {
       path: '/signup',
-      name: 'signup',
-      component: () => import('../views/SignUpView.vue'),
+      name: 'Signup',
+      component: SignUpView,
       meta: {
-        //hideLayout: true
+        hideLayout: true
       },
     },
+    // Donate tree
     {
       path: '/spendenvonbaume',
-      name: 'spendenvonbaume',
-      component: () => import('../views/spendenvonbaumeView.vue'),
+      name: 'Donate tree',
+      component: DonateTreeView,
+    },
+    // Donate money
+    {
+      path: '/donation',
+      name: 'Donate money',
+      component: DonateMoneyView,
     },
   ],
 })
@@ -118,4 +137,5 @@ router.beforeEach(async (to, from, next) => {
   next()
 })
 
+// Export router
 export default router
