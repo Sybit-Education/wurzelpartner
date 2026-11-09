@@ -3,7 +3,7 @@
     <div class="donation-layout">
       <header class="donation-heading">
         <p class="donation-eyebrow">
-          <span aria-hidden="true"></span> Wurzelpartner · Baumpatenschaft
+          Wurzelpartner · Baumpatenschaft
         </p>
         <h1>Ein Baum für morgen.</h1>
         <p class="donation-intro">
@@ -11,7 +11,7 @@
         </p>
       </header>
 
-      <section class="donation-panel" aria-label="Baumspende berechnen">
+      <section class="donation-panel" label="Baumspende berechnen">
         <div class="donation-fields">
           <label class="donation-field" for="tree">
             <span class="field-label">Baumart</span>
