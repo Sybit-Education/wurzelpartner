@@ -138,10 +138,11 @@ function handleLogout() {
                 </router-link></li>
                  <li>
               <router-link
-                to="/privacy-policy"
-                class="block  px-1 text-gray-900 rounded-sm hover:bg-gray-100md:hover:bg-transparent md:border-0 md:hover:text-brand"
-                >Datenschutzerklärung
-                </router-link></li>
+                to="/privacy"
+                    class="text-gray-700 underline hover:text-brand-700 dark:text-gray-300 dark:hover:text-green-400"
+                    >Datenschutzerklärung</router-link
+                  >
+                </li>
 
             <template v-if="!authStore.isAuthenticated">
               <li class="md:hidden mt-4">
