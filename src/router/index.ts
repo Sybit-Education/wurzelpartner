@@ -48,6 +48,8 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
       },
+    },
+    {
       path: '/privacy',
       name: 'privacy',
       component: () => import('../views/PrivacyPolicyView.vue'),
