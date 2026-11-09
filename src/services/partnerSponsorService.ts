@@ -1,11 +1,15 @@
 import { NocoDBService, type ListResponse } from './nocodbService'
 import type { PartnerSponsor, PartnerSponsorType } from '@/models/partnerSponsor'
+import { MiddlewareClient } from './middlewareClient'
+import { MiddlewareService } from './middlewareService'
 
 /**
  * Service für den Zugriff auf die PARTNER_SPONSOR Tabelle
  */
 export class PartnerSponsorService {
   readonly nocoDBService: NocoDBService
+  readonly middlewareClient: MiddlewareClient
+  readonly middlewareService: MiddlewareService
   private readonly tableName = 'PARTNER_SPONSOR'
 
   private extractFirstLogo(value: unknown): string | undefined {
@@ -38,8 +42,10 @@ export class PartnerSponsorService {
     return undefined
   }
 
-  constructor(nocoDBService?: NocoDBService) {
+  constructor(nocoDBService?: NocoDBService, middlewareClient?: MiddlewareClient) {
     this.nocoDBService = nocoDBService || new NocoDBService()
+    this.middlewareClient = middlewareClient || new MiddlewareClient()
+    this.middlewareService = new MiddlewareService(this.middlewareClient)
     this.nocoDBService.registerTable(this.tableName, 'm0syxl6tq6ufvgi')
   }
 
@@ -54,20 +60,19 @@ export class PartnerSponsorService {
     limit?: number,
     offset?: number,
   ): Promise<ListResponse<PartnerSponsor>> {
-    const whereClause = `(type,eq,${type})`
-
-    const response = await this.nocoDBService.getRecords<PartnerSponsor>(this.tableName, {
-      where: whereClause,
+    const adaptedResponse = await this.middlewareService.getList<PartnerSponsor>(
+      'partner-sponsors',
       limit,
       offset,
-    })
+      { type },
+    )
 
-    response.list = (response.list ?? []).map((item) => ({
+    adaptedResponse.list = (adaptedResponse.list ?? []).map((item) => ({
       ...item,
       displayUrl: this.extractFirstLogo(item.logo) ?? null,
     }))
 
-    return response
+    return adaptedResponse
   }
 
   /**
@@ -82,7 +87,7 @@ export class PartnerSponsorService {
    */
   async getPartnerById(id: string | number): Promise<PartnerSponsor | null> {
     try {
-      const record = await this.nocoDBService.getRecord<PartnerSponsor>(this.tableName, id)
+      const record = await this.middlewareService.getRecord<PartnerSponsor>('partner-sponsors', id)
       if (!record) return null
 
       return {
@@ -112,10 +117,9 @@ export class PartnerSponsorService {
         return this.extractFirstLogo((recordOrId as PartnerSponsor).logo)
       }
 
-      const record = await this.nocoDBService.getRecord<PartnerSponsor>(
-        this.tableName,
+      const record = await this.middlewareService.getRecord<PartnerSponsor>(
+        'partner-sponsors',
         recordOrId,
-        'logo',
       )
       return this.extractFirstLogo((record as PartnerSponsor | undefined)?.logo)
     } catch (error) {

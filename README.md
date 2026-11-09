@@ -15,7 +15,9 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-Die Lehrkraft stellt die Werte für `VITE_NOCODB_API_URL` und `VITE_NOCODB_API_KEY` bereit.
+Die Lehrkraft stellt die Middleware-URL (`VITE_MIDDLEWARE_API_URL`) bereit.
+Für die noch nicht migrierten Login- und Schreibfunktionen werden außerdem
+`VITE_NOCODB_API_URL` und `VITE_NOCODB_API_KEY` benötigt.
 Diese gehören in `.env.local` im Projektordner, nicht in `src`.
 Nach einer Änderung der Konfiguration muss der Entwicklungsserver neu gestartet werden.
 Die Browser-Adresse steht im Terminal, normalerweise `http://localhost:5173`.
@@ -24,6 +26,64 @@ Ohne erreichbares Backend kann die Oberfläche starten, aber keine Baumdaten lad
 **Wichtig:** Werte mit dem Präfix `VITE_` sind im Browser sichtbar. Keine administrativen
 API-Schlüssel oder echten Geheimnisse verwenden und lokale Konfiguration nicht committen.
 Der vorhandene Login ist kein geprüfter Sicherheitsbaustein für den Produktionseinsatz.
+
+## Middleware Einrichten
+
+Öffentliche Baumarten, Standorte und Partner/Sponsoren werden über den eigenen
+[MiddlewareService](src/services/middlewareService.ts) geladen. Er sendet weder
+NocoDB-Key noch die simulierten Browser-JWTs. Listen werden in Seiten mit maximal
+50 Einträgen geladen; größere Anfragen (etwa 100 Standorte für die Karte) werden
+zusammengesetzt. Ohne Limit werden alle Seiten geladen.
+
+In `.env.local` steht die Origin der Middleware, **ohne** `/api`:
+
+```dotenv
+VITE_MIDDLEWARE_API_URL=http://localhost:3000
+```
+
+Im separaten Repository `nocodb-middleware` benötigt die `.env` zusätzlich zur
+normalen NocoDB-Konfiguration (`NOCODB_API_URL`, `NOCODB_API_TOKEN`, `NOCODB_BASE_ID`)
+folgende Werte. Die Tabellen-IDs stammen aus dieser Anwendung und müssen zur
+konfigurierten NocoDB-Base passen:
+
+```dotenv
+WURZELPARTNER_PUBLIC_READ_ENABLED=true
+WURZELPARTNER_TREE_INFO_TABLE_ID=msiujkp7wh01rvt
+WURZELPARTNER_LOCATIONS_TABLE_ID=mgnjjdbdzie74ur
+WURZELPARTNER_PARTNER_SPONSORS_TABLE_ID=m0syxl6tq6ufvgi
+CORS_ORIGINS=http://localhost:5173
+```
+
+Nur aktivieren, wenn die Daten einschließlich Bilder/Logos öffentlich sein dürfen.
+Die Middleware erlaubt ausschließlich feste öffentliche Felder und keine freien
+Tabellennamen. Ohne Aktivierung liefern die öffentlichen Routen 404, bei fehlender
+Tabellenkonfiguration 503. Die globale Rate-Begrenzung gilt weiterhin; erfolgreiche
+Antworten werden 60 Sekunden gecacht.
+
+Die Middleware benötigt Node.js >=24.9.0. Dort `npm ci` und `npm run start:dev`
+ausführen, danach hier `npm run dev`. Falls Vite einen anderen Port auswählt,
+`CORS_ORIGINS` auf diese tatsächliche Origin setzen und die Middleware neu starten.
+
+Build-Hinweis: Falls nach einem wiederholten Backend-Build die JavaScript-Dateien
+in `dist` fehlen, kann der vorhandene inkrementelle Build-Cache die Ursache sein.
+Im Middleware-Projekt erzeugt `npm exec tsc -- --project tsconfig.build.json --incremental false`
+einen vollständigen Build ohne diesen Cache. Die Build-Konfiguration wurde in
+dieser Integration nicht verändert.
+
+```sh
+curl 'http://localhost:3000/api/public/tree-info?page=1&take=25'
+curl 'http://localhost:3000/api/public/partner-sponsors?type=Partner&page=1&take=25'
+```
+
+Diese Routen benötigen den aktuellen Middleware-Entwicklungsstand mit dem
+Public-Read-Modul; das frühere Release `v0.6.0` reicht nicht aus. Es wird kein
+NestJS-Serverpaket in das Browser-Bundle eingebaut.
+
+**Grenze dieser Phase:** Anmeldung, Registrierung, Profil und Schreiboperationen
+bleiben direkt an NocoDB angebunden. Auch die derzeit ungenutzte Hilfsmethode
+`getLocationsByTreeId` bleibt mangels öffentlichem Baumfilter beim bisherigen
+Zugriff. Der Browser-NocoDB-Key ist deshalb noch nicht vollständig entfernt;
+der simulierte Login kann keine geschützten Middleware-Endpunkte authentifizieren.
 
 ## Hier anfangen
 
@@ -48,8 +108,9 @@ TreeOverviewView / HomeView
   -> TreeInfoList             zeigt den aktuellen Zustand an
     -> useTreeList           lädt Daten und verwaltet die Seite
       -> TreeInfoService    kennt die fachlichen Datenzugriffe
-        -> NocoDBService   übersetzt die NocoDB-Anfragen und Feldnamen
-          -> ApiClient   sendet die HTTP-Anfrage
+            -> MiddlewareService   bündelt Seiten und übersetzt das Antwortformat
+               -> MiddlewareClient   sendet öffentliche HTTP-Anfragen
+                  -> NocoDB-Middleware   liest serverseitig aus NocoDB
     -> TreeInfoListItem      zeigt einen Baum über die Prop "tree" an
 ```
 
@@ -76,14 +137,14 @@ muss man die technischen Services nicht verändern.
 
 ## Wo ändere ich was?
 
-| Aufgabe                            | Ort                                                                                          |
-| ---------------------------------- | -------------------------------------------------------------------------------------------- |
-| Neue Seite verknüpfen              | [src/router/index.ts](src/router/index.ts)                                                   |
-| Inhalt einer Seite ändern          | [src/views](src/views)                                                                       |
-| Eine Baumkarte gestalten           | [src/components/treeinfo/TreeInfoListItem.vue](src/components/treeinfo/TreeInfoListItem.vue) |
-| Anzahl der Bäume pro Seite ändern  | `PAGE_SIZE` in [src/composables/useTreeList.ts](src/composables/useTreeList.ts)              |
-| Baumarten-Tabelle konfigurieren    | [src/config/nocodb.ts](src/config/nocodb.ts), mit der Lehrkraft                              |
-| Globale Farben und Theme verstehen | [docs/THEMING.md](docs/THEMING.md)                                                           |
+| Aufgabe                                     | Ort                                                                                          |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Neue Seite verknüpfen                       | [src/router/index.ts](src/router/index.ts)                                                   |
+| Inhalt einer Seite ändern                   | [src/views](src/views)                                                                       |
+| Eine Baumkarte gestalten                    | [src/components/treeinfo/TreeInfoListItem.vue](src/components/treeinfo/TreeInfoListItem.vue) |
+| Anzahl der Bäume pro Seite ändern           | `PAGE_SIZE` in [src/composables/useTreeList.ts](src/composables/useTreeList.ts)              |
+| Öffentliche Baumarten-Tabelle konfigurieren | `WURZELPARTNER_TREE_INFO_TABLE_ID` im Middleware-Backend, mit der Lehrkraft                  |
+| Globale Farben und Theme verstehen          | [docs/THEMING.md](docs/THEMING.md)                                                           |
 
 ## Änderungen prüfen
 

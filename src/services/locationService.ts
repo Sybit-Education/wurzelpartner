@@ -1,13 +1,19 @@
 import type { LatLng } from 'leaflet'
 import { NocoDBService, type ListResponse } from './nocodbService'
 import type { Location } from '@/models/location'
+import { MiddlewareClient } from './middlewareClient'
+import { MiddlewareService } from './middlewareService'
 
 export class LocationService {
   readonly nocoDBService: NocoDBService
+  readonly middlewareClient: MiddlewareClient
+  readonly middlewareService: MiddlewareService
   private readonly tableName = 'location'
 
-  constructor(nocoDBService?: NocoDBService) {
+  constructor(nocoDBService?: NocoDBService, middlewareClient?: MiddlewareClient) {
     this.nocoDBService = nocoDBService || new NocoDBService()
+    this.middlewareClient = middlewareClient || new MiddlewareClient()
+    this.middlewareService = new MiddlewareService(this.middlewareClient)
     // Register the table with the ID from the cURL request
     this.nocoDBService.registerTable(this.tableName, 'mgnjjdbdzie74ur')
   }
@@ -16,26 +22,26 @@ export class LocationService {
    * Holt alle Standorte mit optionaler Paginierung
    */
   async getAllLocations(limit?: number, offset?: number): Promise<ListResponse<Location>> {
-    const response = await this.nocoDBService.getRecords<Location>(this.tableName, {
+    const adaptedResponse = await this.middlewareService.getList<Location>(
+      'locations',
       limit,
       offset,
-      viewId: 'vwavvg6u07favtq4',
-    })
+    )
 
-    for (const loc of response.list) {
+    for (const loc of adaptedResponse.list) {
       if (loc.geoLocation) {
         loc.latLang = this.convertGeoPointToLatLngExpression(loc.geoLocation)
       }
     }
-    console.log('Fetched locations:', response)
-    return response
+
+    return adaptedResponse
   }
 
   /**
    * Holt einen Standort anhand seiner ID
    */
   async getLocationById(id: string | number): Promise<Location> {
-    const result = await this.nocoDBService.getRecord<Location>(this.tableName, id)
+    const result = await this.middlewareService.getRecord<Location>('locations', id)
     if (result.geoLocation) {
       result.latLang = this.convertGeoPointToLatLngExpression(result.geoLocation)
     }
@@ -80,7 +86,8 @@ export class LocationService {
    * Zählt die Anzahl der Standorte
    */
   async countLocations() {
-    return this.nocoDBService.countRecords(this.tableName)
+    const response = await this.middlewareService.getList<Location>('locations', 1)
+    return response.pageInfo.totalRows
   }
 
   /**

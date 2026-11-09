@@ -2,16 +2,22 @@ import { NocoDBService, type ListResponse } from './nocodbService'
 import type { TreeInfo } from '@/models/treeInfo'
 import type { Picture } from '@/models/picture'
 import { nocodbTables } from '@/config/nocodb'
+import { MiddlewareClient } from './middlewareClient'
+import { MiddlewareService } from './middlewareService'
 
 /**
  * Service für den Zugriff auf die TREE_INFO Tabelle
  */
 export class TreeInfoService {
   readonly nocoDBService: NocoDBService
+  readonly middlewareClient: MiddlewareClient
+  readonly middlewareService: MiddlewareService
   private readonly tableName = 'treeInfo'
 
-  constructor(nocoDBService?: NocoDBService) {
+  constructor(nocoDBService?: NocoDBService, middlewareClient?: MiddlewareClient) {
     this.nocoDBService = nocoDBService || new NocoDBService()
+    this.middlewareClient = middlewareClient || new MiddlewareClient()
+    this.middlewareService = new MiddlewareService(this.middlewareClient)
     this.nocoDBService.registerTable(this.tableName, nocodbTables.treeInfo)
   }
 
@@ -22,7 +28,7 @@ export class TreeInfoService {
    * @returns Liste von Baumeinträgen
    */
   async getAllTrees(limit?: number, offset?: number): Promise<ListResponse<TreeInfo>> {
-    return this.nocoDBService.getRecords<TreeInfo>(this.tableName, { limit, offset })
+    return this.middlewareService.getList<TreeInfo>('tree-info', limit, offset)
   }
 
   /**
@@ -31,7 +37,7 @@ export class TreeInfoService {
    * @returns Der angeforderte Baumeintrag
    */
   async getTreeById(id: string | number) {
-    return this.nocoDBService.getRecord<TreeInfo>(this.tableName, id)
+    return this.middlewareService.getRecord<TreeInfo>('tree-info', id)
   }
 
   /**
@@ -79,7 +85,8 @@ export class TreeInfoService {
    * @returns Die Anzahl der Baumeinträge
    */
   async countTrees() {
-    return this.nocoDBService.countRecords(this.tableName)
+    const response = await this.middlewareService.getList<TreeInfo>('tree-info', 1)
+    return response.pageInfo.totalRows
   }
 
   /**
@@ -89,13 +96,8 @@ export class TreeInfoService {
    */
   async getTreePictures(treeId: string | number): Promise<Picture[]> {
     try {
-      // Hier müsste die korrekte Tabellen-ID und Verknüpfungsfeld-ID eingetragen werden
-      const response = await this.nocoDBService.getLinkedRecords<Picture>(
-        this.tableName,
-        'pictures', // Verknüpfungsfeld-ID
-        treeId,
-      )
-      return response.list
+      const tree = await this.getTreeById(treeId)
+      return tree.picture ?? []
     } catch (error) {
       console.error(`Fehler beim Abrufen der Bilder für Baum ${treeId}:`, error)
       return []
