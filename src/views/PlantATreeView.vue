@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { LocationService } from '@/services/locationService'
@@ -159,7 +158,6 @@ async function createTree() {
   }
 }
 </script>
-
 
 <template>
   <div class="mx-auto max-w-2xl p-4">

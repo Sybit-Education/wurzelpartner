@@ -24,7 +24,6 @@ const formattedTotal = computed(() =>
 )
 </script>
 
-
 <template>
   <main
     class="min-h-[calc(100vh-8rem)] bg-transparent px-5 py-[clamp(2.5rem,7vw,6rem)] text-[#20342a] max-[35rem]:min-h-[calc(100vh-5rem)] max-[35rem]:px-4 max-[35rem]:py-9 dark:text-[#f4f7f4]"
@@ -55,7 +54,10 @@ const formattedTotal = computed(() =>
         <div
           class="grid grid-cols-[minmax(0,1fr)_minmax(8rem,0.65fr)] gap-5 max-[35rem]:grid-cols-1 max-[35rem]:gap-4"
         >
-          <label class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]" for="tree">
+          <label
+            class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]"
+            for="tree"
+          >
             <span class="text-[0.88rem] font-bold">Baumart</span>
             <select
               id="tree"
@@ -68,7 +70,10 @@ const formattedTotal = computed(() =>
             </select>
           </label>
 
-          <label class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]" for="quantity">
+          <label
+            class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]"
+            for="quantity"
+          >
             <span class="text-[0.88rem] font-bold">Anzahl der Bäume</span>
             <div
               class="flex min-h-13 w-full items-center justify-between rounded-[5px] border border-[#dce5d8] bg-[#fffefa] px-[0.85rem] focus-within:border-[#326b45] focus-within:outline-3 focus-within:outline-[#326b45]/25 focus-within:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:focus-within:border-[#b5ddb5] dark:focus-within:outline-[#b5ddb5]/25"

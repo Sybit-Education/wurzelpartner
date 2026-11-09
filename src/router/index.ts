@@ -80,7 +80,7 @@ const router = createRouter({
       name: 'login',
       component: LoginView,
       meta: {
-        hideLayout: true
+        hideLayout: true,
       },
     },
     // Sign up
@@ -89,7 +89,7 @@ const router = createRouter({
       name: 'signup',
       component: SignUpView,
       meta: {
-        hideLayout: true
+        hideLayout: true,
       },
     },
     // Donate tree
