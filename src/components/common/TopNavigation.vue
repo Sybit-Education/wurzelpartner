@@ -93,7 +93,7 @@ function handleLogout() {
           id="navbar-default"
         >
           <ul
-            class="font-medium flex flex-col md:p-0 mt-4 ml-8 md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-1"
+            class="font-medium flex flex-col md:p-05 mt-4 ml-4 md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-1"
           >
             <li>
               <router-link
@@ -129,6 +129,14 @@ function handleLogout() {
                 to="/contact"
                 class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >Kontakt</router-link
+              >
+            </li>
+           
+            <li>
+              <router-link
+                to="/privacy"
+                class="text-gray-700 underline hover:text-brand-700 dark:text-gray-300 dark:hover:text-green-400"
+                >Datenschutzerklärung</router-link
               >
             </li>
             <li>
