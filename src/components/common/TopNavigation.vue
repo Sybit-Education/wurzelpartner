@@ -144,7 +144,7 @@ function handleLogout() {
                 to="/TreeCare"
                 class="block px-10-text-gray-900 rounded-sm hover:bg-gray-100md:hover:bg-transparent md:border-0 md:hover:text-brand"
                 >Baumpflege
-              </router-link>6
+              </router-link>
             </li>
             <li>
               <router-link
@@ -154,7 +154,7 @@ function handleLogout() {
                 Spenden
               </router-link>
             </li>
-           
+
             <template v-if="!authStore.isAuthenticated">
               <li class="md:hidden mt-4">
                 <router-link
