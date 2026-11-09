@@ -35,6 +35,7 @@ const linkEntryStyle =
           Wurzelpartner
         </span>
       </router-link>
+      <!-- Right  -->
       <div class="flex items-center ml-auto xl:order-2">
         <!-- Theme Toggle -->
         <ThemeToggle class="mr-2" />
@@ -153,10 +154,6 @@ const linkEntryStyle =
           <!-- About -->
           <li>
             <router-link to="/about" :class="linkEntryStyle"> Über uns </router-link>
-          </li>
-          <!-- Contact -->
-          <li>
-            <router-link to="/contact" :class="linkEntryStyle"> Kontakt </router-link>
           </li>
           <!-- Privacy -->
           <li>

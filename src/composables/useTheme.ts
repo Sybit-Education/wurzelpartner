@@ -19,33 +19,11 @@ export function useTheme() {
     return modeLabelTable[mode.value]
   })
 
-  // Icon table
-  const modeIconTable: Record<ThemeMode, string> = {
-    light: 'sun',
-    dark: 'moon',
-    system: 'computer-desktop',
-  }
-
-  // Current icon
-  const modeIcon = computed(() => {
-    return modeIconTable[mode.value]
-  })
-
-  // Available modes
-  const availableModes: { value: ThemeMode; label: string }[] = [
-    { value: 'light', label: 'Hell' },
-    { value: 'dark', label: 'Dunkel' },
-    { value: 'system', label: 'System' },
-  ]
-
   return {
     // State
     mode,
     isDark,
     modeLabel,
-    modeIcon,
-    availableModes,
-
     // Actions
     toggle: themeStore.toggle,
     setMode: themeStore.setMode,

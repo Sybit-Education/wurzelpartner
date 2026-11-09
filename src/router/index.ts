@@ -2,18 +2,18 @@ import { useAuthStore } from '@/stores/authStore'
 import { createRouter, createWebHistory } from 'vue-router'
 // Routes
 import AboutView from '../views/AboutView.vue'
+import AcessibilityView from '../views/AcessibilityView.vue'
+import DonateMoneyView from '../views/DonateMoneyView.vue'
+import DonateTreeView from '../views/DonateTreeView.vue'
 import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
+import MapView from '../views/MapView.vue'
+import PartnerDetailView from '../views/PartnerDetailView.vue'
+import PlantATreeView from '../views/PlantATreeView.vue'
 import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
+import SignUpView from '../views/SignUpView.vue'
 import TreeDetails from '../views/TreeDetails.vue'
 import TreeOverviewView from '../views/TreeOverviewView.vue'
-import AcessibilityView from '../views/AcessibilityView.vue'
-import MapView from '../views/MapView.vue'
-import PlantATreeView from '../views/PlantATreeView.vue'
-import PartnerDetailView from '../views/PartnerDetailView.vue'
-import LoginView from '../views/LoginView.vue'
-import SignUpView from '../views/SignUpView.vue'
-import DonateTreeView from '../views/DonateTreeView.vue'
-import DonateMoneyView from '../views/DonateMoneyView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -108,33 +108,31 @@ const router = createRouter({
 })
 
 // Navigation Guard für geschützte Routen
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to) => {
   const authStore = useAuthStore()
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
 
-  // Wenn die Route keine Authentifizierung erfordert, weiter zur Route
+  // Route erfordert keine Authentifizierung -> weiter
   if (!requiresAuth) {
-    return next()
+    return true
   }
 
-  // Prüfen, ob der Benutzer authentifiziert ist
-  const isAuthenticated = authStore.isAuthenticated
+  // Bereits authentifiziert -> weiter
+  if (authStore.isAuthenticated) {
+    return true
+  }
 
-  // Wenn nicht authentifiziert, zur Login-Seite umleiten
-  if (!isAuthenticated) {
-    // Token überprüfen und ggf. erneuern
-    const tokenValid = await authStore.checkAndRefreshToken()
+  // Token prüfen und ggf. erneuern
+  const tokenValid = await authStore.checkAndRefreshToken()
 
-    if (!tokenValid) {
-      return next({
-        path: '/login',
-        query: { redirect: to.fullPath },
-      })
+  if (!tokenValid) {
+    return {
+      path: '/login',
+      query: { redirect: to.fullPath },
     }
   }
 
-  // Benutzer ist authentifiziert, weiter zur Route
-  next()
+  return true
 })
 
 // Export router
