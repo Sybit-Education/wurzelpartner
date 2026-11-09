@@ -38,6 +38,11 @@ const router = createRouter({
       name: 'Acessibility',
       component: () => import('../views/acessibilityView.vue'),
     },
+     {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/contactView.vue'),
+    },
     {
       path: '/map',
       name: 'map',
