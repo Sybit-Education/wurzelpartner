@@ -36,15 +36,12 @@
       </section>
 
       <section aria-labelledby="standard-heading">
-        <h2 id="standard-heading" class="mb-3 text-2xl font-semibold">
-          Maßstab und Vereinbarkeit
-        </h2>
+        <h2 id="standard-heading" class="mb-3 text-2xl font-semibold">Maßstab und Vereinbarkeit</h2>
         <p class="leading-7">
           Für die Bewertung digitaler Barrierefreiheit sind – je nach Anwendungsbereich – unter
-          anderem die Web Content Accessibility Guidelines (WCAG) 2.1, Konformitätsstufe AA, und
-          die europäische Norm EN 301 549 relevant. Ob und in welchem Umfang diese Anforderungen
-          auf die Website anzuwenden sind und eingehalten werden, ist noch nicht abschließend
-          bewertet.
+          anderem die Web Content Accessibility Guidelines (WCAG) 2.1, Konformitätsstufe AA, und die
+          europäische Norm EN 301 549 relevant. Ob und in welchem Umfang diese Anforderungen auf die
+          Website anzuwenden sind und eingehalten werden, ist noch nicht abschließend bewertet.
         </p>
       </section>
 
@@ -66,15 +63,13 @@
         <p class="leading-7">
           Wenn Ihnen eine Barriere auffällt oder Sie Informationen zu nicht barrierefreien Inhalten
           benötigen, wenden Sie sich bitte an die verantwortliche Stelle des Berufsschulzentrums
-          Radolfzell. Die zuständige Kontaktadresse für solche Rückmeldungen muss vom Betreiber
-          noch ergänzt werden.
+          Radolfzell. Die zuständige Kontaktadresse für solche Rückmeldungen muss vom Betreiber noch
+          ergänzt werden.
         </p>
       </section>
 
       <section aria-labelledby="enforcement-heading">
-        <h2 id="enforcement-heading" class="mb-3 text-2xl font-semibold">
-          Durchsetzungsverfahren
-        </h2>
+        <h2 id="enforcement-heading" class="mb-3 text-2xl font-semibold">Durchsetzungsverfahren</h2>
         <p class="leading-7">
           Ein zuständiges Durchsetzungs- oder Schlichtungsverfahren kann erst benannt werden, wenn
           geklärt ist, welche gesetzlichen Vorschriften für dieses Angebot gelten und wer dessen

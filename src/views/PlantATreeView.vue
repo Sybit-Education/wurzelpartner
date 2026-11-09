@@ -12,45 +12,35 @@
 
     <div>
       <label for="location" class="mb-1 block font-medium">Location</label>
-  <select
-    id="location"
-    name="location"
-    v-model="selectedLocation"
-    class="cursor-pointer w-full rounded border border-gray-300 px-3 py-2"
-  >
-    <option value="" disabled>-- Bitte wählen --</option>
-    <option
-      v-for="location in locations"
-      :key="location.id ?? location.name"
-      :value="location"
-    >
-      {{ location.name }}
-    </option>
-  </select>
+      <select
+        id="location"
+        name="location"
+        v-model="selectedLocation"
+        class="cursor-pointer w-full rounded border border-gray-300 px-3 py-2"
+      >
+        <option value="" disabled>-- Bitte wählen --</option>
+        <option v-for="location in locations" :key="location.id ?? location.name" :value="location">
+          {{ location.name }}
+        </option>
+      </select>
+    </div>
 
-</div>
-
-<div>
+    <div>
       <label for="tree" class="mb-1 block font-medium">Baumart</label>
-  <select
-    id="tree"
-    name="tree"
-    v-model="selectedTree"
-    class="cursor-pointer w-full rounded border border-gray-300 px-3 py-2"
-  >
-    <option value="" disabled>-- Bitte wählen --</option>
-    <option
-      v-for="tree in trees"
-      :key="tree.id ?? tree.name"
-      :value="tree"
-    >
-      {{ tree.name }}
-    </option>
-  </select>
+      <select
+        id="tree"
+        name="tree"
+        v-model="selectedTree"
+        class="cursor-pointer w-full rounded border border-gray-300 px-3 py-2"
+      >
+        <option value="" disabled>-- Bitte wählen --</option>
+        <option v-for="tree in trees" :key="tree.id ?? tree.name" :value="tree">
+          {{ tree.name }}
+        </option>
+      </select>
+    </div>
 
-</div>
-
-<div>
+    <div>
       <label for="amount" class="mb-1 block font-medium">Anzahl der Bäume</label>
       <input
         id="amount"
@@ -61,7 +51,7 @@
       />
     </div>
 
-<div class="flex items-center gap-2 pt-2">
+    <div class="flex items-center gap-2 pt-2">
       <button
         type="button"
         @click="createTree"
@@ -70,7 +60,7 @@
         Speichern
       </button>
     </div>
-</div>
+  </div>
 </template>
 
 <style>
@@ -164,7 +154,6 @@ async function loadTrees() {
   }
 }
 
-
 onMounted(() => {
   loadLocation()
   loadTrees()
@@ -243,5 +232,4 @@ async function createTree() {
     submitting.value = false
   }
 }
-
 </script>
