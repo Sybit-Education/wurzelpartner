@@ -38,10 +38,12 @@ const router = createRouter({
       name: 'privacy',
       component: () => import('../views/PrivacyPolicyView.vue'),
     },
-   {path: '/accesibility',
+    {
+      path: '/accesibility',
       name: 'Acessibility',
-      component: () => import('../views/acessibilityView.vue')},
-   {
+      component: () => import('../views/acessibilityView.vue'),
+    },
+    {
       path: '/map',
       name: 'map',
       component: () => import('../views/MapView.vue'),

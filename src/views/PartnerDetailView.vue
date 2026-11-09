@@ -43,10 +43,14 @@ onMounted(fetchPartner)
 
     <div class="mt-6">
       <div v-if="isLoading" class="text-sm">Partner wird geladen …</div>
-      <div v-else-if="hasError" class="text-sm text-red-500">Partner konnte nicht geladen werden.</div>
+      <div v-else-if="hasError" class="text-sm text-red-500">
+        Partner konnte nicht geladen werden.
+      </div>
       <div v-else-if="!partner" class="text-sm">Kein Partner gefunden.</div>
       <div v-else class="grid gap-8 md:grid-cols-[260px_1fr] md:items-start">
-        <div class="flex h-52 w-full items-center justify-center rounded-2xl bg-black/5 p-6 backdrop-blur-sm dark:bg-white/5">
+        <div
+          class="flex h-52 w-full items-center justify-center rounded-2xl bg-black/5 p-6 backdrop-blur-sm dark:bg-white/5"
+        >
           <img
             v-if="partner.displayUrl"
             :src="partner.displayUrl"
@@ -58,11 +62,16 @@ onMounted(fetchPartner)
 
         <div class="space-y-5">
           <div>
-            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Partner</p>
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+              Partner
+            </p>
             <h1 class="text-3xl font-semibold md:text-4xl">{{ partner.name }}</h1>
           </div>
 
-          <p v-if="partner.description" class="text-base leading-relaxed text-slate-700 dark:text-slate-200">
+          <p
+            v-if="partner.description"
+            class="text-base leading-relaxed text-slate-700 dark:text-slate-200"
+          >
             {{ partner.description }}
           </p>
 
