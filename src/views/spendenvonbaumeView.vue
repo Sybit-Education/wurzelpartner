@@ -311,32 +311,32 @@ const formattedTotal = computed(() =>
 }
 
 :global(.dark) .donation-page {
-  --donation-ink: #e8eee8;
-  --donation-muted: #b1beb2;
-  --donation-green: #9ac99c;
-  --donation-border: #3a4b3e;
-  --donation-paper: #1c2920;
-  --donation-surface: #26372a;
+  --donation-ink: #f4f7f4;
+  --donation-muted: #c6d1c7;
+  --donation-green: #b5ddb5;
+  --donation-border: #303d33;
+  --donation-paper: #141c16;
+  --donation-surface: #1c281f;
 
-  background-color: #131d17;
+  background-color: #0b110d;
   background-image:
     linear-gradient(135deg, rgb(43 67 48 / 25%), transparent 58%),
     repeating-linear-gradient(135deg, transparent 0 34px, rgb(170 206 166 / 3%) 34px 35px);
 }
 
 :global(.dark) .purchase-notice {
-  border-color: #65552d;
-  background: #332d1c;
-  color: #f0dfab;
+  border-color: #53451f;
+  background: #292313;
+  color: #fff1c8;
 }
 
 :global(.dark) .purchase-notice p {
-  color: #ddcca0;
+  color: #efdfb2;
 }
 
 :global(.dark) .purchase-button {
-  background: #344336;
-  color: #aeb9af;
+  background: #253228;
+  color: #e0e9df;
 }
 
 @media (max-width: 35rem) {
