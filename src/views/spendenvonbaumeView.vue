@@ -105,10 +105,7 @@ const formattedTotal = computed(() =>
   min-height: calc(100vh - 8rem);
   padding: clamp(2.5rem, 7vw, 6rem) 1.25rem;
   color: var(--donation-ink);
-  background-color: #f1f5ec;
-  background-image:
-    linear-gradient(135deg, rgb(255 255 255 / 55%), transparent 58%),
-    repeating-linear-gradient(135deg, transparent 0 34px, rgb(50 107 69 / 3%) 34px 35px);
+  background: transparent;
 }
 
 .donation-layout {
@@ -324,11 +321,6 @@ const formattedTotal = computed(() =>
   --donation-border: #303d33;
   --donation-paper: #141c16;
   --donation-surface: #1c281f;
-
-  background-color: #0b110d;
-  background-image:
-    linear-gradient(135deg, rgb(43 67 48 / 25%), transparent 58%),
-    repeating-linear-gradient(135deg, transparent 0 34px, rgb(170 206 166 / 3%) 34px 35px);
 }
 
 .donation-page--dark .purchase-notice {
