@@ -12,6 +12,11 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/plantings',
+      name: 'latest-plantings',
+      component: () => import('@/views/LatestTreePlanted.vue'),
+    },
+    {
       path: '/trees',
       name: 'trees',
       // route level code-splitting

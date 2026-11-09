@@ -7,5 +7,5 @@ export interface PlantedTree {
   users: UserInfo[]
   location: Location
   amount: number
-  created_at: Date
+  created_at: Date | string
 }

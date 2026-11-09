@@ -82,6 +82,7 @@ import { TreeInfoService } from '@/services/treeInfoService'
 import { TreePlantingService } from '@/services/treePlantingService'
 import type { PlantedTree } from '@/models/planted_tree'
 import { useAuthStore } from '@/stores/authStore'
+import { useRouter } from 'vue-router'
 
 const treeInfoService = new TreeInfoService()
 const trees = ref<TreeInfo[]>([])
@@ -104,6 +105,7 @@ const success = ref<string | null>(null)
 
 const treePlantingService = new TreePlantingService()
 const auth = useAuthStore()
+const router = useRouter()
 
 // Paginierung
 const currentPage = ref(1)
@@ -222,6 +224,7 @@ async function createTree() {
       amount.value = 1
       // Option: neu laden der Liste
       await loadTrees()
+      await router.push({ name: 'latest-plantings' })
     } else {
       error.value = 'Beim Speichern ist ein Fehler aufgetreten.'
     }
