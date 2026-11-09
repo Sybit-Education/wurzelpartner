@@ -135,7 +135,7 @@ function handleLogout() {
                 class="block py-2 px-3 text-white bg-brand-700 rounded-sm xl:bg-transparent xl:text-brand-700 xl:p-0 dark:text-white xl:dark:text-green-500"
                 aria-current="page"
                 >Home
-                </router-link>
+              </router-link>
             </li>
             <li>
               <router-link

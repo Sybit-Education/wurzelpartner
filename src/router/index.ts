@@ -34,9 +34,24 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
+      path: '/privacy',
+      name: 'privacy',
+      component: () => import('../views/PrivacyPolicyView.vue'),
+    },
+    {
+      path: '/accesibility',
+      name: 'Acessibility',
+      component: () => import('../views/acessibilityView.vue'),
+    },
+    {
       path: '/map',
       name: 'map',
       component: () => import('../views/MapView.vue'),
+    },
+    {
+      path: '/donation',
+      name: 'donation',
+      component: () => import('../views/donationMenu.vue'),
     },
     {
       path: '/createtree',
@@ -64,6 +79,11 @@ const router = createRouter({
       meta: {
         //hideLayout: true
       },
+    },
+    {
+      path: '/spendenvonbaume',
+      name: 'spendenvonbaume',
+      component: () => import('../views/spendenvonbaumeView.vue'),
     },
   ],
 })
