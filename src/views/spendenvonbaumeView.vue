@@ -1,8 +1,10 @@
 <template>
-  <main class="donation-page">
+  <main class="donation-page" :class="{ 'donation-page--dark': isDark }">
     <div class="donation-layout">
       <header class="donation-heading">
-        <p class="donation-eyebrow"><span aria-hidden="true"></span> Wurzelpartner · Baumpatenschaft</p>
+        <p class="donation-eyebrow">
+          <span aria-hidden="true"></span> Wurzelpartner · Baumpatenschaft
+        </p>
         <h1>Ein Baum für morgen.</h1>
         <p class="donation-intro">
           Wähle eine Baumart und die gewünschte Anzahl. Dein Beitrag wird direkt berechnet.
@@ -30,7 +32,7 @@
                 min="1"
                 step="1"
                 inputmode="numeric"
-              >
+              />
               <span>Bäume</span>
             </div>
           </label>
@@ -39,7 +41,9 @@
         <div class="donation-total" aria-live="polite">
           <div>
             <p class="total-label">Dein Beitrag</p>
-            <p class="total-detail">{{ selectedTreeName }} · {{ treeCount }} {{ treeCount === 1 ? 'Baum' : 'Bäume' }}</p>
+            <p class="total-detail">
+              {{ selectedTreeName }} · {{ treeCount }} {{ treeCount === 1 ? 'Baum' : 'Bäume' }}
+            </p>
           </div>
           <strong>{{ formattedTotal }}</strong>
         </div>
@@ -62,6 +66,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useTheme } from '@/composables/useTheme'
+
+const { isDark } = useTheme()
 
 const treeTypes = [
   { name: 'Birke', price: 25 },
@@ -69,7 +76,7 @@ const treeTypes = [
   { name: 'Buche', price: 35 },
 ]
 
-const selectedTreePrice = ref(treeTypes[0].price)
+const selectedTreePrice = ref(treeTypes[0]!.price)
 const quantity = ref<number | ''>(1)
 
 const treeCount = computed(() => Math.max(1, Math.floor(Number(quantity.value) || 1)))
@@ -310,7 +317,7 @@ const formattedTotal = computed(() =>
   cursor: not-allowed;
 }
 
-:global(.dark) .donation-page {
+.donation-page--dark {
   --donation-ink: #f4f7f4;
   --donation-muted: #c6d1c7;
   --donation-green: #b5ddb5;
@@ -324,17 +331,17 @@ const formattedTotal = computed(() =>
     repeating-linear-gradient(135deg, transparent 0 34px, rgb(170 206 166 / 3%) 34px 35px);
 }
 
-:global(.dark) .purchase-notice {
+.donation-page--dark .purchase-notice {
   border-color: #53451f;
   background: #292313;
   color: #fff1c8;
 }
 
-:global(.dark) .purchase-notice p {
+.donation-page--dark .purchase-notice p {
   color: #efdfb2;
 }
 
-:global(.dark) .purchase-button {
+.donation-page--dark .purchase-button {
   background: #253228;
   color: #e0e9df;
 }
@@ -356,5 +363,3 @@ const formattedTotal = computed(() =>
   }
 }
 </style>
-
-
