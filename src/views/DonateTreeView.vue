@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+
+const treeTypes = [
+  { name: 'Birke', price: 25 },
+  { name: 'Pappel', price: 30 },
+  { name: 'Buche', price: 35 },
+]
+
+const selectedTreePrice = ref(treeTypes[0].price)
+const quantity = ref<number | ''>(1)
+
+const treeCount = computed(() => Math.max(1, Math.floor(Number(quantity.value) || 1)))
+const selectedTreeName = computed(
+  () => treeTypes.find((tree) => tree.price === selectedTreePrice.value)?.name ?? '',
+)
+const total = computed(() => selectedTreePrice.value * treeCount.value)
+
+const formattedTotal = computed(() =>
+  new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(total.value),
+)
+</script>
+
+
 <template>
   <main
     class="min-h-[calc(100vh-8rem)] bg-transparent px-5 py-[clamp(2.5rem,7vw,6rem)] text-[#20342a] max-[35rem]:min-h-[calc(100vh-5rem)] max-[35rem]:px-4 max-[35rem]:py-9 dark:text-[#f4f7f4]"
@@ -112,29 +139,3 @@
     </div>
   </main>
 </template>
-
-<script setup lang="ts">
-import { computed, ref } from 'vue'
-
-const treeTypes = [
-  { name: 'Birke', price: 25 },
-  { name: 'Pappel', price: 30 },
-  { name: 'Buche', price: 35 },
-]
-
-const selectedTreePrice = ref(treeTypes[0].price)
-const quantity = ref<number | ''>(1)
-
-const treeCount = computed(() => Math.max(1, Math.floor(Number(quantity.value) || 1)))
-const selectedTreeName = computed(
-  () => treeTypes.find((tree) => tree.price === selectedTreePrice.value)?.name ?? '',
-)
-const total = computed(() => selectedTreePrice.value * treeCount.value)
-
-const formattedTotal = computed(() =>
-  new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(total.value),
-)
-</script>

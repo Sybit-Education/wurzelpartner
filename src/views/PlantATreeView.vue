@@ -1,77 +1,3 @@
-<template>
-  <div class="mx-auto max-w-2xl p-4">
-    <div>
-      <label for="message" class="mb-1 block font-medium">Nachricht</label>
-      <input
-        id="message"
-        v-model="message"
-        type="text"
-        class="w-full rounded border border-gray-300 px-3 py-2"
-      />
-    </div>
-
-    <div>
-      <label for="location" class="mb-1 block font-medium">Location</label>
-      <select
-        id="location"
-        name="location"
-        v-model="selectedLocation"
-        class="cursor-pointer w-full rounded border border-gray-300 px-3 py-2"
-      >
-        <option value="" disabled>-- Bitte wählen --</option>
-        <option v-for="location in locations" :key="location.id ?? location.name" :value="location">
-          {{ location.name }}
-        </option>
-      </select>
-    </div>
-
-    <div>
-      <label for="tree" class="mb-1 block font-medium">Baumart</label>
-      <select
-        id="tree"
-        name="tree"
-        v-model="selectedTree"
-        class="cursor-pointer w-full rounded border border-gray-300 px-3 py-2"
-      >
-        <option value="" disabled>-- Bitte wählen --</option>
-        <option v-for="tree in trees" :key="tree.id ?? tree.name" :value="tree">
-          {{ tree.name }}
-        </option>
-      </select>
-    </div>
-
-    <div>
-      <label for="amount" class="mb-1 block font-medium">Anzahl der Bäume</label>
-      <input
-        id="amount"
-        v-model.number="amount"
-        type="number"
-        min="1"
-        class="w-full rounded border border-gray-300 px-3 py-2"
-      />
-    </div>
-
-    <div class="flex items-center gap-2 pt-2">
-      <button
-        type="button"
-        @click="createTree"
-        class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
-      >
-        Speichern
-      </button>
-    </div>
-  </div>
-</template>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
@@ -233,3 +159,79 @@ async function createTree() {
   }
 }
 </script>
+
+
+<template>
+  <div class="mx-auto max-w-2xl p-4">
+    <div>
+      <label for="message" class="mb-1 block font-medium">Nachricht</label>
+      <input
+        id="message"
+        v-model="message"
+        type="text"
+        class="w-full rounded border border-gray-300 px-3 py-2"
+      />
+    </div>
+
+    <div>
+      <label for="location" class="mb-1 block font-medium">Location</label>
+      <select
+        id="location"
+        name="location"
+        v-model="selectedLocation"
+        class="cursor-pointer w-full rounded border border-gray-300 px-3 py-2"
+      >
+        <option value="" disabled>-- Bitte wählen --</option>
+        <option v-for="location in locations" :key="location.id ?? location.name" :value="location">
+          {{ location.name }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label for="tree" class="mb-1 block font-medium">Baumart</label>
+      <select
+        id="tree"
+        name="tree"
+        v-model="selectedTree"
+        class="cursor-pointer w-full rounded border border-gray-300 px-3 py-2"
+      >
+        <option value="" disabled>-- Bitte wählen --</option>
+        <option v-for="tree in trees" :key="tree.id ?? tree.name" :value="tree">
+          {{ tree.name }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label for="amount" class="mb-1 block font-medium">Anzahl der Bäume</label>
+      <input
+        id="amount"
+        v-model.number="amount"
+        type="number"
+        min="1"
+        class="w-full rounded border border-gray-300 px-3 py-2"
+      />
+    </div>
+
+    <div class="flex items-center gap-2 pt-2">
+      <button
+        type="button"
+        @click="createTree"
+        class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+      >
+        Speichern
+      </button>
+    </div>
+  </div>
+</template>
+
+<style>
+@media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
+</style>
