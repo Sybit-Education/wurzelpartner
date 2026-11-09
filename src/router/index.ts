@@ -21,63 +21,63 @@ const router = createRouter({
     // Home
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: HomeView,
     },
     // Trees
     {
       path: '/trees',
-      name: 'Trees',
+      name: 'trees',
       component: TreeOverviewView,
     },
     // Tree details
     {
       path: '/tree/:id',
-      name: 'Tree details',
+      name: 'tree-details',
       component: TreeDetails,
       props: true,
     },
     // About
     {
       path: '/about',
-      name: 'About us',
+      name: 'about-us',
       component: AboutView,
     },
     // Data-protection
     {
       path: '/privacy',
-      name: 'Privacy',
+      name: 'privacy',
       component: PrivacyPolicyView,
     },
     // Status about acessibility
     {
       path: '/accesibility',
-      name: 'Acessibility',
+      name: 'acessibility',
       component: AcessibilityView,
     },
     // Map
     {
       path: '/map',
-      name: 'Map',
+      name: 'map',
       component: MapView,
     },
     // Create a tree
     {
       path: '/createtree',
-      name: 'Create a tree',
+      name: 'create-a-tree',
       component: PlantATreeView,
     },
     // Partner details
     {
       path: '/partner/:id',
-      name: 'Partner details',
+      name: 'partner-details',
       component: PartnerDetailView,
       props: true,
     },
     // Login
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: LoginView,
       meta: {
         hideLayout: true
@@ -86,7 +86,7 @@ const router = createRouter({
     // Sign up
     {
       path: '/signup',
-      name: 'Signup',
+      name: 'signup',
       component: SignUpView,
       meta: {
         hideLayout: true
@@ -95,13 +95,13 @@ const router = createRouter({
     // Donate tree
     {
       path: '/spendenvonbaume',
-      name: 'Donate tree',
+      name: 'donate-tree',
       component: DonateTreeView,
     },
     // Donate money
     {
       path: '/donation',
-      name: 'Donate money',
+      name: 'donate-money',
       component: DonateMoneyView,
     },
   ],
