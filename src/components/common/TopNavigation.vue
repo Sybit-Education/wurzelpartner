@@ -140,7 +140,7 @@ function handleLogout() {
             </li>
             <li>
               <router-link
-                to="/accesibility"
+                to="/TreeCare"
                 class="block px-10-text-gray-900 rounded-sm hover:bg-gray-100md:hover:bg-transparent md:border-0 md:hover:text-brand"
                 >Baumpflege
               </router-link>
