@@ -4,8 +4,7 @@
     <p class="mb-6 text-sm text-gray-600 dark:text-gray-400">Stand: 2. November 2026</p>
 
     <aside
-      class="mb-8 rounded-lg border border-amber-400 bg-amber-50 p-4 text-amber-950 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-100"
-      aria-label="Hinweis zur Fertigstellung"
+      class="mb-8 rounded-lg border border-amber-400 bg-amber-50 p-4 text-amber-950 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-100
     >
       <p class="font-semibold">Vor der Veröffentlichung vervollständigen</p>
       <p class="mt-1">

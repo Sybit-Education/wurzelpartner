@@ -131,13 +131,7 @@ function handleLogout() {
                 >Kontakt</router-link
               >
             </li>
-            <li>
-              <router-link
-                to="/accesibility"
-                class="block px-10-text-gray-900 rounded-sm hover:bg-gray-100md:hover:bg-transparent md:border-0 md:hover:text-brand"
-                >Barrierefreiheit
-              </router-link>
-            </li>
+           
             <li>
               <router-link
                 to="/privacy"
