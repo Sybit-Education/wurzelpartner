@@ -1,30 +1,52 @@
 <template>
-  <main class="donation-page" :class="{ 'donation-page--dark': isDark }">
-    <div class="donation-layout">
-      <header class="donation-heading">
-        <p class="donation-eyebrow">
+  <main
+    class="min-h-[calc(100vh-8rem)] bg-transparent px-5 py-[clamp(2.5rem,7vw,6rem)] text-[#20342a] max-[35rem]:min-h-[calc(100vh-5rem)] max-[35rem]:px-4 max-[35rem]:py-9 dark:text-[#f4f7f4]"
+    :class="{ dark: isDark }"
+  >
+    <div class="mx-auto w-full max-w-[42rem]">
+      <header class="mb-7">
+        <p
+          class="!mb-[0.8rem] !mt-0 flex items-center gap-[0.55rem] !text-[0.78rem] !font-bold uppercase !tracking-[0.08em] !text-[#326b45] dark:!text-[#b5ddb5]"
+        >
           Wurzelpartner · Baumpatenschaft
         </p>
-        <h1>Ein Baum für morgen.</h1>
-        <p class="donation-intro">
+        <h1
+          class="!m-0 !text-[clamp(2rem,5vw,2.8rem)] !font-bold !leading-[1.1] !text-[#20342a] dark:!text-[#f4f7f4]"
+        >
+          Ein Baum für morgen.
+        </h1>
+        <p
+          class="!mb-0 !mt-[0.85rem] !max-w-[34rem] !text-base !leading-[1.6] !text-[#637267] dark:!text-[#c6d1c7]"
+        >
           Wähle eine Baumart und die gewünschte Anzahl. Dein Beitrag wird direkt berechnet.
         </p>
       </header>
 
-      <section class="donation-panel" label="Baumspende berechnen">
-        <div class="donation-fields">
-          <label class="donation-field" for="tree">
-            <span class="field-label">Baumart</span>
-            <select id="tree" v-model.number="selectedTreePrice">
+      <section
+        class="rounded-lg border border-[#dce5d8] bg-[#fffefa] p-[clamp(1.25rem,4vw,2rem)] shadow-[0_18px_44px_rgb(34_58_39/8%)] dark:border-[#303d33] dark:bg-[#141c16]"
+        label="Baumspende berechnen"
+      >
+        <div
+          class="grid grid-cols-[minmax(0,1fr)_minmax(8rem,0.65fr)] gap-5 max-[35rem]:grid-cols-1 max-[35rem]:gap-4"
+        >
+          <label class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]" for="tree">
+            <span class="text-[0.88rem] font-bold">Baumart</span>
+            <select
+              id="tree"
+              v-model.number="selectedTreePrice"
+              class="min-h-[3.25rem] w-full cursor-pointer rounded-[5px] border border-[#dce5d8] bg-[#fffefa] py-0 pr-10 pl-[0.9rem] font-[inherit] text-[#20342a] focus-visible:border-[#326b45] focus-visible:outline-3 focus-visible:outline-[#326b45]/25 focus-visible:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:text-[#f4f7f4] dark:focus-visible:border-[#b5ddb5] dark:focus-visible:outline-[#b5ddb5]/25"
+            >
               <option v-for="tree in treeTypes" :key="tree.name" :value="tree.price">
                 {{ tree.name }} · {{ tree.price }} €
               </option>
             </select>
           </label>
 
-          <label class="donation-field" for="quantity">
-            <span class="field-label">Anzahl der Bäume</span>
-            <div class="quantity-control">
+          <label class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]" for="quantity">
+            <span class="text-[0.88rem] font-bold">Anzahl der Bäume</span>
+            <div
+              class="flex min-h-[3.25rem] w-full items-center justify-between rounded-[5px] border border-[#dce5d8] bg-[#fffefa] px-[0.85rem] focus-within:border-[#326b45] focus-within:outline-3 focus-within:outline-[#326b45]/25 focus-within:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:focus-within:border-[#b5ddb5] dark:focus-within:outline-[#b5ddb5]/25"
+            >
               <input
                 id="quantity"
                 v-model.number="quantity"
@@ -32,31 +54,59 @@
                 min="1"
                 step="1"
                 inputmode="numeric"
+                class="w-[4.5rem] min-w-0 border-0 bg-transparent text-[1.1rem] font-bold text-[#20342a] outline-none dark:text-[#f4f7f4]"
               />
-              <span>Bäume</span>
+              <span class="text-[0.85rem] text-[#637267] dark:text-[#c6d1c7]">Bäume</span>
             </div>
           </label>
         </div>
 
-        <div class="donation-total" aria-live="polite">
+        <div
+          class="mt-7 flex items-center justify-between gap-4 border-l-4 border-[#d49b36] bg-[#f3f7ef] px-[1.2rem] py-[1.1rem] max-[35rem]:items-start max-[35rem]:p-4 dark:bg-[#1c281f]"
+          aria-live="polite"
+        >
           <div>
-            <p class="total-label">Dein Beitrag</p>
-            <p class="total-detail">
+            <p class="!m-0 !text-[0.9rem] !font-bold !text-[#20342a] dark:!text-[#f4f7f4]">
+              Dein Beitrag
+            </p>
+            <p class="!mb-0 !mt-[0.2rem] !text-[0.8rem] !text-[#637267] dark:!text-[#c6d1c7]">
               {{ selectedTreeName }} · {{ treeCount }} {{ treeCount === 1 ? 'Baum' : 'Bäume' }}
             </p>
           </div>
-          <strong>{{ formattedTotal }}</strong>
+          <strong
+            class="whitespace-nowrap text-[clamp(1.5rem,5vw,2rem)] tabular-nums text-[#326b45] dark:text-[#b5ddb5]"
+          >
+            {{ formattedTotal }}
+          </strong>
         </div>
 
-        <div id="purchase-note" class="purchase-notice" role="status">
-          <span class="notice-mark" aria-hidden="true">i</span>
+        <div
+          id="purchase-note"
+          class="mt-5 flex items-start gap-3 rounded-[5px] border border-[#ead8a8] bg-[#fff9e9] px-4 py-[0.9rem] text-[#59491e] dark:border-[#53451f] dark:bg-[#292313] dark:text-[#fff1c8]"
+          role="status"
+        >
+          <span
+            class="grid h-[1.35rem] w-[1.35rem] flex-[0_0_1.35rem] place-items-center rounded-full bg-[#eed58f] font-[Georgia,serif] text-[0.85rem] font-bold text-[#59491e]"
+            aria-hidden="true"
+          >
+            i
+          </span>
           <div>
-            <strong>Kaufprozess noch nicht verfügbar</strong>
-            <p>Der Kaufprozess muss noch implementiert werden.</p>
+            <strong class="block text-[0.87rem]">Kaufprozess noch nicht verfügbar</strong>
+            <p
+              class="!mb-0 !mt-[0.18rem] !text-[0.82rem] !leading-[1.45] !text-[#6b5b32] dark:!text-[#efdfb2]"
+            >
+              Der Kaufprozess muss noch implementiert werden.
+            </p>
           </div>
         </div>
 
-        <button class="purchase-button" type="button" disabled aria-describedby="purchase-note">
+        <button
+          class="mt-4 min-h-12 w-full cursor-not-allowed rounded-[5px] border-0 bg-[#dce5d8] font-[inherit] font-bold text-[#536254] dark:bg-[#253228] dark:text-[#e0e9df]"
+          type="button"
+          disabled
+          aria-describedby="purchase-note"
+        >
           Jetzt kaufen
         </button>
       </section>
@@ -92,266 +142,3 @@ const formattedTotal = computed(() =>
   }).format(total.value),
 )
 </script>
-
-<style scoped>
-.donation-page {
-  --donation-ink: #20342a;
-  --donation-muted: #637267;
-  --donation-green: #326b45;
-  --donation-border: #dce5d8;
-  --donation-paper: #fffefa;
-  --donation-surface: #f3f7ef;
-
-  min-height: calc(100vh - 8rem);
-  padding: clamp(2.5rem, 7vw, 6rem) 1.25rem;
-  color: var(--donation-ink);
-  background: transparent;
-}
-
-.donation-layout {
-  width: min(100%, 42rem);
-  margin: 0 auto;
-}
-
-.donation-heading {
-  margin-bottom: 1.75rem;
-}
-
-.donation-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0 0 0.8rem;
-  color: var(--donation-green);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.donation-eyebrow span {
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 2px;
-  background: #d49b36;
-}
-
-.donation-heading h1 {
-  margin: 0;
-  color: var(--donation-ink);
-  font-size: clamp(2rem, 5vw, 2.8rem);
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.donation-intro {
-  max-width: 34rem;
-  margin: 0.85rem 0 0;
-  color: var(--donation-muted);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.donation-panel {
-  padding: clamp(1.25rem, 4vw, 2rem);
-  border: 1px solid var(--donation-border);
-  border-radius: 8px;
-  background: var(--donation-paper);
-  box-shadow: 0 18px 44px rgb(34 58 39 / 8%);
-}
-
-.donation-fields {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.65fr);
-  gap: 1.25rem;
-}
-
-.donation-field {
-  display: grid;
-  align-content: start;
-  gap: 0.55rem;
-  color: var(--donation-ink);
-}
-
-.field-label {
-  font-size: 0.88rem;
-  font-weight: 700;
-}
-
-.donation-field select,
-.quantity-control {
-  width: 100%;
-  min-height: 3.25rem;
-  border: 1px solid var(--donation-border);
-  border-radius: 5px;
-  background-color: var(--donation-paper);
-  color: var(--donation-ink);
-  font: inherit;
-}
-
-.donation-field select {
-  padding: 0 2.5rem 0 0.9rem;
-  cursor: pointer;
-}
-
-.quantity-control {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 0.85rem;
-}
-
-.quantity-control input {
-  width: 4.5rem;
-  min-width: 0;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: var(--donation-ink);
-  font: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.quantity-control span {
-  color: var(--donation-muted);
-  font-size: 0.85rem;
-}
-
-.donation-field select:focus-visible,
-.quantity-control:focus-within {
-  outline: 3px solid rgb(50 107 69 / 25%);
-  outline-offset: 2px;
-  border-color: var(--donation-green);
-}
-
-.donation-total {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 1.75rem;
-  padding: 1.1rem 1.2rem;
-  border-left: 4px solid #d49b36;
-  background: var(--donation-surface);
-}
-
-.total-label,
-.total-detail {
-  margin: 0;
-}
-
-.total-label {
-  color: var(--donation-ink);
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.total-detail {
-  margin-top: 0.2rem;
-  color: var(--donation-muted);
-  font-size: 0.8rem;
-}
-
-.donation-total strong {
-  color: var(--donation-green);
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.purchase-notice {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
-  padding: 0.9rem 1rem;
-  border: 1px solid #ead8a8;
-  border-radius: 5px;
-  background: #fff9e9;
-  color: #59491e;
-}
-
-.notice-mark {
-  display: grid;
-  flex: 0 0 1.35rem;
-  width: 1.35rem;
-  height: 1.35rem;
-  place-items: center;
-  border-radius: 50%;
-  background: #eed58f;
-  color: #59491e;
-  font-family: Georgia, serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.purchase-notice strong {
-  display: block;
-  font-size: 0.87rem;
-}
-
-.purchase-notice p {
-  margin: 0.18rem 0 0;
-  color: #6b5b32;
-  font-size: 0.82rem;
-  line-height: 1.45;
-}
-
-.purchase-button {
-  width: 100%;
-  min-height: 3rem;
-  margin-top: 1rem;
-  border: 0;
-  border-radius: 5px;
-  background: #dce5d8;
-  color: #536254;
-  font: inherit;
-  font-weight: 700;
-}
-
-.purchase-button:disabled {
-  cursor: not-allowed;
-}
-
-.donation-page--dark {
-  --donation-ink: #f4f7f4;
-  --donation-muted: #c6d1c7;
-  --donation-green: #b5ddb5;
-  --donation-border: #303d33;
-  --donation-paper: #141c16;
-  --donation-surface: #1c281f;
-}
-
-.donation-page--dark .purchase-notice {
-  border-color: #53451f;
-  background: #292313;
-  color: #fff1c8;
-}
-
-.donation-page--dark .purchase-notice p {
-  color: #efdfb2;
-}
-
-.donation-page--dark .purchase-button {
-  background: #253228;
-  color: #e0e9df;
-}
-
-@media (max-width: 35rem) {
-  .donation-page {
-    min-height: calc(100vh - 5rem);
-    padding: 2.25rem 1rem;
-  }
-
-  .donation-fields {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .donation-total {
-    align-items: flex-start;
-    padding: 1rem;
-  }
-}
-</style>
