@@ -35,7 +35,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<UserInfo | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
-  
+
   // Beim Start versuchen, den Benutzer aus dem localStorage zu laden
   try {
     const storedUser = localStorage.getItem(USER_KEY)
@@ -45,48 +45,50 @@ export const useAuthStore = defineStore('auth', () => {
   } catch (e) {
     console.error('Fehler beim Laden des Benutzers aus dem localStorage:', e)
   }
-  
+
   // Computed
   const isAuthenticated = computed(() => !!accessToken.value && !!user.value)
   const username = computed(() => user.value?.username || '')
-  
+
   // Actions
   async function login(email: string, password: string): Promise<boolean> {
     loading.value = true
     error.value = null
-    
+
     try {
       const loggedInUser = await userService.loginUser(email, password)
-      
+
       if (!loggedInUser) {
         error.value = 'Ungültige Anmeldedaten'
         return false
       }
-      
+
       // Token generieren
       const tokens = jwtService.generateTokens(loggedInUser)
-      
+
       // Token und Benutzer speichern
       accessToken.value = tokens.accessToken
       refreshToken.value = tokens.refreshToken
       csrfToken.value = tokens.csrfToken
       persistUser(loggedInUser)
       
+      user.value = loggedInUser
+
       // CSRF-Token im localStorage speichern
       localStorage.setItem('csrf_token', tokens.csrfToken)
-      
+
       // Im localStorage speichern - nur notwendige Informationen, keine sensiblen Daten
       localStorage.setItem(TOKEN_KEY, tokens.accessToken)
       localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken)
-      
+
       // Nur nicht-sensible Benutzerdaten speichern
       const safeUserData = {
         id: loggedInUser.id,
         username: loggedInUser.username,
-        email: loggedInUser.email
+        email: loggedInUser.email,
       }
       localStorage.setItem(USER_KEY, JSON.stringify(safeUserData))
-      
+
       return true
     } catch (e) {
       console.error('Login-Fehler:', e)
@@ -96,7 +98,7 @@ export const useAuthStore = defineStore('auth', () => {
       loading.value = false
     }
   }
-  
+
   function logout() {
     // Token und Benutzer entfernen
     accessToken.value = null
@@ -104,29 +106,31 @@ export const useAuthStore = defineStore('auth', () => {
     csrfToken.value = null
     persistUser(null)
     
+    user.value = null
+
     // Aus dem localStorage entfernen
     localStorage.removeItem(TOKEN_KEY)
     localStorage.removeItem(REFRESH_TOKEN_KEY)
     localStorage.removeItem(USER_KEY)
     localStorage.removeItem('csrf_token')
   }
-  
+
   async function refreshTokens(): Promise<boolean> {
     if (!refreshToken.value) {
       return false
     }
-    
+
     try {
       const result = jwtService.refreshAccessToken(refreshToken.value)
-      
+
       if (!result) {
         logout()
         return false
       }
-      
+
       accessToken.value = result.accessToken
       localStorage.setItem(TOKEN_KEY, result.accessToken)
-      
+
       return true
     } catch (e) {
       console.error('Token-Refresh-Fehler:', e)
@@ -134,19 +138,19 @@ export const useAuthStore = defineStore('auth', () => {
       return false
     }
   }
-  
+
   async function checkAndRefreshToken(): Promise<boolean> {
     if (!accessToken.value) {
       return false
     }
-    
+
     // Token überprüfen
     const decoded = jwtService.verifyToken(accessToken.value)
-    
+
     if (decoded) {
       return true
     }
-    
+
     // Token ist abgelaufen, versuchen zu erneuern
     return await refreshTokens()
   }

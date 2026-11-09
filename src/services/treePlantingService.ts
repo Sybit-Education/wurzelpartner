@@ -24,7 +24,10 @@ export class TreePlantingService {
    * @returns Der neu gepflanzte Baum
    */
   async createTree(treeData: PlantedTree): Promise<PlantedTree | null> {
-    const [newTree] = await this.nocoDBService.createRecords<PlantedTree, PlantedTree>(this.tableName, treeData)
+    const [newTree] = await this.nocoDBService.createRecords<PlantedTree, PlantedTree>(
+      this.tableName,
+      treeData,
+    )
     return newTree ?? null
   }
 
@@ -38,7 +41,7 @@ export class TreePlantingService {
       this.tableName,
       this.userLinkFieldId,
       treePlantedId,
-      [{ id: userId }]
+      [{ id: userId }],
     )
   }
 
@@ -47,12 +50,15 @@ export class TreePlantingService {
    * @param treePlantedId ID des gepflanzten Baums
    * @param locationId ID des Standorts
    */
-  async linkLocation(treePlantedId: string | number, locationId: string | number): Promise<boolean> {
+  async linkLocation(
+    treePlantedId: string | number,
+    locationId: string | number,
+  ): Promise<boolean> {
     return await this.nocoDBService.linkRecords(
       this.tableName,
       this.locationLinkFieldId,
       treePlantedId,
-      [{ id: locationId }]
+      [{ id: locationId }],
     )
   }
 
@@ -61,12 +67,15 @@ export class TreePlantingService {
    * @param treePlantedId ID des gepflanzten Baums
    * @param treeInfoId ID der Baumart (TreeInfo)
    */
-  async linkTreeInfo(treePlantedId: string | number, treeInfoId: string | number): Promise<boolean> {
+  async linkTreeInfo(
+    treePlantedId: string | number,
+    treeInfoId: string | number,
+  ): Promise<boolean> {
     return await this.nocoDBService.linkRecords(
       this.tableName,
       this.treeInfoLinkFieldId,
       treePlantedId,
-      [{ id: treeInfoId }]
+      [{ id: treeInfoId }],
     )
   }
 }

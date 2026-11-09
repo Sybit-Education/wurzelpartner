@@ -48,11 +48,24 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
       },
+      path: '/privacy',
+      name: 'privacy',
+      component: () => import('../views/PrivacyPolicyView.vue'),
+    },
+    {
+      path: '/accesibility',
+      name: 'Acessibility',
+      component: () => import('../views/acessibilityView.vue'),
     },
     {
       path: '/map',
       name: 'map',
       component: () => import('../views/MapView.vue'),
+    },
+    {
+      path: '/donation',
+      name: 'donation',
+      component: () => import('../views/donationMenu.vue'),
     },
     {
       path: '/createtree',

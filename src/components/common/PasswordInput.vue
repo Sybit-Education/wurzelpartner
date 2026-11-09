@@ -17,7 +17,7 @@ withDefaults(defineProps<Props>(), {
   placeholder: '',
   required: false,
   label: 'Passwort',
-  autocomplete: 'current-password'
+  autocomplete: 'current-password',
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -36,7 +36,12 @@ const updateValue = (event: Event) => {
 
 <template>
   <div>
-    <label v-if="label" :for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ label }}</label>
+    <label
+      v-if="label"
+      :for="id"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >{{ label }}</label
+    >
     <div class="relative">
       <input
         :type="showPassword ? 'text' : 'password'"
