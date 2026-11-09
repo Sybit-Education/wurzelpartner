@@ -114,32 +114,14 @@ function submitDonation() {
             <button
               type="button"
               class="rounded-md border px-4 py-3 text-sm font-semibold transition focus:outline-none focus:ring-4 focus:ring-brand-100 dark:focus:ring-brand-900"
-              :class="
-                frequency === 'once'
-                  ? 'border-brand-600 bg-brand-50 text-white dark:bg-brand-600'
-                  : 'border-gray-300 text-gray-700 hover:border-brand-500 dark:border-gray-600 dark:text-gray-200'
-              "
-              :aria-pressed="frequency === 'once'"
-              @click="
-                frequency = 'once'
-                clearDonationMessage()
-              "
+              @click="clearDonationMessage()"
             >
               Einmalig
             </button>
             <button
               type="button"
               class="rounded-md border px-4 py-3 text-sm font-semibold transition focus:outline-none focus:ring-4 focus:ring-brand-100 dark:focus:ring-brand-900"
-              :class="
-                frequency === 'monthly'
-                  ? 'border-brand-600 bg-brand-50 text-white dark:bg-brand-600'
-                  : 'border-gray-300 text-gray-700 hover:border-brand-500 dark:border-gray-600 dark:text-gray-200'
-              "
-              :aria-pressed="frequency === 'monthly'"
-              @click="
-                frequency = 'monthly'
-                clearDonationMessage()
-              "
+              @click="clearDonationMessage()"
             >
               Monatlich
             </button>
@@ -156,16 +138,7 @@ function submitDonation() {
               :key="amount"
               type="button"
               class="rounded-md border px-3 py-3 text-sm font-semibold transition focus:outline-none focus:ring-4 focus:ring-brand-100 dark:focus:ring-brand-900"
-              :class="
-                donationAmount === amount
-                  ? 'border-brand-600 bg-brand-50 text-white dark:bg-brand-600'
-                  : 'border-gray-300 text-gray-700 hover:border-brand-500 dark:border-gray-600 dark:text-gray-200'
-              "
-              :aria-pressed="donationAmount === amount"
-              @click="
-                donationAmount = amount
-                clearDonationMessage()
-              "
+              @click="clearDonationMessage()"
             >
               {{ formatDonationAmount(amount) }}
             </button>
