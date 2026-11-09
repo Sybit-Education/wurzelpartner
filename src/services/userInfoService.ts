@@ -29,7 +29,7 @@ export class UserInfoService {
     })
 
     const user = response.list[0]
-    
+
     // Wenn kein Benutzer gefunden wurde oder das Passwort nicht gesetzt ist
     if (!user || !user.password) {
       return null
@@ -37,7 +37,7 @@ export class UserInfoService {
 
     // Überprüfe das Passwort mit bcrypt
     const passwordValid = await verifyPassword(password, user.password)
-    
+
     return passwordValid ? user : null
   }
 
@@ -50,8 +50,7 @@ export class UserInfoService {
     try {
       const user = await this.nocoDBService.getRecord<UserInfo>(this.tableName, id)
       return user as UserInfo
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Fehler beim Abrufen des Benutzers:', error)
       return null
     }
@@ -121,7 +120,7 @@ export class UserInfoService {
   async changePassword(
     userId: string | number,
     currentPassword: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<boolean> {
     try {
       // Benutzer abrufen
@@ -138,7 +137,7 @@ export class UserInfoService {
 
       // Neues Passwort setzen
       user.password = await hashPassword(newPassword)
-      
+
       // Benutzer aktualisieren
       const updatedUser = await this.updateUser(user)
       return !!updatedUser
