@@ -70,17 +70,17 @@ onBeforeUnmount(() => {
 <template>
   <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="container mx-auto">
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
+      <div class="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-4">
         <a href="/" class="flex items-center space-x-3 mr-5">
           <img src="/img/WurzelPartner-Logo.svg" class="h-15" alt="Flowbite Logo" />
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
             >Wurzelpartner</span
           >
         </a>
-        <div class="flex items-center ml-auto md:order-2 md:self-end">
+        <div class="flex items-center ml-auto xl:order-2">
           <!-- Theme Toggle -->
-          <ThemeToggle class="mr-2 md:translate-x-62" />
-          <div class="hidden md:flex md:space-x-2 md:translate-x-62">
+          <ThemeToggle class="mr-2" />
+          <div class="hidden xl:flex xl:space-x-2">
             <template v-if="!authStore.isAuthenticated">
               <fwb-button
                 color="green"
@@ -123,10 +123,10 @@ onBeforeUnmount(() => {
                   </div>
                   <button
                     @click="goToDashboard"
-                  class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
-                >
-                  Dashboard
-                </button>
+                    class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Dashboard
+                  </button>
                   <button
                     @click="goToProfile"
                     class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
@@ -146,7 +146,7 @@ onBeforeUnmount(() => {
           <button
             @click="toggleMenu"
             type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg xl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="navbar-default"
             :aria-expanded="isMenuOpen"
           >
@@ -171,16 +171,16 @@ onBeforeUnmount(() => {
 
         <div
           :class="{ hidden: !isMenuOpen }"
-          class="w-full md:flex md:w-auto md:order-1"
+          class="w-full xl:flex xl:w-auto xl:order-1"
           id="navbar-default"
         >
           <ul
-            class="font-medium flex flex-col md:p-05 mt-4 ml-4 md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-1"
+            class="font-medium flex flex-col xl:p-05 mt-4 ml-4 xl:flex-row xl:space-x-5 rtl:space-x-reverse xl:mt-1"
           >
             <li>
               <router-link
                 to="/"
-                class="block py-2 px-3 text-white bg-brand-700 rounded-sm md:bg-transparent md:text-brand-700 md:p-0 dark:text-white md:dark:text-green-500"
+                class="block py-2 px-3 text-white bg-brand-700 rounded-sm xl:bg-transparent xl:text-brand-700 xl:p-0 dark:text-white xl:dark:text-green-500"
                 aria-current="page"
                 >Home
               </router-link>
@@ -188,28 +188,28 @@ onBeforeUnmount(() => {
             <li>
               <router-link
                 to="/trees"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 xl:hover:bg-transparent xl:border-0 xl:hover:text-brand-700 xl:p-0 dark:text-white xl:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white xl:dark:hover:bg-transparent"
                 >Baumarten</router-link
               >
             </li>
             <li>
               <router-link
                 to="/map"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 xl:hover:bg-transparent xl:border-0 xl:hover:text-brand-700 xl:p-0 dark:text-white xl:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white xl:dark:hover:bg-transparent"
                 >Karte</router-link
               >
             </li>
             <li>
               <router-link
                 to="/about"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 xl:hover:bg-transparent xl:border-0 xl:hover:text-brand-700 xl:p-0 dark:text-white xl:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white xl:dark:hover:bg-transparent"
                 >Über uns</router-link
               >
             </li>
             <li>
               <router-link
                 to="/contact"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 xl:hover:bg-transparent xl:border-0 xl:hover:text-brand-700 xl:p-0 dark:text-white xl:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white xl:dark:hover:bg-transparent"
                 >Kontakt</router-link
               >
             </li>
@@ -246,14 +246,14 @@ onBeforeUnmount(() => {
               </router-link>
             </li>
             <template v-if="!authStore.isAuthenticated">
-              <li class="md:hidden mt-4">
+              <li class="xl:hidden mt-4">
                 <router-link
                   to="/login"
                   class="block w-full text-center py-2 px-3 text-white bg-brand-600 rounded-lg hover:bg-brand-700"
                   >Anmelden</router-link
                 >
               </li>
-              <li class="md:hidden mt-2">
+              <li class="xl:hidden mt-2">
                 <router-link
                   to="/signup"
                   class="block w-full text-center py-2 px-3 text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
@@ -262,12 +262,12 @@ onBeforeUnmount(() => {
               </li>
             </template>
             <template v-else>
-              <li class="md:hidden mt-4">
+              <li class="xl:hidden mt-4">
                 <span class="block w-full text-center py-2 px-3 text-gray-900 dark:text-white">
                   Hallo, {{ authStore.username }}
                 </span>
               </li>
-              <li class="md:hidden mt-2">
+              <li class="xl:hidden mt-2">
                 <router-link
                   to="/dashboard"
                   class="block w-full text-center py-2 px-3 text-white bg-brand-600 rounded-lg hover:bg-brand-700"
@@ -275,7 +275,7 @@ onBeforeUnmount(() => {
                   Zum Dashboard
                 </router-link>
               </li>
-              <li class="md:hidden mt-2">
+              <li class="xl:hidden mt-2">
                 <router-link
                   to="/profile"
                   class="block w-full text-center py-2 px-3 text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
@@ -283,7 +283,7 @@ onBeforeUnmount(() => {
                   Profil verwalten
                 </router-link>
               </li>
-              <li class="md:hidden mt-2">
+              <li class="xl:hidden mt-2">
                 <button
                   @click="handleLogout"
                   class="block w-full text-center py-2 px-3 text-white bg-red-600 rounded-lg hover:bg-red-700"
