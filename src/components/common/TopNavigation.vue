@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
 import ThemeToggle from '@/components/common/ThemeToggle.vue'
@@ -8,9 +8,43 @@ import { FwbButton } from 'flowbite-vue'
 const authStore = useAuthStore()
 const router = useRouter()
 const isMenuOpen = ref(false)
+const isProfileMenuOpen = ref(false)
+const profileMenuRef = ref<HTMLElement | null>(null)
+
+const userInitial = computed(() =>
+  authStore.username ? authStore.username.charAt(0).toUpperCase() : '?',
+)
 
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value
+}
+
+function toggleProfileMenu() {
+  isProfileMenuOpen.value = !isProfileMenuOpen.value
+}
+
+function openProfileMenu() {
+  isProfileMenuOpen.value = true
+}
+
+function closeProfileMenu() {
+  isProfileMenuOpen.value = false
+}
+
+function handleClickOutside(event: MouseEvent) {
+  if (profileMenuRef.value && !profileMenuRef.value.contains(event.target as Node)) {
+    closeProfileMenu()
+  }
+}
+
+function goToDashboard() {
+  isProfileMenuOpen.value = false
+  router.push({ name: 'dashboard' })
+}
+
+function goToProfile() {
+  isProfileMenuOpen.value = false
+  router.push({ name: 'profile' })
 }
 
 function handleLogout() {
@@ -21,6 +55,14 @@ function handleLogout() {
 // Theme
 const linkEntryStyle =
   'flex py-2 px-3 text-brand-600 rounded-sm hover:bg-brand-900 border-0 xl:hover:text-brand-700 dark:text-white xl:dark:hover:text-green-500 dark:hover:bg-brand-100 dark:hover:text-white xl:dark:hover:bg-transparent'
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
@@ -187,6 +229,14 @@ const linkEntryStyle =
                 class="block w-full text-center py-2 px-3 text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
               >
                 Registrieren
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/spendenvonbaume"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
+                Spenden von Bäumen
               </router-link>
             </li>
             <li class="xl:hidden mt-2"></li>

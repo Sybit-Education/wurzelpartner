@@ -43,6 +43,22 @@ const router = createRouter({
       name: 'about-us',
       component: AboutView,
     },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/DashboardView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../views/ProfileView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
     // Data-protection
     {
       path: '/privacy',
@@ -112,7 +128,12 @@ router.beforeEach(async (to) => {
   const authStore = useAuthStore()
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
 
-  // Route erfordert keine Authentifizierung -> weiter
+  // Bereits angemeldete Nutzer auf das Dashboard führen, wenn sie Login/Signup ansteuern
+  if ((to.name === 'login' || to.name === 'signup') && authStore.isAuthenticated) {
+    return next({ name: 'dashboard' })
+  }
+
+  // Wenn die Route keine Authentifizierung erfordert, weiter zur Route
   if (!requiresAuth) {
     return true
   }

@@ -12,6 +12,22 @@ export const useAuthStore = defineStore('auth', () => {
   const jwtService = new JwtService()
   const userService = new UserInfoService()
 
+  const persistUser = (userData: UserInfo | null) => {
+    user.value = userData
+
+    if (!userData) {
+      localStorage.removeItem(USER_KEY)
+      return
+    }
+
+    const safeUserData = {
+      id: userData.id,
+      username: userData.username,
+      email: userData.email,
+    }
+    localStorage.setItem(USER_KEY, JSON.stringify(safeUserData))
+  }
+  
   // State
   const accessToken = ref<string | null>(localStorage.getItem(TOKEN_KEY))
   const refreshToken = ref<string | null>(localStorage.getItem(REFRESH_TOKEN_KEY))
@@ -54,6 +70,8 @@ export const useAuthStore = defineStore('auth', () => {
       accessToken.value = tokens.accessToken
       refreshToken.value = tokens.refreshToken
       csrfToken.value = tokens.csrfToken
+      persistUser(loggedInUser)
+      
       user.value = loggedInUser
 
       // CSRF-Token im localStorage speichern
@@ -86,6 +104,8 @@ export const useAuthStore = defineStore('auth', () => {
     accessToken.value = null
     refreshToken.value = null
     csrfToken.value = null
+    persistUser(null)
+    
     user.value = null
 
     // Aus dem localStorage entfernen
@@ -135,6 +155,51 @@ export const useAuthStore = defineStore('auth', () => {
     return await refreshTokens()
   }
 
+  async function refreshUser(): Promise<UserInfo | null> {
+    if (!user.value?.id) {
+      return null
+    }
+
+    const freshUser = await userService.getUserById(user.value.id)
+    if (freshUser) {
+      persistUser(freshUser)
+    }
+
+    return freshUser
+  }
+
+  async function updateProfile(updates: Partial<UserInfo>): Promise<UserInfo | null> {
+    if (!user.value?.id) {
+      return null
+    }
+
+    const payload: Partial<UserInfo> = {
+      id: user.value.id,
+      username: updates.username ?? user.value.username,
+      email: updates.email ?? user.value.email,
+      treesPlanted: updates.treesPlanted ?? user.value.treesPlanted,
+      moneyDonated: updates.moneyDonated ?? user.value.moneyDonated,
+      signUpDate: updates.signUpDate ?? user.value.signUpDate,
+      logedInLast: updates.logedInLast ?? user.value.logedInLast,
+      profilePicture: updates.profilePicture ?? user.value.profilePicture,
+    }
+
+    const updatedUser = await userService.updateUserProfile(payload as UserInfo)
+    if (updatedUser) {
+      persistUser({ ...payload, ...updatedUser })
+    }
+
+    return updatedUser
+  }
+
+  async function changePassword(currentPassword: string, newPassword: string): Promise<boolean> {
+    if (!user.value?.id) {
+      return false
+    }
+
+    return await userService.changePassword(user.value.id, currentPassword, newPassword)
+  }
+  
   return {
     accessToken,
     csrfToken,
@@ -147,5 +212,8 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     refreshTokens,
     checkAndRefreshToken,
+    refreshUser,
+    updateProfile,
+    changePassword
   }
 })
