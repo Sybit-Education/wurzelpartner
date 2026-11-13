@@ -133,12 +133,7 @@ router.beforeEach(async (to) => {
     return next({ name: 'dashboard' })
   }
 
-  // Bereits angemeldete Nutzer auf das Dashboard führen, wenn sie Login/Signup ansteuern
-  if ((to.name === 'login' || to.name === 'signup') && authStore.isAuthenticated) {
-    return next({ name: 'dashboard' })
-  }
-
-  // Route erfordert keine Authentifizierung -> weiter
+  // Wenn die Route keine Authentifizierung erfordert, weiter zur Route
   if (!requiresAuth) {
     return true
   }
