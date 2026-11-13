@@ -14,23 +14,26 @@ const hasImage = computed(() => {
 const imageUrl = computed((): string => {
   return hasImage.value ? (props.tree?.picture[0]?.signedUrl as string) : ''
 })
+
+const getLink = computed((): string => {
+  return 'tree/' + props.tree.id
+})
 </script>
 
 <template>
-  <router-link :to="{ name: 'tree-details', params: { id: tree.id } }" class="block h-full">
-    <fwb-card
-      class="tree-info-item h-full w-sd hover:shadow-xl transition-shadow rounded-lg overflow-hidden p-0"
-      :img-src="imageUrl"
-      :img-alt="tree.name"
-      :variant="hasImage ? 'image' : 'default'"
-    >
-      <div class="p-5">
-        <h3>{{ tree.name }}</h3>
+  <fwb-card
+    class="tree-info-item w-sd hover:shadow-xl transition-shadow rounded-lg overflow-hidden p-0"
+    :img-src="imageUrl"
+    :img-alt="tree.name"
+    :variant="hasImage ? 'image' : 'default'"
+    :href="getLink"
+  >
+    <div class="p-5">
+      <h3>{{ tree.name }}</h3>
 
-        <p v-if="tree.abstract" class="mt-3 text-sm italic">{{ tree.abstract }}</p>
-      </div>
-    </fwb-card>
-  </router-link>
+      <p v-if="tree.abstract" class="mt-3 text-sm italic">{{ tree.abstract }}</p>
+    </div>
+  </fwb-card>
 </template>
 
 <style scoped>

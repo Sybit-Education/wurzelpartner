@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { donationAmounts, formatDonationAmount, type DonationFrequency } from '@/utils/donation'
+import { donationAmounts, formatDonationAmount, type DonationFrequency } from '@/Donations/donation'
 
 const donationAmount = ref<number>(30)
 const frequency = ref<DonationFrequency>('once')
