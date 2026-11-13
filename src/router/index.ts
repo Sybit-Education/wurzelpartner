@@ -12,6 +12,7 @@ import PartnerDetailView from '../views/PartnerDetailView.vue'
 import PlantATreeView from '../views/PlantATreeView.vue'
 import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
 import SignUpView from '../views/SignUpView.vue'
+import TreeCareView from '../views/TreeCareView.vue'
 import TreeDetails from '../views/TreeDetails.vue'
 import TreeOverviewView from '../views/TreeOverviewView.vue'
 
@@ -54,6 +55,12 @@ const router = createRouter({
       path: '/accesibility',
       name: 'acessibility',
       component: AcessibilityView,
+    },
+    // Tree care
+    {
+      path: '/tree-care',
+      name: 'tree-caare',
+      component: TreeCareView,
     },
     // Map
     {
