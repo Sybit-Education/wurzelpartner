@@ -1,43 +1,61 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import TreeDetails from '@/views/TreeDetails.vue'
 import { useAuthStore } from '@/stores/authStore'
+import { createRouter, createWebHistory } from 'vue-router'
+// Routes
+import AboutView from '../views/AboutView.vue'
+import AcessibilityView from '../views/AcessibilityView.vue'
+import DonateMoneyView from '../views/DonateMoneyView.vue'
+import DonateTreeView from '../views/DonateTreeView.vue'
+import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
+import MapView from '../views/MapView.vue'
+import PartnerDetailView from '../views/PartnerDetailView.vue'
+import PlantATreeView from '../views/PlantATreeView.vue'
+import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
+import SignUpView from '../views/SignUpView.vue'
+import TreeDetails from '../views/TreeDetails.vue'
+import TreeOverviewView from '../views/TreeOverviewView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // Home
     {
       path: '/',
       name: 'home',
       component: HomeView,
     },
+    // Trees
     {
       path: '/trees',
       name: 'trees',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TreeOverviewView.vue'),
+      component: TreeOverviewView,
     },
+    // Tree details
     {
       path: '/tree/:id',
       name: 'tree-details',
       component: TreeDetails,
       props: true,
     },
+    // About
     {
       path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      name: 'about-us',
+      component: AboutView,
     },
+    // Data-protection
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: PrivacyPolicyView,
+    },
+    // Status about acessibility
     {
       path: '/accesibility',
-      name: 'Acessibility',
-      component: () => import('../views/acessibilityView.vue'),
+      name: 'acessibility',
+      component: AcessibilityView,
     },
+    // Map
     {
 
       path: '/TreeCare',
@@ -48,71 +66,81 @@ const router = createRouter({
 
       path: '/map',
       name: 'map',
-      component: () => import('../views/MapView.vue'),
+      component: MapView,
     },
-    {
-      path: '/donation',
-      name: 'donation',
-      component: () => import('../views/donationMenu.vue'),
-    },
+    // Create a tree
     {
       path: '/createtree',
-      name: 'Create a tree',
-      component: () => import('../views/PlantATreeView.vue'),
+      name: 'create-a-tree',
+      component: PlantATreeView,
     },
+    // Partner details
     {
       path: '/partner/:id',
       name: 'partner-details',
-      component: () => import('../views/PartnerDetailView.vue'),
+      component: PartnerDetailView,
       props: true,
     },
+    // Login
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue'),
+      component: LoginView,
       meta: {
-        //hideLayout: true
+        hideLayout: true,
       },
     },
+    // Sign up
     {
       path: '/signup',
       name: 'signup',
-      component: () => import('../views/SignUpView.vue'),
+      component: SignUpView,
       meta: {
-        //hideLayout: true
+        hideLayout: true,
       },
+    },
+    // Donate tree
+    {
+      path: '/spendenvonbaume',
+      name: 'donate-tree',
+      component: DonateTreeView,
+    },
+    // Donate money
+    {
+      path: '/donation',
+      name: 'donate-money',
+      component: DonateMoneyView,
     },
   ],
 })
 
 // Navigation Guard für geschützte Routen
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to) => {
   const authStore = useAuthStore()
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
 
-  // Wenn die Route keine Authentifizierung erfordert, weiter zur Route
+  // Route erfordert keine Authentifizierung -> weiter
   if (!requiresAuth) {
-    return next()
+    return true
   }
 
-  // Prüfen, ob der Benutzer authentifiziert ist
-  const isAuthenticated = authStore.isAuthenticated
+  // Bereits authentifiziert -> weiter
+  if (authStore.isAuthenticated) {
+    return true
+  }
 
-  // Wenn nicht authentifiziert, zur Login-Seite umleiten
-  if (!isAuthenticated) {
-    // Token überprüfen und ggf. erneuern
-    const tokenValid = await authStore.checkAndRefreshToken()
+  // Token prüfen und ggf. erneuern
+  const tokenValid = await authStore.checkAndRefreshToken()
 
-    if (!tokenValid) {
-      return next({
-        path: '/login',
-        query: { redirect: to.fullPath },
-      })
+  if (!tokenValid) {
+    return {
+      path: '/login',
+      query: { redirect: to.fullPath },
     }
   }
 
-  // Benutzer ist authentifiziert, weiter zur Route
-  next()
+  return true
 })
 
+// Export router
 export default router
