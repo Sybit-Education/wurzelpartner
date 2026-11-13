@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import TreeInfoList from '../components/treeinfo/TreeInfoList.vue'
-import SponsorMarquee from '@/components/sponsor/SponsorMarquee.vue'
 import PartnerMarquee from '@/components/partner/PartnerMarquee.vue'
+import SponsorMarquee from '@/components/sponsor/SponsorMarquee.vue'
+import TreeInfoList from '@/components/treeinfo/TreeInfoList.vue'
 import type { PlantedTree } from '@/models/planted_tree'
 import { TreePlantingService } from '@/services/treePlantingService'
+import { computed, onMounted, ref } from 'vue'
 
 const treePlantingService = new TreePlantingService()
 const latestPlantings = ref<PlantedTree[]>([])
@@ -72,9 +72,7 @@ function formatPlantingDate(date: Date | string): string {
     <TreeInfoList />
 
     <section class="mt-12" aria-labelledby="latest-plantings-heading">
-      <h2 id="latest-plantings-heading" class="mb-5 text-2xl font-semibold">
-        Neuste Pflanzungen
-      </h2>
+      <h2 id="latest-plantings-heading" class="mb-5 text-2xl font-semibold">Neuste Pflanzungen</h2>
 
       <div
         v-if="isLoadingPlantings"
@@ -95,7 +93,9 @@ function formatPlantingDate(date: Date | string): string {
         class="overflow-hidden rounded-xl border border-gray-200 shadow-sm dark:border-gray-700"
       >
         <table class="w-full text-left text-sm text-gray-700 dark:text-gray-300">
-          <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+          <thead
+            class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+          >
             <tr>
               <th scope="col" class="px-6 py-4">Nutzername</th>
               <th scope="col" class="px-6 py-4">Tag der Pflanzung</th>
