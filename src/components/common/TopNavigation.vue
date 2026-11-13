@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import ThemeToggle from '@/components/common/ThemeToggle.vue'
-import { useAuthStore } from '@/stores/authStore'
-import { FwbButton } from 'flowbite-vue'
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
+import ThemeToggle from '@/components/common/ThemeToggle.vue'
+import { FwbButton } from 'flowbite-vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
