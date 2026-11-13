@@ -1,6 +1,7 @@
-# Group routine version updates by related tooling and runtime dependencies.
-# Major upgrades stay in individual PRs; security updates keep their default behavior.
-# https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#groups--
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
 
@@ -10,73 +11,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    groups:
-      github-actions:
-        patterns:
-          - "*"
-        update-types: ["minor", "patch"]
 
   # Maintain dependencies for npm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
-    # Leave room for all seven routine groups and individual major upgrades.
-    open-pull-requests-limit: 10
-    groups:
-      # Keep linters and their plugins together to reduce peer dependency conflicts.
-      linting:
-        patterns:
-          - "eslint"
-          - "eslint-*"
-          - "@eslint/*"
-          - "@typescript-eslint/*"
-          - "typescript-eslint"
-          - "@vue/eslint-config-*"
-          - "oxlint"
-          - "oxlint-*"
-        update-types: ["minor", "patch"]
-      vue-typescript:
-        patterns:
-          - "vue"
-          - "vue-router"
-          - "pinia"
-          - "typescript"
-          - "vue-tsc"
-          - "@vue/tsconfig"
-          - "@tsconfig/*"
-          - "@types/node"
-        update-types: ["minor", "patch"]
-      vite-tooling:
-        patterns:
-          - "vite"
-          - "@vitejs/*"
-          - "vite-plugin-*"
-        update-types: ["minor", "patch"]
-      styling:
-        patterns:
-          - "tailwindcss"
-          - "@tailwindcss/*"
-          - "postcss"
-          - "autoprefixer"
-          - "sass*"
-          - "flowbite"
-          - "flowbite-vue"
-        update-types: ["minor", "patch"]
-      maps:
-        patterns:
-          - "leaflet*"
-          - "@vue-leaflet/*"
-          - "@types/leaflet"
-        update-types: ["minor", "patch"]
-      # Dependabot uses the first matching group; keep these catch-all groups last.
-      runtime:
-        dependency-type: "production"
-        patterns:
-          - "*"
-        update-types: ["minor", "patch"]
-      development:
-        dependency-type: "development"
-        patterns:
-          - "*"
-        update-types: ["minor", "patch"]
