@@ -13,8 +13,9 @@ const pinia = createPinia()
 app.use(pinia)
 app.use(router)
 
-// Theme-Store initialisieren (für Dark Mode)
+// Setup theme
 const themeStore = useThemeStore(pinia)
 themeStore.initTheme()
 
+// Mounts app
 app.mount('#app')
