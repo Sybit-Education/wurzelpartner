@@ -6,6 +6,7 @@ import AcessibilityView from '../views/AcessibilityView.vue'
 import DonateMoneyView from '../views/DonateMoneyView.vue'
 import DonateTreeView from '../views/DonateTreeView.vue'
 import HomeView from '../views/HomeView.vue'
+import LatestTreePlanted from '../views/LatestTreePlanted.vue'
 import LoginView from '../views/LoginView.vue'
 import MapView from '../views/MapView.vue'
 import PartnerDetailView from '../views/PartnerDetailView.vue'
@@ -23,6 +24,12 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    // Latests plantings
+    {
+      path: '/plantings',
+      name: 'latest-plantings',
+      component: LatestTreePlanted,
     },
     // Trees
     {
