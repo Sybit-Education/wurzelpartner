@@ -42,7 +42,9 @@ async function loadUser() {
 async function saveProfile() {
   profileMessage.value = ''
   profileError.value = ''
-  if (!profileForm.username || !profileForm.email) {
+  const username = profileForm.username.trim()
+  const email = profileForm.email.trim()
+  if (!username || !email) {
     profileError.value = 'Bitte Benutzername und E-Mail ausfüllen.'
     return
   }
@@ -50,8 +52,8 @@ async function saveProfile() {
   loadingProfile.value = true
   try {
     const updatedUser = await authStore.updateProfile({
-      username: profileForm.username.trim(),
-      email: profileForm.email.trim(),
+      username,
+      email,
     })
 
     if (updatedUser) {
