@@ -15,7 +15,7 @@
       </p>
     </header>
 
-    <!-- Bildbereich -->
+    <!-- Picture -->
     <div class="mb-10 overflow-hidden rounded-xl bg-green-100 dark:bg-green-950">
       <div class="flex min-h-64 items-center justify-center p-8 text-center">
         <p class="text-lg font-medium text-green-900 dark:text-green-100">
@@ -25,7 +25,7 @@
     </div>
 
     <div class="space-y-10">
-      <!-- Bedeutung -->
+      <!-- Meaning -->
       <section aria-labelledby="importance-heading">
         <h2 id="importance-heading" class="mb-3 text-2xl font-semibold">
           Warum ist Baumpflege wichtig?
@@ -38,7 +38,7 @@
         </p>
       </section>
 
-      <!-- Leistungen -->
+      <!-- Services -->
       <section aria-labelledby="services-heading">
         <h2 id="services-heading" class="mb-5 text-2xl font-semibold">Unsere Leistungen</h2>
 
@@ -73,7 +73,7 @@
         </div>
       </section>
 
-      <!-- Arbeitsweise -->
+      <!-- Way of working -->
       <section aria-labelledby="work-heading">
         <h2 id="work-heading" class="mb-3 text-2xl font-semibold">So arbeiten wir</h2>
 
@@ -84,7 +84,7 @@
         </p>
       </section>
 
-      <!-- Nachhaltigkeit -->
+      <!-- sustainability -->
       <section aria-labelledby="sustainability-heading">
         <h2 id="sustainability-heading" class="mb-3 text-2xl font-semibold">
           Nachhaltigkeit und Verantwortung
@@ -97,7 +97,7 @@
         </p>
       </section>
 
-      <!-- Bildbereich -->
+      <!-- Picture -->
       <section aria-labelledby="gallery-heading">
         <h2 id="gallery-heading" class="mb-4 text-2xl font-semibold">
           Einblicke in die Baumpflege
@@ -118,7 +118,7 @@
         </div>
       </section>
 
-      <!-- Kontakt -->
+      <!-- Contakt -->
       <section
         aria-labelledby="contact-heading"
         class="rounded-xl border border-green-200 bg-green-50 p-6 dark:border-green-800 dark:bg-green-950"
