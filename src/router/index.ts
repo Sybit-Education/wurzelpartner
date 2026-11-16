@@ -15,6 +15,7 @@ import SignUpView from '../views/SignUpView.vue'
 import TreeCareView from '../views/TreeCareView.vue'
 import TreeDetails from '../views/TreeDetails.vue'
 import TreeOverviewView from '../views/TreeOverviewView.vue'
+import ImpressumView from '../views/ImpressumView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -110,6 +111,12 @@ const router = createRouter({
       path: '/donation',
       name: 'donate-money',
       component: DonateMoneyView,
+    },
+    // Impressum
+    {
+      path: '/impressum',
+      name: 'impressum',
+      component:ImpressumView,
     },
   ],
 })
