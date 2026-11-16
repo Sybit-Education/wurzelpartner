@@ -1,28 +1,35 @@
 # Theming & Dark Mode Dokumentation
 
 Diese Dokumentation beschreibt, wie das Theme-System in diesem Projekt funktioniert und wie Sie es anpassen können.
+Eine Übersicht der empfohlenen Klassen und Abstände finden Sie unter
+[CSS-Klassen und Theme](./CSS-KLASSEN.md).
 
 ## Übersicht
 
 Das Projekt verwendet **Tailwind CSS 4** mit **Flowbite** für ein flexibles Theme-System, das folgende Features bietet:
 
-- **Light Mode** (Standard)
+- **Light Mode**
 - **Dark Mode** (manuell oder automatisch basierend auf System-Einstellung)
 - **Anpassbare Farbpaletten** über CSS-Variablen
 - **Persistente Benutzer-Präferenzen** via localStorage
+
+Ohne gespeicherte Präferenz folgt die Darstellung der System-Einstellung.
 
 ## Dark Mode verwenden
 
 ### In Komponenten
 
-Der Dark Mode wird durch die CSS-Klasse `dark` auf dem `<html>`-Element gesteuert. Verwenden Sie Tailwind's `dark:`-Präfix für Dark Mode-spezifische Styles:
+Der Dark Mode wird durch die CSS-Klasse `dark` auf dem `<html>`-Element gesteuert.
+Semantische Theme-Klassen passen sich automatisch an:
 
 ```html
-<div class="bg-white dark:bg-gray-800">
-  <h1 class="text-gray-900 dark:text-white">Überschrift</h1>
-  <p class="text-gray-600 dark:text-gray-300">Text</p>
+<div class="bg-raised">
+  <h1 class="text-heading">Überschrift</h1>
+  <p class="text-secondary">Text</p>
 </div>
 ```
+
+Für spezielle Styles kann weiterhin das Tailwind-Präfix `dark:` verwendet werden.
 
 ### Theme Toggle verwenden
 
@@ -68,37 +75,18 @@ Die Farbpaletten sind in `src/assets/main.css` als CSS-Variablen definiert:
 
 ```css
 @theme {
-  /* Primary Color Palette */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
+  /* Auszug aus der Markenpalette */
+  --color-brand-50: rgb(15, 41, 30);
+  --color-brand-500: rgb(35, 110, 74);
+  --color-brand-600: rgb(48, 164, 108);
   /* ... weitere Abstufungen ... */
-
-  /* Success, Warning, Danger Paletten ebenfalls anpassbar */
 }
 ```
 
 ### Eigene Markenfarben verwenden
 
-Um Ihre Markenfarben zu verwenden, ersetzen Sie die `--color-primary-*` Werte:
-
-```css
-@theme {
-  /* Beispiel: Grüne Markenfarbe */
-  --color-primary-50: #f0fdf4;
-  --color-primary-100: #dcfce7;
-  --color-primary-200: #bbf7d0;
-  --color-primary-300: #86efac;
-  --color-primary-400: #4ade80;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;
-  --color-primary-700: #15803d;
-  --color-primary-800: #166534;
-  --color-primary-900: #14532d;
-  --color-primary-950: #052e16;
-}
-```
+Für eigene Markenfarben passen Sie die `--color-brand-*`-Werte und bei Bedarf
+die Zuordnung von `--theme-brand-foreground` in `:root` und `.dark` an.
 
 ### Farbpalette generieren
 
@@ -113,9 +101,8 @@ Die Schriftarten sind ebenfalls als Variablen definiert:
 
 ```css
 @theme {
-  --font-sans: 'Inter', 'ui-sans-serif', /* ... */;
-  --font-body: 'Inter', 'ui-sans-serif', /* ... */;
-  --font-mono: 'ui-monospace', 'SFMono-Regular', /* ... */;
+  --font-body: Assistant;
+  --font-monospace-body: 'Source Sans 3';
 }
 ```
 
@@ -150,7 +137,7 @@ import { FlowbiteThemable, FwbButton, FwbDropdown } from 'flowbite-vue'
 ```
 src/
 ├── assets/
-│   └── main.scss          # Theme-Variablen & CSS
+│   └── main.css           # Theme-Variablen & CSS
 ├── components/
 │   └── common/
 │       └── ThemeToggle.vue # Toggle-Komponente
@@ -170,7 +157,7 @@ src/
 
 ## Best Practices
 
-1. **Konsistenz**: Verwenden Sie immer `dark:`-Varianten, wenn Sie Light Mode-Styles definieren
+1. **Konsistenz**: Verwenden Sie semantische Theme-Klassen; ergänzen Sie `dark:` für spezielle Styles
 2. **Kontrast**: Stellen Sie sicher, dass Text im Dark Mode gut lesbar ist (WCAG 2.1 AA)
 3. **Bilder**: Verwenden Sie `dark:invert` für Icons oder bieten Sie alternative Bilder an
 4. **Formulare**: Flowbite-Komponenten sind bereits für Dark Mode optimiert
@@ -185,18 +172,9 @@ src/
 
 ### Flash of Unstyled Content (FOUC)
 
-Das Inline-Script in `index.html` sollte dies verhindern. Falls nicht, prüfen Sie:
-
-```html
-<script>
-  if (
-    localStorage.getItem('theme-mode') === 'dark' ||
-    (!('theme-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    document.documentElement.classList.add('dark')
-  }
-</script>
-```
+Der Theme-Store wird in `src/main.ts` initialisiert. `index.html` enthält
+derzeit kein vorgeschaltetes Inline-Skript für das Theme; beim Laden kann daher
+kurzzeitig die Standarddarstellung sichtbar sein.
 
 ### VSCode zeigt CSS-Fehler
 

@@ -19,12 +19,7 @@ defineProps<{
   <button
     v-if="!showDropdown"
     type="button"
-    :class="[
-      'inline-flex items-center justify-center rounded-lg p-2.5 text-sm',
-      'text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200',
-      'dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700',
-      buttonClass,
-    ]"
+    :class="['theme-toggle-button', buttonClass]"
     :title="`Aktuell: ${modeLabel}. Klicken zum Wechseln.`"
     @click="toggle"
   >
@@ -60,15 +55,7 @@ defineProps<{
   <!-- Dropdown mit allen Modi -->
   <div v-else class="relative inline-block text-left">
     <div class="group">
-      <button
-        type="button"
-        :class="[
-          'inline-flex items-center justify-center rounded-lg p-2.5 text-sm',
-          'text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200',
-          'dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700',
-          buttonClass,
-        ]"
-      >
+      <button type="button" :class="['theme-toggle-button', buttonClass]">
         <!-- Sun Icon -->
         <svg
           v-if="mode === 'light'"
