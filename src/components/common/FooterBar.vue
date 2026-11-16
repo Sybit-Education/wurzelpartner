@@ -58,9 +58,9 @@ function handleLogout() {
 
 <template>
   <footer
-    class="mega-footer mt-12 border-t border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
+    class="mega-footer mt-section-gap border-t border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
   >
-    <div class="container mx-auto px-4 pb-6 pt-10 sm:pt-12">
+    <div class="page-shell py-section-gap">
       <div class="grid gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] xl:gap-16">
         <div>
           <router-link to="/" class="footer-brand inline-flex items-center gap-3 rounded-sm">
@@ -106,7 +106,7 @@ function handleLogout() {
       </div>
 
       <div class="mt-10 border-t border-gray-300 pt-6 dark:border-gray-600">
-        <p class="mb-0 text-sm text-gray-600 dark:text-gray-300">
+        <p class="mb-0! text-sm text-gray-600 dark:text-gray-300">
           &copy; {{ currentYear }} Wurzelpartner made with ♥️ by BSZ Radolfzell. All rights
           reserved.
         </p>

@@ -5,14 +5,12 @@ import PartnerMarquee from '@/components/partner/PartnerMarquee.vue'
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8">
-    <div class="mb-10 flex flex-col gap-6">
-      <div>
-        <h1>Baumarten</h1>
-        <p class="mt-5 text-xl text-gray-600 max-w-fit">
-          Entdecken Sie die Vielfalt unserer regionalen Bäume und erfahren Sie mehr über ihre Arten.
-        </p>
-      </div>
+  <div class="page-section">
+    <div class="mb-section-gap">
+      <h1>Baumarten</h1>
+      <p class="mt-4 max-w-fit text-xl text-secondary">
+        Entdecken Sie die Vielfalt unserer regionalen Bäume und erfahren Sie mehr über ihre Arten.
+      </p>
     </div>
 
     <TreeInfoList />
@@ -34,11 +32,3 @@ import PartnerMarquee from '@/components/partner/PartnerMarquee.vue'
   </div>
   <SponsorMarquee />
 </template>
-
-<style scoped>
-.full-bleed {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-}
-</style>
