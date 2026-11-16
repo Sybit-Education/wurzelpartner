@@ -33,7 +33,7 @@ onMounted(fetchPartner)
 </script>
 
 <template>
-  <section class="mx-auto max-w-5xl px-4 py-8 md:py-12">
+  <section class="page-section mx-auto max-w-5xl">
     <div class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
       <RouterLink to="/" class="font-medium text-primary-600 hover:underline">
         ← Zurück

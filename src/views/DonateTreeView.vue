@@ -25,44 +25,33 @@ const formattedTotal = computed(() =>
 </script>
 
 <template>
-  <main
-    class="min-h-[calc(100vh-8rem)] bg-transparent px-5 py-[clamp(2.5rem,7vw,6rem)] text-[#20342a] max-[35rem]:min-h-[calc(100vh-5rem)] max-[35rem]:px-4 max-[35rem]:py-9 dark:text-[#f4f7f4]"
-  >
+  <div class="page-section text-donation-text">
     <div class="mx-auto w-full max-w-2xl">
-      <header class="mb-7">
+      <header class="mb-section-gap">
         <p
-          class="mb-[0.8rem] mt-0 flex items-center gap-[0.55rem] text-[0.78rem] font-bold uppercase tracking-[0.08em] text-[#326b45] dark:text-[#b5ddb5]"
+          class="mb-3 mt-0 flex items-center gap-2 text-[0.78rem] font-bold uppercase tracking-[0.08em] text-donation-accent"
         >
           Wurzelpartner · Baumpatenschaft
         </p>
-        <h1
-          class="m-0 text-[clamp(2rem,5vw,2.8rem)] font-bold leading-[1.1] text-[#20342a] dark:text-[#f4f7f4]"
-        >
+        <h1 class="m-0 text-[clamp(2rem,5vw,2.8rem)] font-bold leading-[1.1] text-donation-text">
           Ein Baum für morgen.
         </h1>
-        <p
-          class="mb-0 mt-[0.85rem] max-w-136 text-base leading-[1.6] text-[#637267] dark:text-[#c6d1c7]"
-        >
+        <p class="mb-0 mt-4 max-w-136 text-base leading-[1.6] text-donation-muted">
           Wähle eine Baumart und die gewünschte Anzahl. Dein Beitrag wird direkt berechnet.
         </p>
       </header>
 
       <section
-        class="rounded-lg border border-[#dce5d8] bg-[#fffefa] p-[clamp(1.25rem,4vw,2rem)] shadow-[0_18px_44px_rgb(34_58_39/8%)] dark:border-[#303d33] dark:bg-[#141c16]"
+        class="rounded-lg border border-donation-border bg-donation-surface p-surface shadow-[0_18px_44px_rgb(34_58_39/8%)]"
         label="Baumspende berechnen"
       >
-        <div
-          class="grid grid-cols-[minmax(0,1fr)_minmax(8rem,0.65fr)] gap-5 max-[35rem]:grid-cols-1 max-[35rem]:gap-4"
-        >
-          <label
-            class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]"
-            for="tree"
-          >
+        <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(8rem,0.65fr)] sm:gap-6">
+          <label class="grid content-start gap-2 text-donation-text" for="tree">
             <span class="text-[0.88rem] font-bold">Baumart</span>
             <select
               id="tree"
               v-model.number="selectedTreePrice"
-              class="min-h-13 w-full cursor-pointer rounded-[5px] border border-[#dce5d8] bg-[#fffefa] py-0 pr-10 pl-[0.9rem] font-[inherit] text-[#20342a] focus-visible:border-[#326b45] focus-visible:outline-3 focus-visible:outline-[#326b45]/25 focus-visible:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:text-[#f4f7f4] dark:focus-visible:border-[#b5ddb5] dark:focus-visible:outline-[#b5ddb5]/25"
+              class="min-h-13 w-full cursor-pointer rounded-[5px] border border-donation-border bg-donation-surface py-0 pr-10 pl-4 font-[inherit] text-donation-text focus-visible:border-donation-accent focus-visible:outline-3 focus-visible:outline-donation-accent/25 focus-visible:outline-offset-2"
             >
               <option v-for="tree in treeTypes" :key="tree.name" :value="tree.price">
                 {{ tree.name }} · {{ tree.price }} €
@@ -70,13 +59,10 @@ const formattedTotal = computed(() =>
             </select>
           </label>
 
-          <label
-            class="grid content-start gap-[0.55rem] text-[#20342a] dark:text-[#f4f7f4]"
-            for="quantity"
-          >
+          <label class="grid content-start gap-2 text-donation-text" for="quantity">
             <span class="text-[0.88rem] font-bold">Anzahl der Bäume</span>
             <div
-              class="flex min-h-13 w-full items-center justify-between rounded-[5px] border border-[#dce5d8] bg-[#fffefa] px-[0.85rem] focus-within:border-[#326b45] focus-within:outline-3 focus-within:outline-[#326b45]/25 focus-within:outline-offset-2 dark:border-[#303d33] dark:bg-[#141c16] dark:focus-within:border-[#b5ddb5] dark:focus-within:outline-[#b5ddb5]/25"
+              class="flex min-h-13 w-full items-center justify-between rounded-[5px] border border-donation-border bg-donation-surface px-4 focus-within:border-donation-accent focus-within:outline-3 focus-within:outline-donation-accent/25 focus-within:outline-offset-2"
             >
               <input
                 id="quantity"
@@ -85,27 +71,25 @@ const formattedTotal = computed(() =>
                 min="1"
                 step="1"
                 inputmode="numeric"
-                class="w-18 min-w-0 border-0 bg-transparent text-[1.1rem] font-bold text-[#20342a] outline-none dark:text-[#f4f7f4]"
+                class="w-18 min-w-0 border-0 bg-transparent text-[1.1rem] font-bold text-donation-text outline-none"
               />
-              <span class="text-[0.85rem] text-[#637267] dark:text-[#c6d1c7]">Bäume</span>
+              <span class="text-[0.85rem] text-donation-muted">Bäume</span>
             </div>
           </label>
         </div>
 
         <div
-          class="mt-7 flex items-center justify-between gap-4 border-l-4 border-[#d49b36] bg-[#f3f7ef] px-[1.2rem] py-[1.1rem] max-[35rem]:items-start max-[35rem]:p-4 dark:bg-[#1c281f]"
+          class="mt-8 flex flex-wrap items-start justify-between gap-4 border-l-4 border-[#d49b36] bg-[#f3f7ef] p-4 dark:bg-[#1c281f] sm:items-center sm:px-5"
           aria-live="polite"
         >
           <div>
-            <p class="m-0 text-[0.9rem] font-bold text-[#20342a] dark:text-[#f4f7f4]">
-              Dein Beitrag
-            </p>
-            <p class="mb-0 mt-[0.2rem] text-[0.8rem] text-[#637267] dark:text-[#c6d1c7]">
+            <p class="m-0 text-[0.9rem] font-bold text-donation-text">Dein Beitrag</p>
+            <p class="mb-0 mt-[0.2rem] text-[0.8rem] text-donation-muted">
               {{ selectedTreeName }} · {{ treeCount }} {{ treeCount === 1 ? 'Baum' : 'Bäume' }}
             </p>
           </div>
           <strong
-            class="whitespace-nowrap text-[clamp(1.5rem,5vw,2rem)] tabular-nums text-[#326b45] dark:text-[#b5ddb5]"
+            class="min-w-0 wrap-break-word text-[clamp(1.5rem,5vw,2rem)] tabular-nums text-donation-accent"
           >
             {{ formattedTotal }}
           </strong>
@@ -113,7 +97,7 @@ const formattedTotal = computed(() =>
 
         <div
           id="purchase-note"
-          class="mt-5 flex items-start gap-3 rounded-[5px] border border-[#ead8a8] bg-[#fff9e9] px-4 py-[0.9rem] text-[#59491e] dark:border-[#53451f] dark:bg-[#292313] dark:text-[#fff1c8]"
+          class="mt-6 flex items-start gap-3 rounded-[5px] border border-[#ead8a8] bg-[#fff9e9] p-4 text-[#59491e] dark:border-[#53451f] dark:bg-[#292313] dark:text-[#fff1c8]"
           role="status"
         >
           <span
@@ -142,5 +126,5 @@ const formattedTotal = computed(() =>
         </button>
       </section>
     </div>
-  </main>
+  </div>
 </template>

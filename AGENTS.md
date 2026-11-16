@@ -94,6 +94,8 @@ Implementiere eine klare Trennung zwischen UI und Datenquellen durch eine dedizi
 3. Nutze CSS-Variablen für ein konsistentes Theming
 4. Implementiere Barrierefreiheit nach WCAG 2.1 AA-Standard
 5. Optimiere für Performance (Code-Splitting, Lazy Loading, etc.)
+6. Lies vor Änderungen an Views, Komponenten oder CSS die Übersicht [CSS-Klassen und Theme](docs/CSS-KLASSEN.md). Verwende die vorhandenen semantischen Klassen für Farben, Abstände, Layouts, Formulare und Navigation, soweit sie passen.
+7. Nutze die dort dokumentierten Breakpoints und ergänze bei Bedarf spezifische Tailwind-Utilities. Aktualisiere die Übersicht, wenn gemeinsame Klassen oder Theme-Tokens geändert werden.
 
 ## Testing-Strategie
 
