@@ -10,17 +10,15 @@ const hideLayout = computed(() => route.meta.hideLayout === true)
 </script>
 
 <template>
-  <div
-    class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
-  >
+  <div class="min-h-screen flex flex-col bg-page-surface text-page-text">
     <header v-if="!hideLayout">
       <TopNavigation class="top-0 left-0 z-500 flex w-full" />
     </header>
-    <main class="container mx-auto px-4 flex-1">
+    <main class="page-shell flex-1">
       <RouterView />
     </main>
-    <footer v-if="!hideLayout" class="bg-gray-100 dark:bg-gray-800 py-4 mt-8">
-      <FooterBar class="container mx-auto" />
+    <footer v-if="!hideLayout" class="mt-section-gap bg-gray-100 py-section-gap dark:bg-gray-800">
+      <FooterBar class="page-shell" />
     </footer>
   </div>
 </template>

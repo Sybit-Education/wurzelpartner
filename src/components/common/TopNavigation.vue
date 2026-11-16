@@ -33,15 +33,15 @@ function handleLogout() {
 </script>
 
 <template>
-  <nav aria-label="Hauptnavigation" class="relative bg-white dark:bg-gray-900">
-    <div class="mx-auto flex w-full max-w-screen-2xl flex-wrap items-center gap-x-4 px-4 py-4">
+  <nav aria-label="Hauptnavigation" class="relative bg-page-surface">
+    <div class="page-shell flex flex-wrap items-center gap-x-2 py-4 sm:gap-x-4">
       <RouterLink
         to="/"
-        class="flex shrink-0 items-center gap-3 !text-gray-900 no-underline dark:!text-white"
+        class="flex shrink-0 items-center gap-2 text-heading! no-underline sm:gap-3"
         @click="isMenuOpen = false"
       >
-        <img src="/img/WurzelPartner-Logo.svg" class="h-10 w-10" alt="" />
-        <span class="whitespace-nowrap text-xl font-semibold">Wurzelpartner</span>
+        <img src="/img/WurzelPartner-Logo.svg" class="h-8 w-8 sm:h-10 sm:w-10" alt="" />
+        <span class="whitespace-nowrap text-lg font-semibold sm:text-xl">Wurzelpartner</span>
       </RouterLink>
 
       <div class="ml-auto flex items-center gap-2 xl:order-2">
@@ -50,22 +50,22 @@ function handleLogout() {
           <template v-if="!authStore.isAuthenticated">
             <RouterLink
               to="/login"
-              class="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium !text-white hover:bg-brand-400"
+              class="nav-action nav-action-primary px-4 py-2 text-sm font-medium"
               >Anmelden</RouterLink
             >
             <RouterLink
               to="/signup"
-              class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium !text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:!text-white dark:hover:bg-gray-800"
+              class="nav-action nav-action-secondary px-4 py-2 text-sm font-medium"
               >Registrieren</RouterLink
             >
           </template>
           <template v-else>
-            <span class="max-w-32 truncate text-sm text-gray-900 dark:text-white">
+            <span class="max-w-32 truncate text-sm text-heading">
               Hallo, {{ authStore.username }}
             </span>
             <button
               type="button"
-              class="rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800"
+              class="nav-action nav-action-danger px-4 py-2 text-sm font-medium"
               @click="handleLogout"
             >
               Abmelden
@@ -101,13 +101,13 @@ function handleLogout() {
       <div
         id="navbar-default"
         :class="{ hidden: !isMenuOpen }"
-        class="absolute top-full left-0 z-50 max-h-[calc(100dvh_-_100%)] w-full overflow-y-auto bg-white px-4 pb-4 shadow-lg dark:bg-gray-900 xl:static xl:order-1 xl:flex xl:max-h-none xl:w-auto xl:overflow-visible xl:bg-transparent xl:p-0 xl:shadow-none xl:dark:bg-transparent"
+        class="absolute top-full left-0 z-50 max-h-[calc(100dvh-100%)] w-full overflow-y-auto bg-page-surface px-page-gutter pb-4 shadow-lg xl:static xl:order-1 xl:flex xl:max-h-none xl:w-auto xl:overflow-visible xl:bg-transparent xl:p-0 xl:shadow-none"
       >
         <ul class="mt-4 flex flex-col gap-1 font-medium xl:mt-0 xl:flex-row xl:items-center">
           <li v-for="link in navigationLinks" :key="link.to">
             <RouterLink
               :to="link.to"
-              class="block rounded-lg px-3 py-2 !text-gray-700 hover:bg-gray-100 dark:!text-gray-200 dark:hover:bg-gray-800"
+              class="block rounded-lg px-3 py-2 text-gray-700! hover:bg-gray-100 dark:text-gray-200! dark:hover:bg-gray-800"
               @click="isMenuOpen = false"
             >
               <template #default="{ isExactActive }">
@@ -121,7 +121,7 @@ function handleLogout() {
             <li class="mt-2 xl:hidden">
               <RouterLink
                 to="/login"
-                class="block rounded-lg bg-brand-500 px-3 py-2 text-center !text-white hover:bg-brand-400"
+                class="nav-action nav-action-primary block px-3 py-2 text-center"
                 @click="isMenuOpen = false"
                 >Anmelden</RouterLink
               >
@@ -129,20 +129,18 @@ function handleLogout() {
             <li class="xl:hidden">
               <RouterLink
                 to="/signup"
-                class="block rounded-lg border border-gray-300 px-3 py-2 text-center !text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:!text-white dark:hover:bg-gray-800"
+                class="nav-action nav-action-secondary block px-3 py-2 text-center"
                 @click="isMenuOpen = false"
                 >Registrieren</RouterLink
               >
             </li>
           </template>
           <template v-else>
-            <li class="mt-2 px-3 py-2 text-gray-900 dark:text-white xl:hidden">
-              Hallo, {{ authStore.username }}
-            </li>
+            <li class="mt-2 px-3 py-2 text-heading xl:hidden">Hallo, {{ authStore.username }}</li>
             <li class="xl:hidden">
               <button
                 type="button"
-                class="w-full rounded-lg bg-red-700 px-3 py-2 text-white hover:bg-red-800"
+                class="nav-action nav-action-danger w-full px-3 py-2"
                 @click="handleLogout"
               >
                 Abmelden
