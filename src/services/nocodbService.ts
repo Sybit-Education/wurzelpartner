@@ -276,9 +276,7 @@ export class NocoDBService {
 
       // Konvertiere die Feldnamen in der Antwort zurück zu Kleinbuchstaben
       if (Array.isArray(response)) {
-        return response.map((item) =>
-          lowercaseObjectKeys(item as Record<string, unknown>),
-        ) as R[]
+        return response.map((item) => lowercaseObjectKeys(item as Record<string, unknown>)) as R[]
       }
 
       return response
@@ -311,9 +309,7 @@ export class NocoDBService {
 
       // Konvertiere die Feldnamen in der Antwort zurück zu Kleinbuchstaben
       if (Array.isArray(response)) {
-        return response.map((item) =>
-          lowercaseObjectKeys(item as Record<string, unknown>),
-        ) as R[]
+        return response.map((item) => lowercaseObjectKeys(item as Record<string, unknown>)) as R[]
       }
 
       return response
@@ -362,9 +358,7 @@ export class NocoDBService {
 
       // Konvertiere die Feldnamen in der Antwort zurück zu Kleinbuchstaben
       if (Array.isArray(response)) {
-        return response.map((item) =>
-          lowercaseObjectKeys(item as Record<string, unknown>),
-        ) as R[]
+        return response.map((item) => lowercaseObjectKeys(item as Record<string, unknown>)) as R[]
       }
 
       return response

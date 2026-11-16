@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <article class="page-section reading-page">
     <h1>Über uns</h1>
     <p>
       Das Berufsschulzentrum Radolfzell hat im Schuljahr 2025/26 das Umweltprojekt „Wurzelpartner“
@@ -37,5 +37,5 @@
       <li>1BKFHW => einjähriges Berufskolleg Fachhochschulreife Wirtschaft</li>
       <li>WO2 => Wirtschaftsoberschule im zweiten Jahr</li>
     </ul>
-  </div>
+  </article>
 </template>

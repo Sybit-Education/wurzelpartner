@@ -17,7 +17,7 @@ withDefaults(defineProps<Props>(), {
   placeholder: '',
   required: false,
   label: 'Passwort',
-  autocomplete: 'current-password'
+  autocomplete: 'current-password',
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -36,7 +36,7 @@ const updateValue = (event: Event) => {
 
 <template>
   <div>
-    <label v-if="label" :for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ label }}</label>
+    <label v-if="label" :for="id" class="form-label">{{ label }}</label>
     <div class="relative">
       <input
         :type="showPassword ? 'text' : 'password'"
@@ -47,12 +47,12 @@ const updateValue = (event: Event) => {
         :placeholder="placeholder"
         :required="required"
         :autocomplete="autocomplete"
-        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="form-input"
       />
       <button
         type="button"
         @click="togglePasswordVisibility"
-        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-400"
+        class="absolute inset-y-0 right-0 flex items-center px-3 text-muted"
       >
         <svg
           v-if="showPassword"

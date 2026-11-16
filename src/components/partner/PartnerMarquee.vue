@@ -37,16 +37,17 @@ onMounted(fetchPartners)
 </script>
 
 <template>
-  <section class="overflow-hidden rounded-2xl">
+  <section>
     <div class="py-6 md:py-8">
-
-      <div class="mt-6 min-h-[100px]">
+      <div class="mt-6 min-h-25">
         <div v-if="isLoading" class="flex items-center gap-2">
           <span class="h-2.5 w-2.5 animate-ping rounded-full"></span>
           <span>Lade Partner …</span>
         </div>
         <div v-else-if="hasError" class="text-sm">Partner konnten nicht geladen werden.</div>
-        <div v-else-if="partners.length === 0" class="text-sm">Aktuell keine Partner vorhanden.</div>
+        <div v-else-if="partners.length === 0" class="text-sm">
+          Aktuell keine Partner vorhanden.
+        </div>
         <div v-else class="relative overflow-hidden">
           <div
             class="marquee-track flex items-center gap-6 md:gap-10"
@@ -59,7 +60,7 @@ onMounted(fetchPartners)
                 :key="`${partner.id}-${copy}`"
                 :to="{ name: 'partner-details', params: { id: partner.id } }"
                 :aria-hidden="copy > 0 ? 'true' : undefined"
-                class="group flex items-center gap-3 rounded-xl bg-black/10 px-4 py-3 backdrop-blur-sm transition hover:scale-105 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20"
+                class="group flex items-center gap-3 rounded-xl bg-black/10 px-4 py-3 backdrop-blur-sm transition hover:scale-102 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20"
               >
                 <div class="flex h-10 w-40 items-center justify-center">
                   <img

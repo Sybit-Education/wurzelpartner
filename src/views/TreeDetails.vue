@@ -48,25 +48,28 @@ const imageUrl = computed((): string => {
 </script>
 
 <template>
-  <div v-if="loading">
-    <p>Lade Baumdaten...</p>
-  </div>
+  <div class="page-section">
+    <div v-if="loading">
+      <p>Lade Baumdaten...</p>
+    </div>
 
-  <div v-else-if="error">
-    <p class="text-red-500">{{ error }}</p>
-  </div>
+    <div v-else-if="error">
+      <p class="text-error-foreground">{{ error }}</p>
+    </div>
 
-  <div v-else-if="tree" class="mx-5 md:mx-10">
-      <h1 class="text-4xl font-bold text-gray-800 mb-8 mt-6 md:mb-4">Über {{ tree.name }}</h1>
+    <div v-else-if="tree">
+      <h1 class="mb-8 text-4xl font-bold text-heading md:mb-4">Über {{ tree.name }}</h1>
 
-    <div class="space-x-8">
-      <img
-        :src="imageUrl"
-        :alt="tree.name"
-        class="mt-4 md:max-w-md  h-full rounded-lg shadow-lg w-auto md:float-left md:mb-8" />
-      <p class="mt-10 md:mt-2 text-xl text-gray-700 text-justify whitespace-pre-line">
-        {{ tree.description }}
-      </p>
+      <div class="space-x-8">
+        <img
+          :src="imageUrl"
+          :alt="tree.name"
+          class="mt-4 md:max-w-md h-full rounded-lg shadow-lg w-auto md:float-left md:mb-8"
+        />
+        <p class="mt-10 text-justify text-xl whitespace-pre-line text-secondary md:mt-2">
+          {{ tree.description }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

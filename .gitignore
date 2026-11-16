@@ -36,10 +36,9 @@ coverage
 .env.test.local
 .env.production.local
 
-# graphify-axet
-.graphify/
-.axet-plugin/
-.codex/
-.copilot/
-.gemini/
-.opencode/
+.axet-plugin/*
+.codex/*
+.copilot/*
+.gemini/*
+.graphify/*
+.opencode/*

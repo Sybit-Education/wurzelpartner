@@ -17,12 +17,12 @@ export interface TokenResponse {
   accessToken: string
   refreshToken: string
   expiresIn: number
-  csrfToken: string  // CSRF-Token für Formular-Übermittlungen
+  csrfToken: string // CSRF-Token für Formular-Übermittlungen
 }
 
 /**
  * Service für die Verwaltung von JWT-Tokens (Browser-kompatible Version)
- * 
+ *
  * Hinweis: Da wir im Browser sind, können wir keine echten JWT-Tokens signieren.
  * Diese Implementierung simuliert die Token-Generierung für Demonstrationszwecke.
  * In einer Produktionsumgebung sollte die Token-Generierung auf dem Server erfolgen.
@@ -48,14 +48,14 @@ export class JwtService {
       username: user.username,
       email: user.email,
       iat: Math.floor(now / 1000),
-      exp: Math.floor(accessTokenExpiry / 1000)
+      exp: Math.floor(accessTokenExpiry / 1000),
     }
 
     // Payload für Refresh Token
     const refreshPayload = {
       userId: user.id,
       iat: Math.floor(now / 1000),
-      exp: Math.floor(refreshTokenExpiry / 1000)
+      exp: Math.floor(refreshTokenExpiry / 1000),
     }
 
     // Token als Base64-kodierte JSON-Strings (simuliert)
@@ -64,12 +64,12 @@ export class JwtService {
 
     // CSRF-Token generieren
     const csrfToken = this.generateRandomToken(32)
-    
+
     return {
       accessToken,
       refreshToken,
       expiresIn: Math.floor((accessTokenExpiry - now) / 1000),
-      csrfToken
+      csrfToken,
     }
   }
 
@@ -81,14 +81,14 @@ export class JwtService {
   verifyToken(token: string): JwtPayload | null {
     try {
       const decoded = jwtDecode<JwtPayload>(token)
-      
+
       // Prüfen, ob das Token abgelaufen ist
       const now = Math.floor(Date.now() / 1000)
       if (decoded.exp && decoded.exp < now) {
         console.warn('Token ist abgelaufen')
         return null
       }
-      
+
       return decoded
     } catch (error) {
       console.error('Token-Verifizierungsfehler:', error)
@@ -104,7 +104,7 @@ export class JwtService {
   refreshAccessToken(refreshToken: string): { accessToken: string; expiresIn: number } | null {
     try {
       const decoded = this.verifyToken(refreshToken)
-      
+
       if (!decoded || !decoded.userId) {
         return null
       }
@@ -116,14 +116,14 @@ export class JwtService {
       const accessPayload = {
         userId: decoded.userId,
         iat: Math.floor(now / 1000),
-        exp: Math.floor(accessTokenExpiry / 1000)
+        exp: Math.floor(accessTokenExpiry / 1000),
       }
 
       const accessToken = this.encodeToken(accessPayload)
 
       return {
         accessToken,
-        expiresIn: Math.floor(ACCESS_TOKEN_EXPIRES_IN / 1000)
+        expiresIn: Math.floor(ACCESS_TOKEN_EXPIRES_IN / 1000),
       }
     } catch (error) {
       console.error('Token-Refresh-Fehler:', error)
@@ -151,13 +151,13 @@ export class JwtService {
     const header = { alg: 'HS256', typ: 'JWT' }
     const encodedHeader = btoa(JSON.stringify(header))
     const encodedPayload = btoa(JSON.stringify(payload))
-    
+
     // Simulierte Signatur (in einer echten Implementierung würde hier eine kryptografische Signatur stehen)
     const signature = btoa('simulated-signature')
-    
+
     return `${encodedHeader}.${encodedPayload}.${signature}`
   }
-  
+
   /**
    * Generiert ein zufälliges Token für CSRF-Schutz
    * @param length Die Länge des Tokens
@@ -167,16 +167,19 @@ export class JwtService {
     const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     let result = ''
     const randomValues = new Uint8Array(length)
-    
+
     // Sichere Zufallszahlen generieren, wenn verfügbar
     if (window.crypto && window.crypto.getRandomValues) {
       window.crypto.getRandomValues(randomValues)
-      
+
       for (let i = 0; i < length; i++) {
         // Ensure the index is within bounds
-        const randomValue = randomValues[i];
-        const index = randomValue !== undefined ? randomValue % charset.length : Math.floor(Math.random() * charset.length);
-        result += charset[index];
+        const randomValue = randomValues[i]
+        const index =
+          randomValue !== undefined
+            ? randomValue % charset.length
+            : Math.floor(Math.random() * charset.length)
+        result += charset[index]
       }
     } else {
       // Fallback für ältere Browser (weniger sicher)
@@ -184,7 +187,7 @@ export class JwtService {
         result += charset[Math.floor(Math.random() * charset.length)]
       }
     }
-    
+
     return result
   }
 }

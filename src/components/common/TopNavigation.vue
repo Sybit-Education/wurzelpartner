@@ -1,169 +1,153 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { shallowRef, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
-import { useRouter } from 'vue-router'
 import ThemeToggle from '@/components/common/ThemeToggle.vue'
-import { FwbButton } from 'flowbite-vue'
 
 const authStore = useAuthStore()
+const route = useRoute()
 const router = useRouter()
-const isMenuOpen = ref(false)
+const isMenuOpen = shallowRef(false)
 
-function toggleMenu() {
-  isMenuOpen.value = !isMenuOpen.value
-}
+const navigationLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/trees', label: 'Baumarten' },
+  { to: '/map', label: 'Karte' },
+  { to: '/about', label: 'Über uns' },
+  { to: '/privacy', label: 'Datenschutzerklärung' },
+  { to: '/spendenvonbaume', label: 'Spenden von Bäumen' },
+]
+
+watch(
+  () => route.fullPath,
+  () => {
+    isMenuOpen.value = false
+  },
+)
 
 function handleLogout() {
+  isMenuOpen.value = false
   authStore.logout()
-  router.push('/login')
+  void router.push('/login')
 }
 </script>
 
 <template>
-  <nav class="bg-white border-gray-200 dark:bg-gray-900">
-    <div class="container mx-auto">
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
-        <a href="/" class="flex items-center space-x-3 mr-5">
-          <img src="/img/WurzelPartner-Logo.svg" class="h-15" alt="Flowbite Logo" />
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-            >Wurzelpartner</span
+  <nav aria-label="Hauptnavigation" class="relative bg-page-surface">
+    <div class="page-shell flex flex-wrap items-center gap-x-2 py-4 sm:gap-x-4">
+      <RouterLink
+        to="/"
+        class="flex shrink-0 items-center gap-2 text-heading! no-underline sm:gap-3"
+        @click="isMenuOpen = false"
+      >
+        <img src="/img/WurzelPartner-Logo.svg" class="h-8 w-8 sm:h-10 sm:w-10" alt="" />
+        <span class="whitespace-nowrap text-lg font-semibold sm:text-xl">Wurzelpartner</span>
+      </RouterLink>
+
+      <div class="ml-auto flex items-center gap-2 xl:order-2">
+        <ThemeToggle />
+        <div class="hidden items-center gap-2 xl:flex">
+          <template v-if="!authStore.isAuthenticated">
+            <RouterLink
+              to="/login"
+              class="nav-action nav-action-primary px-4 py-2 text-sm font-medium"
+              >Anmelden</RouterLink
+            >
+            <RouterLink
+              to="/signup"
+              class="nav-action nav-action-secondary px-4 py-2 text-sm font-medium"
+              >Registrieren</RouterLink
+            >
+          </template>
+          <template v-else>
+            <span class="max-w-32 truncate text-sm text-heading">
+              Hallo, {{ authStore.username }}
+            </span>
+            <button
+              type="button"
+              class="nav-action nav-action-danger px-4 py-2 text-sm font-medium"
+              @click="handleLogout"
+            >
+              Abmelden
+            </button>
+          </template>
+        </div>
+        <button
+          type="button"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:text-gray-300 dark:hover:bg-gray-700 xl:hidden"
+          aria-controls="navbar-default"
+          :aria-expanded="isMenuOpen"
+          :aria-label="isMenuOpen ? 'Menü schließen' : 'Menü öffnen'"
+          @click="isMenuOpen = !isMenuOpen"
+        >
+          <svg
+            class="h-5 w-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
           >
-        </a>
-        <div class="flex items-center ml-auto md:order-2 md:self-end">
-          <!-- Theme Toggle -->
-          <ThemeToggle class="mr-2 md:translate-x-62" />
-          <div class="hidden md:flex md:space-x-2 md:translate-x-62">
-            <template v-if="!authStore.isAuthenticated">
-              <fwb-button
-                color="green"
-                size="md"
-                href="/login"
-                class="px-5 py-2.5 h-10 inline-flex items-center justify-center bg-brand-600 hover:bg-brand-700"
-                ><span class="text-white">Anmelden</span>
-              </fwb-button>
-              <fwb-button
-                color="alternative"
-                size="md"
-                class="px-5 py-2.5 h-10 inline-flex items-center justify-center"
-                href="/signup"
-                >Registrieren</fwb-button
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        id="navbar-default"
+        :class="{ hidden: !isMenuOpen }"
+        class="absolute top-full left-0 z-50 max-h-[calc(100dvh-100%)] w-full overflow-y-auto bg-page-surface px-page-gutter pb-4 shadow-lg xl:static xl:order-1 xl:flex xl:max-h-none xl:w-auto xl:overflow-visible xl:bg-transparent xl:p-0 xl:shadow-none"
+      >
+        <ul class="mt-4 flex flex-col gap-1 font-medium xl:mt-0 xl:flex-row xl:items-center">
+          <li v-for="link in navigationLinks" :key="link.to">
+            <RouterLink
+              :to="link.to"
+              class="block rounded-lg px-3 py-2 text-gray-700! hover:bg-gray-100 dark:text-gray-200! dark:hover:bg-gray-800"
+              @click="isMenuOpen = false"
+            >
+              <template #default="{ isExactActive }">
+                <span :class="isExactActive ? 'text-brand-500 dark:text-green-400' : ''">
+                  {{ link.label }}
+                </span>
+              </template>
+            </RouterLink>
+          </li>
+          <template v-if="!authStore.isAuthenticated">
+            <li class="mt-2 xl:hidden">
+              <RouterLink
+                to="/login"
+                class="nav-action nav-action-primary block px-3 py-2 text-center"
+                @click="isMenuOpen = false"
+                >Anmelden</RouterLink
               >
-            </template>
-            <template v-else>
-              <span class="text-gray-900 dark:text-white mr-2"
-                >Hallo, {{ authStore.username }}</span
+            </li>
+            <li class="xl:hidden">
+              <RouterLink
+                to="/signup"
+                class="nav-action nav-action-secondary block px-3 py-2 text-center"
+                @click="isMenuOpen = false"
+                >Registrieren</RouterLink
               >
+            </li>
+          </template>
+          <template v-else>
+            <li class="mt-2 px-3 py-2 text-heading xl:hidden">Hallo, {{ authStore.username }}</li>
+            <li class="xl:hidden">
               <button
+                type="button"
+                class="nav-action nav-action-danger w-full px-3 py-2"
                 @click="handleLogout"
-                class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
               >
                 Abmelden
               </button>
-            </template>
-          </div>
-          <button
-            @click="toggleMenu"
-            type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-default"
-            :aria-expanded="isMenuOpen"
-          >
-            <span class="sr-only">Open main menu</span>
-            <svg
-              class="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <div
-          :class="{ hidden: !isMenuOpen }"
-          class="w-full md:flex md:w-auto md:order-1"
-          id="navbar-default"
-        >
-          <ul
-            class="font-medium flex flex-col md:p-0 mt-4 ml-8 md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-1"
-          >
-            <li>
-              <router-link
-                to="/"
-                class="block py-2 px-3 text-white bg-brand-700 rounded-sm md:bg-transparent md:text-brand-700 md:p-0 dark:text-white md:dark:text-green-500"
-                aria-current="page"
-                >Home
-                </router-link>
             </li>
-            <li>
-              <router-link
-                to="/trees"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Baumarten</router-link
-              >
-            </li>
-            <li>
-              <router-link
-                to="/map"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Karte</router-link
-              >
-            </li>
-            <li>
-              <router-link
-                to="/about"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Über uns</router-link
-              >
-            </li>
-            <li>
-              <router-link
-                to="/contact"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-brand-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Kontakt</router-link
-              >
-            </li>
-            <template v-if="!authStore.isAuthenticated">
-              <li class="md:hidden mt-4">
-                <router-link
-                  to="/login"
-                  class="block w-full text-center py-2 px-3 text-white bg-brand-600 rounded-lg hover:bg-brand-700"
-                  >Anmelden</router-link
-                >
-              </li>
-              <li class="md:hidden mt-2">
-                <router-link
-                  to="/signup"
-                  class="block w-full text-center py-2 px-3 text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
-                  >Registrieren</router-link
-                >
-              </li>
-            </template>
-            <template v-else>
-              <li class="md:hidden mt-4">
-                <span class="block w-full text-center py-2 px-3 text-gray-900 dark:text-white">
-                  Hallo, {{ authStore.username }}
-                </span>
-              </li>
-              <li class="md:hidden mt-2">
-                <button
-                  @click="handleLogout"
-                  class="block w-full text-center py-2 px-3 text-white bg-red-600 rounded-lg hover:bg-red-700"
-                >
-                  Abmelden
-                </button>
-              </li>
-            </template>
-          </ul>
-        </div>
+          </template>
+        </ul>
       </div>
     </div>
   </nav>

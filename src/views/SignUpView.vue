@@ -35,7 +35,8 @@ const handleSignUp = async (event: Event) => {
     // Passwortanforderungen prüfen
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     if (!passwordRegex.test(password.value)) {
-      errorMessage.value = 'Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.'
+      errorMessage.value =
+        'Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.'
       return
     }
 
@@ -67,41 +68,26 @@ const handleSignUp = async (event: Event) => {
 </script>
 
 <template>
-  <div
-    class="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 mx-auto mt-8"
-  >
-    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-      <h1
-        class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
-      >
+  <div class="auth-card">
+    <div class="form-stack p-surface">
+      <h1 class="text-xl font-bold leading-tight tracking-tight text-heading md:text-2xl">
         Konto erstellen
       </h1>
-      <form @submit="handleSignUp" class="space-y-4 md:space-y-6">
+      <form @submit="handleSignUp" class="form-stack">
         <div>
-          <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Benutzername</label
-          >
+          <label for="username" class="form-label"> Benutzername </label>
           <input
             type="text"
             name="username"
             id="username"
             v-model="username"
-            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="form-input"
             required
           />
         </div>
         <div>
-          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Ihre E-Mail</label
-          >
-          <input
-            type="email"
-            name="email"
-            id="email"
-            v-model="email"
-            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required
-          />
+          <label for="email" class="form-label">Ihre E-Mail</label>
+          <input type="email" name="email" id="email" v-model="email" class="form-input" required />
         </div>
         <div>
           <PasswordInput
@@ -124,19 +110,15 @@ const handleSignUp = async (event: Event) => {
           />
         </div>
         <div>
-          <p v-if="errorMessage" class="text-sm text-red-600 mx-auto max-w-fit">
+          <p v-if="errorMessage" class="form-error">
             {{ errorMessage }}
           </p>
         </div>
-        <button
-          type="submit"
-          class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          :disabled="loading"
-        >
+        <button type="submit" class="auth-submit" :disabled="loading">
           <span v-if="loading">Wird registriert...</span>
           <span v-else>Registrieren</span>
         </button>
-        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+        <p class="text-sm font-light text-muted">
           Bereits registriert?
           <router-link
             to="/login"
