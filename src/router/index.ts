@@ -58,8 +58,8 @@ const router = createRouter({
     },
     // Tree care
     {
-      path: '/tree-care',
-      name: 'tree-caare',
+      path: '/treecare',
+      name: 'treecare',
       component: TreeCareView,
     },
     // Map
