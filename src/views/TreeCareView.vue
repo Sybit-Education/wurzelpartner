@@ -1,6 +1,6 @@
 <template>
-  <article class="mx-auto max-w-4xl py-10 md:py-14">
-    <!-- Einleitung -->
+  <article class="contact-heading">
+    <!--Introduction-->
     <header class="mb-10">
       <p class="mb-2 text-sm font-semibold uppercase tracking-wide text-brand-700">
         Wurzelpartner · BSZ Radolfzell
