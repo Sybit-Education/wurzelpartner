@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TreeInfoList from '../components/treeinfo/TreeInfoList.vue'
+import TreeInfoList from '@/components/treeinfo/TreeInfoList.vue'
 import SponsorMarquee from '@/components/sponsor/SponsorMarquee.vue'
 import PartnerMarquee from '@/components/partner/PartnerMarquee.vue'
 </script>

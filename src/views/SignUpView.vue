@@ -79,9 +79,12 @@ const handleSignUp = async (event: Event) => {
       </h1>
       <form @submit="handleSignUp" class="space-y-4 md:space-y-6">
         <div>
-          <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Benutzername</label
+          <label
+            for="username"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
+            Benutzername
+          </label>
           <input
             type="text"
             name="username"
@@ -131,7 +134,7 @@ const handleSignUp = async (event: Event) => {
         </div>
         <button
           type="submit"
-          class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          class="w-full text-white bg-brand-600 hover:bg-brand-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           :disabled="loading"
         >
           <span v-if="loading">Wird registriert...</span>
