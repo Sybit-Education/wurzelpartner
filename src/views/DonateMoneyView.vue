@@ -26,9 +26,9 @@ function submitDonation() {
 </script>
 
 <template>
-  <div class="donation-page -mx-4">
-    <section class="donation-hero px-6 py-16 text-white sm:px-10 sm:py-20">
-      <div class="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.2fr_0.8fr]">
+  <div class="donation-page -mx-page-gutter">
+    <section class="donation-hero px-page-gutter py-16 text-white sm:py-20">
+      <div class="mx-auto grid max-w-6xl items-center gap-section-gap md:grid-cols-[1.2fr_0.8fr]">
         <div class="max-w-2xl">
           <p class="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-green-200">
             Gemeinsam Wurzeln schlagen
@@ -65,37 +65,33 @@ function submitDonation() {
 
     <section
       id="spenden"
-      class="mx-auto grid max-w-6xl gap-12 px-6 py-16 sm:px-10 lg:grid-cols-2 lg:gap-20"
+      class="mx-auto grid max-w-6xl gap-section-gap px-page-gutter py-page-section lg:grid-cols-2"
     >
       <div class="self-center">
-        <p
-          class="text-sm font-semibold uppercase tracking-[0.16em] text-brand-700 dark:text-brand-600"
-        >
+        <p class="text-sm font-semibold uppercase tracking-[0.16em] text-brand-foreground">
           Dein Beitrag
         </p>
-        <h2 class="mt-3 text-3xl font-semibold text-gray-900 dark:text-white">
-          Wachsen lassen, was uns verbindet.
-        </h2>
-        <p class="mt-4 max-w-xl leading-7 text-gray-600 dark:text-gray-300">
+        <h2 class="mt-3 text-3xl font-semibold text-heading">Wachsen lassen, was uns verbindet.</h2>
+        <p class="mt-4 max-w-xl leading-7 text-secondary">
           Wähle einen Betrag, der für dich passt. Ob einmalig oder regelmäßig: Deine Unterstützung
           stärkt unsere gemeinsame Arbeit für mehr Bäume in der Region.
         </p>
-        <div class="mt-8 grid gap-5 sm:grid-cols-3">
+        <div class="mt-8 grid gap-6 sm:grid-cols-3">
           <div class="border-t-2 border-brand-600 pt-3">
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Planen</h3>
-            <p class="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
+            <h3 class="text-base font-semibold text-heading">Planen</h3>
+            <p class="mt-1 text-sm leading-6 text-secondary">
               Geeignete Orte und passende Baumarten finden.
             </p>
           </div>
           <div class="border-t-2 border-brand-600 pt-3">
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Pflanzen</h3>
-            <p class="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
+            <h3 class="text-base font-semibold text-heading">Pflanzen</h3>
+            <p class="mt-1 text-sm leading-6 text-secondary">
               Neue Pflanzungen gemeinsam möglich machen.
             </p>
           </div>
           <div class="border-t-2 border-brand-600 pt-3">
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Pflegen</h3>
-            <p class="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
+            <h3 class="text-base font-semibold text-heading">Pflegen</h3>
+            <p class="mt-1 text-sm leading-6 text-secondary">
               Junge Bäume auf ihrem Weg begleiten.
             </p>
           </div>
@@ -103,13 +99,11 @@ function submitDonation() {
       </div>
 
       <form
-        class="donation-form rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 sm:p-8"
+        class="donation-form rounded-lg border border-gray-200 bg-raised p-surface shadow-md dark:border-gray-700"
         @submit.prevent="submitDonation"
       >
         <fieldset>
-          <legend class="text-lg font-semibold text-gray-900 dark:text-white">
-            Wie möchtest du helfen?
-          </legend>
+          <legend class="text-lg font-semibold text-heading">Wie möchtest du helfen?</legend>
           <div class="mt-4 grid grid-cols-2 gap-3">
             <button
               type="button"
@@ -129,9 +123,7 @@ function submitDonation() {
         </fieldset>
 
         <fieldset class="mt-7">
-          <legend class="text-sm font-semibold text-gray-900 dark:text-white">
-            Betrag auswählen
-          </legend>
+          <legend class="text-sm font-semibold text-heading">Betrag auswählen</legend>
           <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
             <button
               v-for="amount in donationAmounts"
@@ -145,10 +137,7 @@ function submitDonation() {
           </div>
         </fieldset>
 
-        <label
-          for="donation-amount"
-          class="mt-6 block text-sm font-medium text-gray-900 dark:text-white"
-        >
+        <label for="donation-amount" class="mt-6 block text-sm font-medium text-heading">
           Oder eigenen Betrag eingeben
         </label>
         <div class="relative mt-2">
@@ -160,17 +149,17 @@ function submitDonation() {
             max="1000"
             step="1"
             required
-            class="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 pr-14 text-gray-900 focus:border-brand-600 focus:ring-brand-600 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+            class="block w-full rounded-md border border-field-border bg-page-surface px-4 py-3 pr-14 text-heading focus:border-brand-600 focus:ring-brand-600"
             aria-describedby="donation-limit"
             @input="clearDonationMessage"
           />
           <span
-            class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-gray-500 dark:text-gray-400"
+            class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-muted"
           >
             EUR
           </span>
         </div>
-        <p id="donation-limit" class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+        <p id="donation-limit" class="mt-2 text-xs text-muted">
           Möglich sind Beträge zwischen 5 EUR und 1.000 EUR.
         </p>
 
@@ -180,13 +169,13 @@ function submitDonation() {
         >
           Spendenabsicht vormerken
         </button>
-        <p class="mt-4 text-xs leading-5 text-gray-500 dark:text-gray-400">
+        <p class="mt-4 text-xs leading-5 text-muted">
           Demo: Die Zahlungsabwicklung ist noch nicht angebunden. Beim Absenden wird keine Zahlung
           ausgelöst.
         </p>
         <p
           v-if="donationMessage"
-          class="mt-4 rounded-md border border-brand-200 bg-brand-900 px-4 py-3 text-sm leading-6 text-brand-900 dark:border-brand-700 dark:bg-brand-900/20 dark:text-brand-100"
+          class="mt-4 rounded-md border border-brand-200 bg-brand-900 px-4 py-3 text-sm leading-6 text-brand-100 dark:border-brand-700 dark:bg-brand-900/20 dark:text-brand-900"
           role="status"
           aria-live="polite"
         >

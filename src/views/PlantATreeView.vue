@@ -160,7 +160,7 @@ async function createTree() {
 </script>
 
 <template>
-  <div class="mx-auto max-w-2xl p-4">
+  <div class="page-section form-stack mx-auto w-full max-w-2xl">
     <div>
       <label for="message" class="mb-1 block font-medium">Nachricht</label>
       <input
@@ -223,13 +223,3 @@ async function createTree() {
     </div>
   </div>
 </template>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
