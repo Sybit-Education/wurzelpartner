@@ -127,22 +127,24 @@
       <section>
         <h2>7. Karten und externe Kartendienste</h2>
         <p>
-          Die Straßenkarte wird aus einer PMTiles-Datei geladen, die von derselben Domain wie die
-          Anwendung bereitgestellt wird. Dabei werden keine Kartenkacheln von OpenStreetMap-Servern
-          angefordert. Wenn Sie die Satellitenebene auswählen, stellt Ihr Browser eine Verbindung zu
-          Esri (ArcGIS World Imagery) her. Dabei werden insbesondere Ihre IP-Adresse, technische
-          Browserdaten und die angefragten Bildkacheln übermittelt. Auf diese Datenverarbeitung
-          durch Esri haben wir keinen unmittelbaren Einfluss.
+          Die standardmäßig angezeigte Straßenkarte wird aus einer PMTiles-Datei geladen, die von
+          derselben Domain wie die Anwendung bereitgestellt wird. Dabei werden keine Kartenkacheln
+          von OpenStreetMap-Servern angefordert. Wenn Sie die Ebene „OpenStreetMap (online)“
+          auswählen, stellt Ihr Browser eine Verbindung zum Kachelserver der OpenStreetMap
+          Foundation her; bei Auswahl der Satellitenebene zu Esri (ArcGIS World Imagery). Dabei
+          werden insbesondere Ihre IP-Adresse, technische Browserdaten und die angefragten
+          Bildkacheln an den jeweiligen Anbieter übermittelt. Auf diese Datenverarbeitung haben wir
+          keinen unmittelbaren Einfluss.
         </p>
         <ul class="list-inside list-disc">
           <li>
-            OpenStreetMap:
+            OpenStreetMap Foundation:
             <a
               class="text-blue-700 underline dark:text-blue-300"
-              href="https://www.openstreetmap.org/copyright"
+              href="https://osmfoundation.org/wiki/Privacy_Policy"
               target="_blank"
               rel="noopener noreferrer"
-              >Informationen zum Urheberrecht und Datenschutz</a
+              >Datenschutzhinweise</a
             >
           </li>
           <li>

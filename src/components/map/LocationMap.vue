@@ -5,7 +5,6 @@
       v-model:zoom="zoom"
       :center="center"
       class="map"
-      crs="EPSG:3857"
       :min-zoom="11"
       :max-zoom="18"
       :bounds="bounds"
@@ -21,6 +20,13 @@
         name="Satellite"
         :visible="false"
         attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+      ></l-tile-layer>
+      <l-tile-layer
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        layer-type="base"
+        name="OpenStreetMap (online)"
+        :visible="false"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       ></l-tile-layer>
 
       <!-- Radolfzell Grenzen (zuerst laden, damit sie unter den Markern liegen) -->

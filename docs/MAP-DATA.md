@@ -41,9 +41,15 @@ die Größe und abweichende Bounds eines neuen Archivs.
 
 ## Netzwerk und Datenschutz
 
-Die PMTiles-Datei wird von derselben Domain wie die Anwendung geladen; für die
-Straßenkarte kontaktiert der Browser keinen externen Kachelserver. Der
-Webserver muss HTTP-Range-Anfragen für die Datei unterstützen. Das macht nicht
-die gesamte Anwendung offline verfügbar: Standorte benötigen weiterhin die
-Anwendungs-API, und die optionale Esri-Satellitenebene stellt bei Auswahl eine
-Verbindung zu Esri her.
+Die standardmäßig aktive PMTiles-Datei wird von derselben Domain wie die
+Anwendung geladen; dabei kontaktiert der Browser keinen externen Kachelserver.
+Der Webserver muss HTTP-Range-Anfragen für die Datei unterstützen. Das macht
+nicht die gesamte Anwendung offline verfügbar: Standorte benötigen weiterhin
+die Anwendungs-API.
+
+Die optionalen Ebenen „OpenStreetMap (online)“ und „Satellite“ stellen erst bei
+Auswahl Verbindungen zu `tile.openstreetmap.org` beziehungsweise Esri her. Für
+den OSM-Kachelserver gilt dessen
+[Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/);
+Kacheln dürfen nicht vorab für die Offline-Nutzung heruntergeladen werden.
+Alle Kartenebenen verwenden Leaflets Standard-Koordinatensystem EPSG:3857.
