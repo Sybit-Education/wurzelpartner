@@ -11,6 +11,14 @@ bisher bis Zoomstufe 18 vergrößert werden; darüber hinaus werden die
 Vektorkacheln skaliert. Das Satellitenbild bleibt ein separater, optionaler
 Esri-Dienst.
 
+Ab Kachelzoomstufe 15 werden Straßen- und Wegenamen deutlicher beschriftet, ab
+Kachelzoomstufe 16 Gebäude stärker abgegrenzt. Ab Kachelzoomstufe 17 erscheinen
+Hausnummern, sofern sie im Archiv als Adresspunkt vorhanden sind und die
+Beschriftung nicht mit wichtigeren Kartenelementen kollidiert. Das
+verwendete Archiv wird dafür nicht vergrößert oder nachgeladen. Da die Karte
+auch halbe Zoomstufen erlaubt und Leaflet die Kachelzoomstufe rundet, können
+die Details jeweils eine halbe Zoomstufe früher erscheinen.
+
 ## Archiv neu erzeugen
 
 Installiere die PMTiles-CLI v1.31.2 von den
