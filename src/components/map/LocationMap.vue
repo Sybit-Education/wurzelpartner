@@ -5,7 +5,7 @@
       v-model:zoom="zoom"
       :center="center"
       class="map"
-      crs="EPSG:4326"
+      crs="EPSG:3857"
       :min-zoom="11"
       :max-zoom="18"
       :bounds="bounds"
@@ -19,14 +19,8 @@
         url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
         layer-type="base"
         name="Satellite"
+        :visible="false"
         attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-      ></l-tile-layer>
-
-      <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        layer-type="base"
-        name="OpenStreetMap"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       ></l-tile-layer>
 
       <!-- Radolfzell Grenzen (zuerst laden, damit sie unter den Markern liegen) -->
@@ -63,7 +57,7 @@
 <script setup lang="ts">
 import { ref, watch, onBeforeMount, shallowRef, onBeforeUnmount, onMounted } from 'vue'
 
-import { latLngBounds, type PointTuple } from 'leaflet'
+import { latLngBounds, type Control, type Map as LeafletMap, type PointTuple } from 'leaflet'
 import {
   LMap,
   LControlLayers,
@@ -74,6 +68,7 @@ import {
   LGeoJson,
 } from '@vue-leaflet/vue-leaflet'
 import { LocationService } from '@/services/locationService'
+import { installOfflineBasemap } from './offlineBasemap'
 import type { Location } from '@/models/location'
 import { FwbSpinner } from 'flowbite-vue'
 
@@ -106,27 +101,35 @@ const mapOptions = ref({
   updateWhenIdle: true,
 })
 // Definiere einen Typ für die Leaflet-Map mit leafletObject
-interface LeafletMapRef {
-  leafletObject?: {
-    options: {
-      trackResize: boolean
-      renderer: unknown
-      zoomSnap: number
-      wheelPxPerZoomLevel: number
-    }
-    _container?: {
-      style: {
-        transform: string
-        willChange: string
-        backfaceVisibility: string
-      }
-    }
-    on: (event: string, callback: () => void) => void
-    getZoom: () => number
+interface LeafletMapObject extends Pick<LeafletMap, 'addLayer' | 'removeLayer'> {
+  options: {
+    trackResize: boolean
+    renderer: unknown
+    zoomSnap: number
+    wheelPxPerZoomLevel: number
   }
+  _container?: {
+    style: {
+      transform: string
+      willChange: string
+      backfaceVisibility: string
+    }
+  }
+  on: (event: string, callback: () => void) => void
+  getZoom: () => number
+}
+
+interface LeafletMapRef {
+  leafletObject?: LeafletMapObject
+}
+
+interface LeafletControlLayersRef {
+  leafletObject?: Pick<Control.Layers, 'addBaseLayer' | 'removeLayer'>
 }
 
 const map = ref<LeafletMapRef>({})
+const control = ref<LeafletControlLayersRef>({})
+let removeOfflineBasemap: (() => void) | null = null
 
 // Standorte
 const locationService = new LocationService()
@@ -180,6 +183,14 @@ onMounted(() => {
 
 // Verwende eine debounced Funktion für mapLoaded mit defineAsyncComponent für bessere Performance
 const mapLoaded = () => {
+  const leafletMap = map.value?.leafletObject
+  const layerControl = control.value?.leafletObject
+
+  if (!leafletMap || !layerControl) {
+    throw new Error('Leaflet map and layer control must be ready before mapLoaded')
+  }
+
+  removeOfflineBasemap = installOfflineBasemap(leafletMap, layerControl)
   mapInitialized.value = true
 }
 
@@ -211,6 +222,8 @@ watch(
 
 // Bereinige Timeouts beim Unmount
 onBeforeUnmount(() => {
+  removeOfflineBasemap?.()
+
   if (zoomTimeout) {
     clearTimeout(zoomTimeout)
   }

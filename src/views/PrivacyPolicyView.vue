@@ -127,11 +127,12 @@
       <section>
         <h2>7. Karten und externe Kartendienste</h2>
         <p>
-          Auf der Kartenansicht können Kartenkacheln von OpenStreetMap und Esri (ArcGIS World
-          Imagery) geladen werden. Erst beim Aufruf bzw. der Nutzung der Karte stellt Ihr Browser
-          Verbindungen zu den Servern dieser Anbieter her. Dabei werden insbesondere Ihre
-          IP-Adresse, technische Browserdaten und die angefragten Kartenkacheln übermittelt. Auf
-          diese Datenverarbeitung durch die Anbieter haben wir keinen unmittelbaren Einfluss.
+          Die Straßenkarte wird aus einer PMTiles-Datei geladen, die von derselben Domain wie die
+          Anwendung bereitgestellt wird. Dabei werden keine Kartenkacheln von OpenStreetMap-Servern
+          angefordert. Wenn Sie die Satellitenebene auswählen, stellt Ihr Browser eine Verbindung zu
+          Esri (ArcGIS World Imagery) her. Dabei werden insbesondere Ihre IP-Adresse, technische
+          Browserdaten und die angefragten Bildkacheln übermittelt. Auf diese Datenverarbeitung
+          durch Esri haben wir keinen unmittelbaren Einfluss.
         </p>
         <ul class="list-inside list-disc">
           <li>
