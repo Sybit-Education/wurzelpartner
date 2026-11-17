@@ -26,10 +26,12 @@
 - `public/maps/radolfzell.pmtiles` — clipped OSM-derived vector tile archive served same-origin.
 - `scripts/generate-radolfzell-map.sh` — regenerates the archive from a dated Protomaps basemap build.
 - `scripts/__tests__/generate-radolfzell-map.test.sh` — guards invalid source-date handling without network access.
+- `scripts/__tests__/map-entry-bundle.test.sh` — ensures map rendering code stays out of the initial app bundle.
 - `docs/MAP-DATA.md` — regeneration requirements, source attribution, and map-network behavior.
 - `src/components/map/offlineBasemap.ts` — creates, registers, activates, and removes the PMTiles Leaflet base layer.
 - `src/components/map/__tests__/offlineBasemap.spec.ts` — tests layer registration, activation, and cleanup.
 - `src/components/map/LocationMap.vue` — installs the offline layer, retains the Esri layer, and uses Web Mercator.
+- `src/router/index.ts` — lazy-loads the map route to keep its renderer out of the initial app bundle.
 - `src/views/PrivacyPolicyView.vue` — explains same-origin basemap delivery and optional Esri requests.
 - `package.json`, `package-lock.json` — add the Protomaps Leaflet runtime dependency, Vitest, and the project test command.
 
@@ -143,8 +145,10 @@ Expected: PASS for registration, activation, renderer configuration, and cleanup
 
 **Files:**
 - Modify: `src/components/map/LocationMap.vue`
+- Modify: `src/router/index.ts`
 - Modify: `src/views/PrivacyPolicyView.vue`
 - Modify: `src/components/map/__tests__/offlineBasemap.spec.ts` only if a lifecycle regression requires a focused test.
+- Create: `scripts/__tests__/map-entry-bundle.test.sh`
 
 **Interfaces:**
 - `LocationMap.vue` calls `installOfflineBasemap` after both the map and layer-control Leaflet objects exist, and calls the returned cleanup before unmount.
@@ -154,6 +158,8 @@ Expected: PASS for registration, activation, renderer configuration, and cleanup
 - [x] **Step 1: Integrate the helper and Web Mercator CRS**
 
 Remove the remote OSM `l-tile-layer`. Set the Esri layer's `:visible="false"` so it is only requested after selection. In `mapLoaded`, install the PMTiles layer using the map and layer-control refs; retain the cleanup function and call it in `onBeforeUnmount`. Change `crs="EPSG:4326"` to `crs="EPSG:3857"`. Keep all location, boundary, bounds, and zoom behavior unchanged.
+
+Lazy-load the `/map` route so the PMTiles renderer is not downloaded on pages that do not use the map. After `npm run build`, run `bash scripts/__tests__/map-entry-bundle.test.sh` to verify the basemap code is absent from the app entry and present in a production JavaScript chunk.
 
 - [x] **Step 2: Update the privacy notice**
 

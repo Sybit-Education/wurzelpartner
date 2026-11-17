@@ -7,7 +7,6 @@ import DonateMoneyView from '../views/DonateMoneyView.vue'
 import DonateTreeView from '../views/DonateTreeView.vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import MapView from '../views/MapView.vue'
 import PartnerDetailView from '../views/PartnerDetailView.vue'
 import PlantATreeView from '../views/PlantATreeView.vue'
 import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
@@ -66,7 +65,7 @@ const router = createRouter({
     {
       path: '/map',
       name: 'map',
-      component: MapView,
+      component: () => import('../views/MapView.vue'),
     },
     // Create a tree
     {
