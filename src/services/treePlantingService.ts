@@ -1,4 +1,4 @@
-import { NocoDBService } from './nocodbService'
+import { NocoDBService, type ListResponse } from './nocodbService'
 import type { PlantedTree } from '@/models/planted_tree'
 
 /**
@@ -29,6 +29,17 @@ export class TreePlantingService {
       treeData,
     )
     return newTree ?? null
+  }
+
+  /**
+   * Ruft die neuesten Pflanzungen ab
+   * @param limit Maximale Anzahl der abzurufenden Pflanzungen
+   */
+  async getLatestPlantings(limit: number): Promise<ListResponse<PlantedTree>> {
+    return this.nocoDBService.getRecords<PlantedTree>(this.tableName, {
+      sort: '-created_at',
+      limit,
+    })
   }
 
   /**
