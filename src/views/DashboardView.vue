@@ -72,16 +72,14 @@ const totalReserved = computed(() =>
 </script>
 
 <template>
-  <section class="px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-    <header class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+  <section class="page-section reading-page">
+    <header class="reading-header">
       <div>
-        <p class="text-sm text-gray-500 dark:text-gray-300">
+        <p class="text-sm text-muted">
           Willkommen zurück, {{ authStore.username || 'Freund:in des Waldes' }}
         </p>
-        <h1 class="text-3xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
-        <p class="text-gray-600 dark:text-gray-300">
-          Überblick über deine Baumpatenschaften und bereitgestellten Pflanzorte.
-        </p>
+        <h1 class="text-heading">Dashboard</h1>
+        <p>Überblick über deine Baumpatenschaften und bereitgestellten Pflanzorte.</p>
       </div>
       <span
         class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm text-amber-900 dark:bg-amber-900/30 dark:text-amber-100"
@@ -91,45 +89,35 @@ const totalReserved = computed(() =>
     </header>
 
     <div class="grid gap-4 md:grid-cols-3">
-      <div
-        class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-      >
-        <p class="text-sm text-gray-500 dark:text-gray-400">Gespendete Bäume</p>
-        <p class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">
+      <div class="rounded-xl border border-field-border bg-raised p-surface shadow-sm">
+        <p class="text-sm text-muted">Gespendete Bäume</p>
+        <p class="mt-2 text-3xl font-semibold text-heading">
           {{ totalTreesDonated }}
         </p>
       </div>
-      <div
-        class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-      >
-        <p class="text-sm text-gray-500 dark:text-gray-400">Pflanzplätze gesamt</p>
-        <p class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">
+      <div class="rounded-xl border border-field-border bg-raised p-surface shadow-sm">
+        <p class="text-sm text-muted">Pflanzplätze gesamt</p>
+        <p class="mt-2 text-3xl font-semibold text-heading">
           {{ totalCapacity }}
         </p>
       </div>
-      <div
-        class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-      >
-        <p class="text-sm text-gray-500 dark:text-gray-400">Davon reserviert</p>
-        <p class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">
+      <div class="rounded-xl border border-field-border bg-raised p-surface shadow-sm">
+        <p class="text-sm text-muted">Davon reserviert</p>
+        <p class="mt-2 text-3xl font-semibold text-heading">
           {{ totalReserved }}
         </p>
       </div>
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-2">
-      <div
-        class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-      >
-        <div class="mb-4 flex items-center justify-between">
+    <div class="mt-section-gap grid gap-section-gap lg:grid-cols-2">
+      <div class="rounded-2xl border border-field-border bg-raised p-surface shadow-sm">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Gespendete Bäume</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-300">
-              Übersicht deiner Baumspenden und Pflanzorte.
-            </p>
+            <h2 class="text-xl font-semibold text-heading">Gespendete Bäume</h2>
+            <p class="text-sm text-muted">Übersicht deiner Baumspenden und Pflanzorte.</p>
           </div>
           <span
-            class="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800 dark:bg-green-900/40 dark:text-green-100"
+            class="shrink-0 whitespace-nowrap rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800 dark:bg-green-900/40 dark:text-green-100"
           >
             {{ donatedTrees.length }} Einträge
           </span>
@@ -139,46 +127,40 @@ const totalReserved = computed(() =>
           <div
             v-for="donation in donatedTrees"
             :key="donation.id"
-            class="rounded-xl border border-gray-200 bg-gray-50 p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900/40"
+            class="rounded-xl border border-field-border bg-page-surface p-4 shadow-sm"
           >
             <div class="flex items-start justify-between gap-4">
               <div>
-                <p class="text-sm text-gray-500 dark:text-gray-300">Baumart</p>
-                <p class="text-lg font-semibold text-gray-900 dark:text-white">
+                <p class="text-sm text-muted">Baumart</p>
+                <p class="text-lg font-semibold text-heading">
                   {{ donation.species }}
                 </p>
-                <p class="text-sm text-gray-600 dark:text-gray-300">
+                <p class="text-sm text-secondary">
                   Standort: {{ donation.location }} · Gepflanzt am {{ donation.plantedAt }}
                 </p>
               </div>
               <span
-                class="rounded-full bg-brand-100 px-3 py-1 text-sm font-semibold text-brand-800 dark:bg-brand-900/40 dark:text-brand-100"
+                class="shrink-0 whitespace-nowrap rounded-full bg-brand-100 px-3 py-1 text-sm font-semibold text-brand-800 dark:bg-brand-900/40 dark:text-brand-100"
               >
                 {{ donation.count }} Bäume
               </span>
             </div>
           </div>
 
-          <p v-if="!donatedTrees.length" class="text-sm text-gray-500 dark:text-gray-300">
+          <p v-if="!donatedTrees.length" class="text-sm text-muted">
             Noch keine Spenden hinterlegt.
           </p>
         </div>
       </div>
 
-      <div
-        class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-      >
-        <div class="mb-4 flex items-center justify-between">
+      <div class="rounded-2xl border border-field-border bg-raised p-surface shadow-sm">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              Bereitgestellte Pflanzorte
-            </h2>
-            <p class="text-sm text-gray-500 dark:text-gray-300">
-              Plätze, die du für Pflanzungen zur Verfügung stellst.
-            </p>
+            <h2 class="text-xl font-semibold text-heading">Bereitgestellte Pflanzorte</h2>
+            <p class="text-sm text-muted">Plätze, die du für Pflanzungen zur Verfügung stellst.</p>
           </div>
           <span
-            class="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800 dark:bg-blue-900/40 dark:text-blue-100"
+            class="shrink-0 whitespace-nowrap rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800 dark:bg-blue-900/40 dark:text-blue-100"
           >
             {{ plantingLocations.length }} Orte
           </span>
@@ -188,24 +170,24 @@ const totalReserved = computed(() =>
           <div
             v-for="location in plantingLocations"
             :key="location.id"
-            class="rounded-xl border border-gray-200 bg-gray-50 p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900/40"
+            class="rounded-xl border border-field-border bg-page-surface p-4 shadow-sm"
           >
             <div class="flex items-start justify-between gap-4">
               <div>
-                <p class="text-sm text-gray-500 dark:text-gray-300">Ort</p>
-                <p class="text-lg font-semibold text-gray-900 dark:text-white">
+                <p class="text-sm text-muted">Ort</p>
+                <p class="text-lg font-semibold text-heading">
                   {{ location.name }}
                 </p>
-                <p class="text-sm text-gray-600 dark:text-gray-300">
+                <p class="text-sm text-secondary">
                   {{ location.city }} · Kapazität: {{ location.capacity }} Bäume
                 </p>
-                <div class="mt-2 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                <div class="mt-2 flex items-center gap-2 text-sm text-secondary">
                   <span class="inline-flex h-2 w-2 rounded-full bg-green-500"></span>
                   {{ location.treesPlaced }} bereits eingeplant
                 </div>
               </div>
               <span
-                class="rounded-full px-3 py-1 text-sm font-semibold"
+                class="shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-sm font-semibold"
                 :class="{
                   'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-100':
                     location.status === 'geplant',
@@ -220,7 +202,7 @@ const totalReserved = computed(() =>
             </div>
           </div>
 
-          <p v-if="!plantingLocations.length" class="text-sm text-gray-500 dark:text-gray-300">
+          <p v-if="!plantingLocations.length" class="text-sm text-muted">
             Noch keine Pflanzorte erfasst.
           </p>
         </div>
