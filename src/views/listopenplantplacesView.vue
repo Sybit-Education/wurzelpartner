@@ -8,16 +8,51 @@ const locations = ref<Location[]>([])
 const isLoading = ref(true)
 const errorMessage = ref<string | null>(null)
 
-function formatCoordinates(geoLocation: string): string | null {
+interface Coordinates {
+  latitude: number
+  longitude: number
+}
+
+function parseCoordinates(geoLocation: string): Coordinates | null {
+  if (!geoLocation) {
+    return null
+  }
+
   const [latitudeValue, longitudeValue] = geoLocation.split(';')
   const latitude = Number(latitudeValue)
   const longitude = Number(longitudeValue)
 
-  if (!geoLocation || !Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+  if (
+    !latitudeValue ||
+    !longitudeValue ||
+    !Number.isFinite(latitude) ||
+    !Number.isFinite(longitude)
+  ) {
     return null
   }
 
-  return `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`
+  return { latitude, longitude }
+}
+
+function formatCoordinates(geoLocation: string): string | null {
+  const coordinates = parseCoordinates(geoLocation)
+
+  if (!coordinates) {
+    return null
+  }
+
+  return `${coordinates.latitude.toFixed(5)}, ${coordinates.longitude.toFixed(5)}`
+}
+
+function getGoogleMapsUrl(geoLocation: string): string | null {
+  const coordinates = parseCoordinates(geoLocation)
+
+  if (!coordinates) {
+    return null
+  }
+
+  const query = `${coordinates.latitude},${coordinates.longitude}`
+  return `https://www.google.com/maps?q=${encodeURIComponent(query)}`
 }
 
 async function loadLocations() {
@@ -81,7 +116,17 @@ onMounted(loadLocations)
         <h2 class="text-2xl font-semibold text-heading">{{ location.name }}</h2>
         <p class="mt-3 text-sm text-muted">
           <span class="font-medium text-heading">Koordinaten:</span>
-          {{ formatCoordinates(location.geoLocation) ?? 'Keine Koordinaten hinterlegt' }}
+          <a
+            v-if="getGoogleMapsUrl(location.geoLocation)"
+            :href="getGoogleMapsUrl(location.geoLocation) || undefined"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-brand-foreground underline underline-offset-2 hover:no-underline"
+            :aria-label="`Standort ${location.name} in Google Maps öffnen`"
+          >
+            {{ formatCoordinates(location.geoLocation) }}
+          </a>
+          <span v-else>Keine Koordinaten hinterlegt</span>
         </p>
         <RouterLink
           to="/spendenvonbaume"
