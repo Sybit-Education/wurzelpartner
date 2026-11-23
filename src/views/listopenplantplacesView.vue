@@ -114,7 +114,7 @@ onMounted(loadLocations)
         class="flex flex-col rounded-lg border border-field-border bg-raised p-surface"
       >
         <h2 class="text-2xl font-semibold text-heading">{{ location.name }}</h2>
-        <p class="mt-3 text-sm text-muted">
+        <p class="mt-3 flex items-baseline gap-2 text-sm text-muted">
           <span class="font-medium text-heading">Koordinaten:</span>
           <a
             v-if="getGoogleMapsUrl(location.geoLocation)"
@@ -122,7 +122,6 @@ onMounted(loadLocations)
             target="_blank"
             rel="noopener noreferrer"
             class="text-brand-foreground underline underline-offset-2 hover:no-underline"
-            :aria-label="`Standort ${location.name} in Google Maps öffnen`"
           >
             {{ formatCoordinates(location.geoLocation) }}
           </a>
