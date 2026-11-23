@@ -17,8 +17,6 @@ const hideLayout = computed(() => route.meta.hideLayout === true)
     <main class="page-shell flex-1">
       <RouterView />
     </main>
-    <footer v-if="!hideLayout" class="mt-section-gap bg-gray-100 py-section-gap dark:bg-gray-800">
-      <FooterBar class="page-shell" />
-    </footer>
+    <FooterBar v-if="!hideLayout" />
   </div>
 </template>

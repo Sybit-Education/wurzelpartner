@@ -140,6 +140,22 @@ function handleLogout() {
           <template v-else>
             <li class="mt-2 px-3 py-2 text-heading xl:hidden">Hallo, {{ authStore.username }}</li>
             <li class="xl:hidden">
+              <RouterLink
+                to="/dashboard"
+                class="nav-action nav-action-primary block px-3 py-2 text-center"
+                @click="isMenuOpen = false"
+                >Zum Dashboard</RouterLink
+              >
+            </li>
+            <li class="xl:hidden">
+              <RouterLink
+                to="/profile"
+                class="nav-action nav-action-secondary block px-3 py-2 text-center"
+                @click="isMenuOpen = false"
+                >Profil verwalten</RouterLink
+              >
+            </li>
+            <li class="xl:hidden">
               <button
                 type="button"
                 class="nav-action nav-action-danger w-full px-3 py-2"

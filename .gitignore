@@ -42,3 +42,5 @@ coverage
 .gemini/*
 .graphify/*
 .opencode/*
+.agents/
+.claude/
