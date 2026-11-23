@@ -6,20 +6,35 @@ import { treeDonationOptions } from '@/utils/donation'
 const route = useRoute()
 const requestedTree = typeof route.query.tree === 'string' ? route.query.tree : ''
 const requestedQuantity = Number(route.query.quantity)
+const minimumTreeQuantity = 1
+const maximumTreeQuantity = 10000
+
+function normalizeTreeQuantity(value: number | '' | undefined): number {
+  const numericValue = Number(value)
+  if (!Number.isFinite(numericValue)) {
+    return minimumTreeQuantity
+  }
+
+  return Math.min(
+    maximumTreeQuantity,
+    Math.max(minimumTreeQuantity, Math.floor(numericValue)),
+  )
+}
 
 const selectedTreePrice = ref(
   treeDonationOptions.find((tree) => tree.name === requestedTree)?.price ??
     treeDonationOptions[0].price,
 )
-const quantity = ref<number | ''>(
-  Number.isInteger(requestedQuantity) && requestedQuantity >= 1 ? requestedQuantity : 1,
-)
+const quantity = ref<number | ''>(normalizeTreeQuantity(requestedQuantity))
 
-const treeCount = computed(() => Math.max(1, Math.floor(Number(quantity.value) || 1)))
+const treeCount = computed(() => normalizeTreeQuantity(quantity.value))
 const selectedTreeName = computed(
   () => treeDonationOptions.find((tree) => tree.price === selectedTreePrice.value)?.name ?? '',
 )
 const total = computed(() => selectedTreePrice.value * treeCount.value)
+function normalizeQuantityInput() {
+  quantity.value = normalizeTreeQuantity(quantity.value)
+}
 
 const formattedTotal = computed(() =>
   new Intl.NumberFormat('de-DE', {
@@ -74,12 +89,20 @@ const formattedTotal = computed(() =>
                 v-model.number="quantity"
                 type="number"
                 min="1"
+                max="10000"
                 step="1"
                 inputmode="numeric"
+                required
+                aria-describedby="quantity-limit"
                 class="w-18 min-w-0 border-0 bg-transparent text-[1.1rem] font-bold text-donation-text outline-none"
+                @change="normalizeQuantityInput"
+                @blur="normalizeQuantityInput"
               />
               <span class="text-[0.85rem] text-donation-muted">Bäume</span>
             </div>
+            <span id="quantity-limit" class="text-[0.78rem] text-donation-muted">
+              Möglich sind 1 bis 10.000 Bäume.
+            </span>
           </label>
         </div>
 
