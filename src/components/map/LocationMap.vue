@@ -69,6 +69,7 @@
                 class="form-input"
                 type="number"
                 min="1"
+                max="10000"
                 step="1"
                 inputmode="numeric"
               />
@@ -82,7 +83,7 @@
               {{ quantity }} {{ quantity === 1 ? 'Baum' : 'Bäume' }} {{ selectedTreeName }} spenden
             </RouterLink>
             <p v-else class="text-sm text-error-foreground" role="alert">
-              Bitte mindestens einen Baum auswählen.
+              Bitte eine Anzahl von 1 bis 10000 Bäumen auswählen.
             </p>
           </div>
         </l-popup>
@@ -182,7 +183,10 @@ const selectedLocation = ref<Location | null>(null)
 const selectedTreeName = ref(treeDonationOptions[0].name)
 const quantity = ref<number | ''>(1)
 const isQuantityValid = computed(
-  () => Number.isInteger(quantity.value) && Number(quantity.value) >= 1,
+  () =>
+    Number.isInteger(quantity.value) &&
+    Number(quantity.value) >= 1 &&
+    Number(quantity.value) <= 10000,
 )
 
 const getDonationLink = computed(() => ({
@@ -193,7 +197,17 @@ const getDonationLink = computed(() => ({
   },
 }))
 
-const formatCoordinates = (geoLocation: string) => geoLocation.replace(';', ', ')
+const formatCoordinates = (geoLocation: string) => {
+  const [latitude, longitude] = geoLocation.split(';')
+  const parsedLatitude = Number(latitude)
+  const parsedLongitude = Number(longitude)
+
+  if (!Number.isFinite(parsedLatitude) || !Number.isFinite(parsedLongitude)) {
+    return geoLocation
+  }
+
+  return `${parsedLatitude.toFixed(6)}, ${parsedLongitude.toFixed(6)}`
+}
 
 // Lade Radolfzell GeoJSON
 const loadRadolfzellBoundary = async () => {
