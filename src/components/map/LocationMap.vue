@@ -45,23 +45,68 @@
           :icon-anchor="[12, 24]"
         ></l-icon>
         <l-popup>
-          <div>
-            <h3 class="font-bold">{{ location.name }}</h3>
+          <div class="min-w-60 space-y-3 text-heading">
+            <div>
+              <h3 class="font-bold">{{ location.name }}</h3>
+              <p class="mt-1 text-sm text-secondary">
+                Koordinaten: {{ formatCoordinates(location.geoLocation) }}
+              </p>
+            </div>
+
+            <label class="block space-y-1 text-sm">
+              <span class="font-medium">Baumart</span>
+              <select v-model="selectedTreeName" class="form-input">
+                <option v-for="tree in treeDonationOptions" :key="tree.name" :value="tree.name">
+                  {{ tree.name }} · {{ tree.price }} €
+                </option>
+              </select>
+            </label>
+
+            <label class="block space-y-1 text-sm">
+              <span class="font-medium">Anzahl der Bäume</span>
+              <input
+                v-model.number="quantity"
+                class="form-input"
+                type="number"
+                min="1"
+                max="10000"
+                step="1"
+                inputmode="numeric"
+              />
+            </label>
+
+            <RouterLink
+              v-if="isQuantityValid"
+              :to="getDonationLink"
+              class="nav-action nav-action-primary inline-flex px-3 py-2 text-sm font-medium"
+            >
+              {{ quantity }} {{ quantity === 1 ? 'Baum' : 'Bäume' }} {{ selectedTreeName }} spenden
+            </RouterLink>
+            <p v-else class="text-sm text-error-foreground" role="alert">
+              Bitte eine Anzahl von 1 bis 10000 Bäumen auswählen.
+            </p>
           </div>
         </l-popup>
       </l-marker>
     </l-map>
 
     <!-- Loading-Indikator für Standorte mit Flowbite -->
-    <div v-if="isLoadingLocations" class="pins-loading-indicator">
+    <div v-if="isLoadingLocations" class="pins-loading-indicator" role="status">
       <FwbSpinner size="10" color="green" />
       <div class="mt-2">Lade Standorte...</div>
+    </div>
+    <div
+      v-else-if="locationsError"
+      class="pins-loading-indicator text-error-foreground"
+      role="alert"
+    >
+      {{ locationsError }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onBeforeMount, shallowRef, onBeforeUnmount, onMounted } from 'vue'
+import { computed, ref, watch, onBeforeMount, shallowRef, onBeforeUnmount, onMounted } from 'vue'
 
 import { latLngBounds, type Control, type Map as LeafletMap, type PointTuple } from 'leaflet'
 import {
@@ -77,6 +122,7 @@ import { LocationService } from '@/services/locationService'
 import { installOfflineBasemap } from './offlineBasemap'
 import type { Location } from '@/models/location'
 import { FwbSpinner } from 'flowbite-vue'
+import { treeDonationOptions } from '@/utils/donation'
 
 const zoom = ref(12.5)
 // Define a center point for the map (important to prevent the error)
@@ -141,7 +187,36 @@ let removeOfflineBasemap: (() => void) | null = null
 const locationService = new LocationService()
 const locations = ref<Location[]>([])
 const isLoadingLocations = ref(false)
+const locationsError = ref<string | null>(null)
 const selectedLocation = ref<Location | null>(null)
+const selectedTreeName = ref(treeDonationOptions[0].name)
+const quantity = ref<number | ''>(1)
+const isQuantityValid = computed(
+  () =>
+    Number.isInteger(quantity.value) &&
+    Number(quantity.value) >= 1 &&
+    Number(quantity.value) <= 10000,
+)
+
+const getDonationLink = computed(() => ({
+  path: '/spendenvonbaume',
+  query: {
+    tree: selectedTreeName.value,
+    quantity: String(quantity.value),
+  },
+}))
+
+const formatCoordinates = (geoLocation: string) => {
+  const [latitude, longitude] = geoLocation.split(';')
+  const parsedLatitude = Number(latitude)
+  const parsedLongitude = Number(longitude)
+
+  if (!Number.isFinite(parsedLatitude) || !Number.isFinite(parsedLongitude)) {
+    return geoLocation
+  }
+
+  return `${parsedLatitude.toFixed(6)}, ${parsedLongitude.toFixed(6)}`
+}
 
 // Lade Radolfzell GeoJSON
 const loadRadolfzellBoundary = async () => {
@@ -156,11 +231,46 @@ const loadRadolfzellBoundary = async () => {
 // Lade Standorte
 const loadLocations = async () => {
   isLoadingLocations.value = true
+  locationsError.value = null
   try {
-    const response = await locationService.getAllLocations(100, 0)
-    locations.value = response.list
+    const loadedLocations: Location[] = []
+    let totalRows = Number.POSITIVE_INFINITY
+    const pageSize = 100
+
+    while (loadedLocations.length < totalRows) {
+      const response = await locationService.getAllLocations(pageSize, loadedLocations.length)
+      loadedLocations.push(...response.list)
+      totalRows = response.pageInfo.totalRows
+
+      if (response.list.length === 0) {
+        break
+      }
+    }
+
+    locations.value = loadedLocations.filter((location) => {
+      if (typeof location.geoLocation !== 'string') {
+        return false
+      }
+
+      const coordinateParts = location.geoLocation.split(';')
+      if (coordinateParts.length !== 2 || coordinateParts.some((part) => !part.trim())) {
+        return false
+      }
+
+      const [latitude, longitude] = coordinateParts.map(Number)
+      return (
+        Number.isFinite(latitude) &&
+        Number.isFinite(longitude) &&
+        latitude >= -90 &&
+        latitude <= 90 &&
+        longitude >= -180 &&
+        longitude <= 180
+      )
+    })
   } catch (error) {
     console.error('Fehler beim Laden der Standorte:', error)
+    locationsError.value =
+      'Die Pflanzorte konnten nicht geladen werden. Bitte versuchen Sie es später erneut.'
   } finally {
     isLoadingLocations.value = false
   }
