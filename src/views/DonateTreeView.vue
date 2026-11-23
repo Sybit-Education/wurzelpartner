@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { treeDonationOptions } from '@/utils/donation'
 
-const treeTypes = [
-  { name: 'Birke', price: 25 },
-  { name: 'Pappel', price: 30 },
-  { name: 'Buche', price: 35 },
-]
+const route = useRoute()
+const requestedTree = typeof route.query.tree === 'string' ? route.query.tree : ''
+const requestedQuantity = Number(route.query.quantity)
 
-const selectedTreePrice = ref(treeTypes[0].price)
-const quantity = ref<number | ''>(1)
+const selectedTreePrice = ref(
+  treeDonationOptions.find((tree) => tree.name === requestedTree)?.price ??
+    treeDonationOptions[0].price,
+)
+const quantity = ref<number | ''>(
+  Number.isInteger(requestedQuantity) && requestedQuantity >= 1 ? requestedQuantity : 1,
+)
 
 const treeCount = computed(() => Math.max(1, Math.floor(Number(quantity.value) || 1)))
 const selectedTreeName = computed(
-  () => treeTypes.find((tree) => tree.price === selectedTreePrice.value)?.name ?? '',
+  () => treeDonationOptions.find((tree) => tree.price === selectedTreePrice.value)?.name ?? '',
 )
 const total = computed(() => selectedTreePrice.value * treeCount.value)
 
@@ -53,7 +58,7 @@ const formattedTotal = computed(() =>
               v-model.number="selectedTreePrice"
               class="min-h-13 w-full cursor-pointer rounded-[5px] border border-donation-border bg-donation-surface py-0 pr-10 pl-4 font-[inherit] text-donation-text focus-visible:border-donation-accent focus-visible:outline-3 focus-visible:outline-donation-accent/25 focus-visible:outline-offset-2"
             >
-              <option v-for="tree in treeTypes" :key="tree.name" :value="tree.price">
+              <option v-for="tree in treeDonationOptions" :key="tree.name" :value="tree.price">
                 {{ tree.name }} · {{ tree.price }} €
               </option>
             </select>
