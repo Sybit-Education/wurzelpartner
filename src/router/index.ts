@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // Routes
 import AboutView from '../views/AboutView.vue'
 import AcessibilityView from '../views/AcessibilityView.vue'
+import AngebotBaupflanzortView from '../views/AngebotBaupflanzortView.vue'
 import DonateMoneyView from '../views/DonateMoneyView.vue'
 import DonateTreeView from '../views/DonateTreeView.vue'
 import HomeView from '../views/HomeView.vue'
@@ -84,6 +85,13 @@ const router = createRouter({
       name: 'partner-details',
       component: PartnerDetailView,
       props: true,
+    },
+    {
+      path: '/AngebotBaupflanzort/:id?',
+      name: 'AngebotBaupflanzort',
+      component: AngebotBaupflanzortView,
+      props: true,
+      alias: ['/angebot-baupflanzort'],
     },
     // Login
     {

@@ -1,6 +1,6 @@
 import type { LatLng } from 'leaflet'
 import { NocoDBService, type ListResponse } from './nocodbService'
-import type { Location } from '@/models/location'
+import type { Location, NewLocation } from '@/models/location'
 
 export class LocationService {
   readonly nocoDBService: NocoDBService
@@ -45,11 +45,21 @@ export class LocationService {
   /**
    * Erstellt einen neuen Standort
    */
-  async createLocation(location: Location) {
-    const [createdLocation] = await this.nocoDBService.createRecords<Location, Location>(
+  async createLocation(location: NewLocation): Promise<Location> {
+    const [createdLocation] = await this.nocoDBService.createRecords<NewLocation, Location>(
       this.tableName,
       location,
     )
+
+    if (
+      !createdLocation ||
+      typeof createdLocation !== 'object' ||
+      createdLocation.id === undefined ||
+      createdLocation.id === null
+    ) {
+      throw new Error('NocoDB hat keinen Standort mit ID zurückgegeben')
+    }
+
     return createdLocation
   }
 
