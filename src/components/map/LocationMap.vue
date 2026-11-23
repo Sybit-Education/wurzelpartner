@@ -24,7 +24,7 @@
       <l-tile-layer
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         layer-type="base"
-        name="OpenStreetMap (online)"
+        name="OpenStreetMap"
         :visible="false"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       ></l-tile-layer>
