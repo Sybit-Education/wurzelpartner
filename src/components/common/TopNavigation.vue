@@ -16,6 +16,7 @@ const navigationLinks = [
   { to: '/about', label: 'Über uns' },
   { to: '/privacy', label: 'Datenschutzerklärung' },
   { to: '/spendenvonbaume', label: 'Spenden von Bäumen' },
+  { to: '/TreeCare', label: 'Baumpflege' },
 ]
 
 watch(
