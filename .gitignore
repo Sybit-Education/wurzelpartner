@@ -36,9 +36,17 @@ coverage
 .env.test.local
 .env.production.local
 
+# Server-side middleware configuration
+.env.middleware*
+!.env.middleware.example
+
 .axet-plugin/*
 .codex/*
 .copilot/*
 .gemini/*
 .graphify/*
 .opencode/*
+.agents/*
+.claude/*
+
+docs/superpowers/*
