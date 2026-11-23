@@ -67,6 +67,11 @@ const router = createRouter({
       name: 'map',
       component: () => import('../views/MapView.vue'),
     },
+    {
+      path: '/pflanzorte',
+      name: 'planting-places',
+      component: () => import('../views/listopenplantplacesView.vue'),
+    },
     // Create a tree
     {
       path: '/createtree',

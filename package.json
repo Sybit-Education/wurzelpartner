@@ -30,9 +30,10 @@
     "leaflet": "^1.9.4",
     "leaflet.path.drag": "^0.0.6",
     "pinia": "^4.1.0",
+
     "protomaps-leaflet": "^5.1.0",
-    "vue": "^3.5.45",
-    "vue-router": "^5.5.0"
+    "vue": "^3.5.46",
+    "vue-router": "^5.5.1"
   },
   "devDependencies": {
     "@prettier/plugin-oxc": "^0.2.4",
@@ -49,14 +50,14 @@
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/tsconfig": "^0.9.1",
     "autoprefixer": "^10.6.2",
-    "baseline-browser-mapping": "^2.11.37",
-    "eslint": "^10.14.0",
-    "eslint-plugin-oxlint": "~1.93.0",
+    "baseline-browser-mapping": "^2.11.39",
+    "eslint": "^10.15.0",
+    "eslint-plugin-oxlint": "~1.94.0",
     "eslint-plugin-vue": "~10.12.1",
     "jiti": "^2.5.1",
     "npm-run-all2": "^9.0.4",
-    "oxlint": "~1.93.0",
-    "postcss": "^8.5.6",
+    "oxlint": "~1.94.0",
+    "postcss": "^8.5.33",
     "prettier": "3.10.1",
     "sass-embedded": "^1.108.2",
     "tailwindcss": "^4.3.3",

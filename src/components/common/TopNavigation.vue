@@ -12,6 +12,7 @@ const isMenuOpen = shallowRef(false)
 const navigationLinks = [
   { to: '/', label: 'Home' },
   { to: '/trees', label: 'Baumarten' },
+  { to: '/pflanzorte', label: 'Pflanzorte' },
   { to: '/map', label: 'Karte' },
   { to: '/about', label: 'Über uns' },
   { to: '/privacy', label: 'Datenschutzerklärung' },
