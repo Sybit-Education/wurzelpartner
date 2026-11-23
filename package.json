@@ -9,11 +9,13 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
+    "backend:dev": "bash scripts/start-backend.sh",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "test": "vitest run",
+    "test:backend": "node --test tests/*.test.mjs",
     "test:watch": "vitest",
     "lint:oxlint": "oxlint . --fix -D correctness --ignore-path .gitignore",
     "lint:eslint": "eslint . --fix",
