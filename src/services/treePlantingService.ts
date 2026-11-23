@@ -19,6 +19,18 @@ export class TreePlantingService {
   }
 
   /**
+   * Gibt die neuesten Pflanzungen mit ihren verknüpften Benutzern zurück
+   */
+  async getLatestPlantings(limit = 5): Promise<PlantedTree[]> {
+    const response = await this.nocoDBService.getRecords<PlantedTree>(this.tableName, {
+      fields: 'Id,Amount,Message,Created_at,Users,TreeInfo',
+      sort: '-created_at',
+      limit,
+    })
+    return response.list
+  }
+
+  /**
    * Pflanzt einen neuen Baum (oder mehrere), indem ein neuer Eintrag in der Planted_Trees Tabelle erstellt wird
    * @param treeData Daten des zu pflanzenden Baums
    * @returns Der neu gepflanzte Baum

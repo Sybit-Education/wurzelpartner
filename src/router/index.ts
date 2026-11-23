@@ -31,6 +31,12 @@ const router = createRouter({
       name: 'trees',
       component: TreeOverviewView,
     },
+    // Plantings
+    {
+      path: '/plantings',
+      name: 'plantings',
+      component: () => import('../views/PlantingsView.vue'),
+    },
     // Tree details
     {
       path: '/tree/:id',
